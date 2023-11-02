@@ -21,7 +21,9 @@ import NoiThat.Services.ICateParentsService;
 public class CateParentsController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
+	
 	ICateParentsService catepase = new CateParentsServicePImpl();
+	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		String url = req.getRequestURI().toString();
@@ -39,6 +41,7 @@ public class CateParentsController extends HttpServlet{
 //			findAll(req, resp);
 //		}
 	}	
+	
 	private void findAllparent(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
 		resp.setContentType("text/html");
 		resp.setCharacterEncoding("UTF-8");
