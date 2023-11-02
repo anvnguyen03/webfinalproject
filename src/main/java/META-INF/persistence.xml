@@ -7,8 +7,8 @@
 
 	<persistence-unit name="bandonoithat">
 
-		<class>com.hcmute.Entity.Category</class>
-		<class>com.hcmute.Entity.CategoryParents</class>
+		<class>NoiThat.Entity.Category</class>
+		<class>NoiThat.Entity.CategoryParents</class>
 
 		<properties>
 
@@ -18,7 +18,7 @@
 			<property name="javax.persistence.jdbc.user" value="root" />
 
 			<property name="javax.persistence.jdbc.password"
-				value="123456789" />
+				value="1234" />
 
 			<property name="javax.persistence.jdbc.driver"
 				value="com.mysql.cj.jdbc.Driver" />
