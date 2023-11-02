@@ -9,7 +9,7 @@
 		<pattern>/seller*</pattern>
 	</decorator>
 
-	<decorator name="user" page="user.jsp">
+	<decorator name="user" page="userHome.jsp">
 		<pattern>/*</pattern>
 	</decorator>
 

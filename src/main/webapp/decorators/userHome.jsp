@@ -6,7 +6,6 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-    <meta name="description" content="Ogani Template">
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -27,20 +26,9 @@
 </head>
 <body>
 	
-	<%@ include file="/common/user/header.jsp" %>
-	
+	<%@ include file="/common/user/headerForHome.jsp" %>
 
-	<table border="1">
-		<tr>
-			<td colspan="2"></td>
-		</tr>
-		<tr>
-			<td><decorator:body></decorator:body></td>
-		</tr>
-		<tr>
-			<td colspan="2"></td>
-		</tr>
-	</table>
+	<decorator:body></decorator:body>
 	
 	<%@ include file="/common/user/footer.jsp" %>
 	
