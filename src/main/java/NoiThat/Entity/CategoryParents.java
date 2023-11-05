@@ -24,24 +24,22 @@ public class CategoryParents {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cateParentsID;
 
-	@Column(columnDefinition = "nvarchar(50)")
 	private String cateParentsName;
-
 	private int state;
 
 	@OneToMany(mappedBy = "cateParent", fetch = FetchType.EAGER) // Sửa "categoryparents" thành "cateParents"
-	private List<Category> categorys;
+	private List<Category> categories;
 
 	public CategoryParents() {
 		super();
 	}
 
-	public CategoryParents(int cateParentsID, String cateParentsName, int state, List<Category> categorys) {
+	public CategoryParents(int cateParentsID, String cateParentsName, int state, List<Category> categories) {
 		super();
 		this.cateParentsID = cateParentsID;
 		this.cateParentsName = cateParentsName;
 		this.state = state;
-		this.categorys = categorys;
+		this.categories = categories;
 	}
 
 	public int getCateParentsID() {
@@ -68,12 +66,12 @@ public class CategoryParents {
 		this.state = state;
 	}
 
-	public List<Category> getCategorys() {
-		return categorys;
+	public List<Category> getCategories() {
+		return categories;
 	}
 
-	public void setCategorys(List<Category> categorys) {
-		this.categorys = categorys;
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 	public static long getSerialversionuid() {
@@ -83,7 +81,7 @@ public class CategoryParents {
 	@Override
 	public String toString() {
 		return "CategoryParents [cateParentsID=" + cateParentsID + ", cateParentsName=" + cateParentsName + ", state="
-				+ state + ", categorys=" + categorys + "]";
+				+ state + ", categories=" + categories + "]";
 	}
 	
 	

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!-- Breadcrumb Section Begin -->
 <section class="breadcrumb-section set-bg"
-	data-setbg="/WebFinalProject/templates/img/breadcrumb.jpg">
+	data-setbg="/WebFinalProject/templates/img/breadcrumb_1.jpg">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12 text-center">

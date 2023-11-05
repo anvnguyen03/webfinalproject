@@ -26,7 +26,7 @@
 </head>
 <body>
 	
-	<%@ include file="/common/user/headerForHome.jsp" %>
+	<%@ include file="/common/user/header.jsp" %>
 
 	<decorator:body></decorator:body>
 	

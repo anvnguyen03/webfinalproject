@@ -1,5 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%
+String msg = request.getParameter("msg");
+if ("done".equals(msg)) {
+%>
+<h2>Xóa thành công</h2>
+<%
+}
+%>
+<%
+if ("invalid".equals(msg)) {
+%>
+<h2>Xóa thất bại</h2>
+
+<%
+}
+%>
 <!-- Header Section Begin -->
 <header class="header">
 	<div class="header__top">
@@ -26,21 +43,27 @@
 		<div class="row">
 			<div class="col-lg-3">
 				<div class="header__logo">
-					<a href="./index.html"><img src="/WebFinalProject/templates/img/hero/logo.png" alt=""></a>
+					<a href="./index.html"><img
+						src="/WebFinalProject/templates/img/hero/logo.png" alt=""></a>
 				</div>
 			</div>
 			<div class="col-lg-6">
 				<nav class="header__menu">
 					<ul>
-						<li class="active"><a href="/WebFinalProject/views/home/listCategoryToHome.jsp">Home</a></li>
-						<li><a href="/WebFinalProject/views/shop/listProductToShop.jsp">Shop</a>
+						<li class="active"><a href="/WebFinalProject/home">Home</a></li>
+						<li>
+							<a href="/WebFinalProject/shop">Shop</a>
 							<ul class="header__menu__dropdown">
-								<li><a href="./shop-details.html">Này</a></li>
-								<li><a href="./shoping-cart.html">Cũng</a></li>
-								<li><a href="./checkout.html">Load</a></li>
-								<li><a href="./blog-details.html">Từ</a></li>
-								<li><a href="./blog-details.html">Database</a></li>
-							</ul></li>
+								<c:forEach items="${listcatepa}" var="cateParent">
+									<li class="menu-item"><a href="#">${cateParent.cateParentsName}</a>
+										<ul class="sub-menu">
+											<c:forEach items="${cateParent.categories}" var="category">
+												<li><a href="#">${category.cateName}</a></li>
+											</c:forEach>
+										</ul></li>
+								</c:forEach>
+							</ul>
+						</li>
 						<li><a href="./blog.html">Blog</a></li>
 						<li><a href="/WebFinalProject/views/contact/contact.jsp">Contact</a></li>
 					</ul>
@@ -50,7 +73,8 @@
 				<div class="header__cart">
 					<ul>
 						<li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-						<li><a href="/WebFinalProject/views/cart/listCartDetails.jsp"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+						<li><a href="/WebFinalProject/views/cart/listCartDetails.jsp"><i
+								class="fa fa-shopping-bag"></i> <span>3</span></a></li>
 					</ul>
 					<!-- <div class="header__cart__price">item: <span>$150.00</span></div> -->
 				</div>
@@ -68,31 +92,13 @@
 		<div class="row">
 			<div class="col-lg-3">
 				<div class="hero__categories">
-					<div class="hero__categories__all">
-						<i class="fa fa-bars"></i> <span>All departments</span>
-					</div>
-					<ul>
-						<li><a href="#">Category Parents</a></li>
-						<li><a href="#">Ở đây nè</a></li>
-						<li><a href="#">Mình</a></li>
-						<li><a href="#">Load</a></li>
-						<li><a href="#">Từ</a></li>
-						<li><a href="#">Database</a></li>
-						<li><a href="#">Fastfood</a></li>
-						<li><a href="#">Fresh Onion</a></li>
-						<li><a href="#">Papayaya & Crisps</a></li>
-						<li><a href="#">Oatmeal</a></li>
-						<li><a href="#">Fresh Bananas</a></li>
-					</ul>
 				</div>
 			</div>
 			<div class="col-lg-9">
 				<div class="hero__search">
 					<div class="hero__search__form">
 						<form action="#">
-							<div class="hero__search__categories">
-								All Categories <span class="arrow_carrot-down"></span>
-							</div>
+							<div class="hero__search__categories">AZ furniture shop</div>
 							<input type="text" placeholder="What do you need?">
 							<button type="submit" class="site-btn">SEARCH</button>
 						</form>
@@ -105,17 +111,6 @@
 							<h5>+65 11.188.888</h5>
 							<span>support 24/7 time</span>
 						</div>
-					</div>
-				</div>
-				<div class="hero__item set-bg"
-					data-setbg="/WebFinalProject/templates/img/hero/banner_1.jpg">
-					<div class="hero__text">
-						<span>AZ FUNITURE</span>
-						<h2>
-							Timeless Elegance<br />Handcrafted Furniture
-						</h2>
-						<p>Exquisite Selection, Home Delivery Services Available</p>
-						<a href="#" class="primary-btn">DISCOVER NOW</a>
 					</div>
 				</div>
 			</div>

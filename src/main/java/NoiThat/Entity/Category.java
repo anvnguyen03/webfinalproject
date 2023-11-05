@@ -1,13 +1,17 @@
 package NoiThat.Entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -28,19 +32,22 @@ public class Category {
 	
 	@ManyToOne
 	@JoinColumn(name = "cateParentsID")
-	
 	private CategoryParents cateParent;
+
+	@OneToMany(mappedBy = "category", fetch = FetchType.EAGER) 
+	private List<Product> product;
 
 	public Category() {
 		super();
 	}
 
-	public Category(int cateID, String cateName, int state, CategoryParents cateParent) {
+	public Category(int cateID, String cateName, int state, CategoryParents cateParent, List<Product> product) {
 		super();
 		this.cateID = cateID;
 		this.cateName = cateName;
 		this.state = state;
 		this.cateParent = cateParent;
+		this.product = product;
 	}
 
 	public int getCateID() {
@@ -79,6 +86,12 @@ public class Category {
 		return serialVersionUID;
 	}
 
+	public List<Product> getProduct() {
+		return product;
+	}
 
+	public void setProduct(List<Product> product) {
+		this.product = product;
+	}
 	
 }

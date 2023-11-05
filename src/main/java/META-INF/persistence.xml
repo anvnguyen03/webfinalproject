@@ -9,6 +9,7 @@
 
 		<class>NoiThat.Entity.Category</class>
 		<class>NoiThat.Entity.CategoryParents</class>
+		<class>NoiThat.Entity.Product</class>
 
 		<properties>
 
