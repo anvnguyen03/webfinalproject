@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="/common/taglib.jsp" %>
 
 <div class="home_container">
 	<div class="hero__item set-bg"
@@ -11,7 +11,7 @@
 				Timeless Elegance<br />Handcrafted Furniture
 			</h2>
 			<p>Exquisite Selection, Home Delivery Services Available</p>
-			<a href="/WebFinalProject/shop" class="primary-btn">DISCOVER NOW</a>
+			<a href="<c:url value="/shop/allproduct" />" class="primary-btn">DISCOVER NOW</a>
 		</div>
 	</div>
 </div>

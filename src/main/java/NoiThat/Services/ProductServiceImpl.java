@@ -9,6 +9,7 @@ import NoiThat.Entity.Product;
 public class ProductServiceImpl implements IProductService{
 
 	IProductDAO pro = new ProductDAOImpl();
+
 	@Override
 	public List<Product> findAllProduct() {
 		return pro.findAllProduct();
@@ -27,14 +28,23 @@ public class ProductServiceImpl implements IProductService{
 	}
 
 	@Override
-	public List<Product> findProductByCateName(String catename) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> findProductByCateID(int cateid) {
+		return pro.findProductByCateID(cateid);
+	}
+
+	@Override
+	public List<Product> findProductByCateParensID(int cateparentsid) {
+		return pro.findProductByCateParensID(cateparentsid);
 	}
 
 	@Override
 	public int countAll() {
 		return pro.countAll();
+	}
+
+	@Override
+	public List<Product> findTop6LatestProduct() {
+		return pro.findTop6LatestProduct();
 	}
 
 }

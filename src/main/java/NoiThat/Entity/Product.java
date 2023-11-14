@@ -1,6 +1,5 @@
 package NoiThat.Entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,7 +35,7 @@ public class Product {
     private int stoke;
     private boolean state;
     private String information;
-    
+
 	public Product(int productID, Category category, String productName, String description, double price,
 			String imgLink1, String imgLink2, String imgLink3, String imgLink4, String imgLink5, String provider,
 			String locate, int stoke, boolean state, String information) {
@@ -56,6 +55,7 @@ public class Product {
 		this.stoke = stoke;
 		this.state = state;
 		this.information = information;
+		
 	}
 
 	public Product() {

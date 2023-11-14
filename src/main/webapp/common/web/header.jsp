@@ -44,28 +44,28 @@ if ("invalid".equals(msg)) {
 			<div class="col-lg-3">
 				<div class="header__logo">
 					<a href="./index.html"><img
-						src="/WebFinalProject/templates/img/hero/logo.png" alt=""></a>
+						src="<c:url value="/templates/img/hero/logo.png" />" alt=""></a>
 				</div>
 			</div>
 			<div class="col-lg-6">
 				<nav class="header__menu">
 					<ul>
-						<li class="active"><a href="/WebFinalProject/home">Home</a></li>
+						<li class="active"><a href="<c:url value="/home" />">Home</a></li>
 						<li>
-							<a href="/WebFinalProject/shop">Shop</a>
+							<a href="<c:url value="/shop/allproduct" />">Shop</a>
 							<ul class="header__menu__dropdown">
 								<c:forEach items="${listcatepa}" var="cateParent">
-									<li class="menu-item"><a href="#">${cateParent.cateParentsName}</a>
+									<li class="menu-item"><a href="<c:url value="/shop/productbycateparents?categoryparentsid=${cateParent.cateParentsID}"/>">${cateParent.cateParentsName}</a>
 										<ul class="sub-menu">
 											<c:forEach items="${cateParent.categories}" var="category">
-												<li><a href="#">${category.cateName}</a></li>
+												<li><a href="<c:url value="/shop/productbycategory?categoryid=${category.cateID}"/>">${category.cateName}</a></li>
 											</c:forEach>
 										</ul></li>
 								</c:forEach>
 							</ul>
 						</li>
 						<li><a href="./blog.html">Blog</a></li>
-						<li><a href="/WebFinalProject/views/contact/contact.jsp">Contact</a></li>
+						<li><a href="<c:url value="/views/contact/contact.jsp" />" >Contact</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -73,7 +73,7 @@ if ("invalid".equals(msg)) {
 				<div class="header__cart">
 					<ul>
 						<li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-						<li><a href="/WebFinalProject/views/cart/listCartDetails.jsp"><i
+						<li><a href="<c:url value="/views/cart/listCartDetails.jsp" />"><i
 								class="fa fa-shopping-bag"></i> <span>3</span></a></li>
 					</ul>
 					<!-- <div class="header__cart__price">item: <span>$150.00</span></div> -->

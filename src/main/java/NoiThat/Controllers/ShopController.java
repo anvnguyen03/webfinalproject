@@ -20,7 +20,7 @@ import NoiThat.Services.ICateService;
 import NoiThat.Services.IProductService;
 import NoiThat.Services.ProductServiceImpl;
 
-@WebServlet( urlPatterns = {"/shop"} )
+@WebServlet( urlPatterns = {"/shop/allproduct", "/shop/productbycategory", "/shop/productbycateparents"} )
 
 public class ShopController extends HttpServlet{
 
@@ -28,26 +28,73 @@ public class ShopController extends HttpServlet{
 	
 	ICateParentsService catepase = new CateParentsServiceImpl();
 	ICateService cate = new CateServiceImpl();
-	
 	IProductService prod = new ProductServiceImpl();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	
+		resp.setContentType("text/html");
+		resp.setCharacterEncoding("UTF-8");
+		req.setCharacterEncoding("UTF-8");
+		
+		// list category to shop dropdown menu
+		findCategoryOfEachCateParents(req, resp);
+		// list 6 latest product
+		find6LatestProducts(req, resp);
 		
 		String url = req.getRequestURI();
-		if (url.contains("/shop")) {
-			findCategoryOfEachCateParents(req, resp);
-			
+		if (url.contains("/allproduct")) {
 			findAndCountAllProduct(req, resp);
-			
+			req.getRequestDispatcher("/views/shop/Shop.jsp").forward(req, resp);
+		} else if (url.contains("/productbycategory")) {
+			findProductByCategory(req, resp);
+			req.getRequestDispatcher("/views/shop/Shop.jsp").forward(req, resp);
+		} else if (url.contains("/productbycateparents")) {
+			findProductByCateParent(req, resp);
 			req.getRequestDispatcher("/views/shop/Shop.jsp").forward(req, resp);
 		}
 	}
 	
+	private void find6LatestProducts(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
+		try {
+			List<Product> listlatestprod = prod.findTop6LatestProduct();
+			req.setAttribute("listlatestprod", listlatestprod);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void findProductByCateParent(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
+		
+		int cateparentid = Integer.parseInt(req.getParameter("categoryparentsid"));
+		try {
+			List<Product> listprod = prod.findProductByCateParensID(cateparentid);
+			int countProduct = listprod.size();
+			req.setAttribute("listprod", listprod);
+			req.setAttribute("countproduct", countProduct);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void findProductByCategory(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		
+		int cateid = Integer.parseInt(req.getParameter("categoryid"));
+//		String jsScript = "<script>console.log('var: " + cateid + "');</script>";
+//        resp.getWriter().write(jsScript);
+		
+		try {
+			List<Product> listprod = prod.findProductByCateID(cateid);
+			int countProduct = listprod.size();
+			req.setAttribute("listprod", listprod);
+			req.setAttribute("countproduct", countProduct);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void findAndCountAllProduct(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
-		resp.setContentType("text/html");
-		resp.setCharacterEncoding("UTF-8");
-		req.setCharacterEncoding("UTF-8");
 		
 		try {
 			int countProduct = prod.countAll();
@@ -62,9 +109,6 @@ public class ShopController extends HttpServlet{
 	}
 
 	private void findCategoryOfEachCateParents(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
-		resp.setContentType("text/html");
-		resp.setCharacterEncoding("UTF-8");
-		req.setCharacterEncoding("UTF-8");
 		
 		try {
 			List<CategoryParents> listcatepa = catepase.findAllCateParents();

@@ -26,11 +26,11 @@
 </head>
 <body>
 	
-	<%@ include file="/common/user/header.jsp" %>
+	<%@ include file="/common/web/header.jsp" %>
 
 	<decorator:body></decorator:body>
 	
-	<%@ include file="/common/user/footer.jsp" %>
+	<%@ include file="/common/web/footer.jsp" %>
 	
 	<!-- Js Plugins -->
 	<script src="/WebFinalProject/templates/js/jquery-3.3.1.min.js"></script>

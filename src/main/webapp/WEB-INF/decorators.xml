@@ -8,6 +8,22 @@
 	<decorator name="seller" page="seller.jsp">
 		<pattern>/seller*</pattern>
 	</decorator>
+	
+	<decorator name="register" page="register.jsp">
+		<pattern>/register*</pattern>
+	</decorator>
+	
+	<decorator name="verifycode" page="verify.jsp">
+		<pattern>/verifycode*</pattern>
+	</decorator>
+	
+	<decorator name="verify-success" page="verifysuccess.jsp">
+		<pattern>/verify-success*</pattern>
+	</decorator>
+	
+	<decorator name="login" page="login.jsp">
+		<pattern>/login*</pattern>
+	</decorator>
 
 	<decorator name="user" page="userHome.jsp">
 		<pattern>/*</pattern>

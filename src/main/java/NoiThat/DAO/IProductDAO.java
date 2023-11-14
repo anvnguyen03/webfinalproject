@@ -9,6 +9,8 @@ public interface IProductDAO {
 	List<Product> findAllProduct();
 	void insert(Product product);
 	void update(Product product);
-	List<Product> findProductByCateName(String catename);
+	List<Product> findProductByCateID(int cateid);
+	List<Product> findProductByCateParensID(int cateparentsid);
+	List<Product> findTop6LatestProduct();
 	int countAll();
 }

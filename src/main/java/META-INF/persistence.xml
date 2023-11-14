@@ -10,6 +10,8 @@
 		<class>NoiThat.Entity.Category</class>
 		<class>NoiThat.Entity.CategoryParents</class>
 		<class>NoiThat.Entity.Product</class>
+		<class>NoiThat.Entity.User</class>
+		<class>NoiThat.Entity.UserRole</class>
 
 		<properties>
 
