@@ -12,14 +12,14 @@ import NoiThat.JPAConfig.JPAConfig;
 
 public class ProductDAOImpl implements IProductDAO{
 
-//	 public static void main(String[] args) {
-//			IProductDAO pro = new ProductDAOImpl();
-////			System.out.println(pro.countAll());
-////			System.out.println(pro.findAllProduct());
-////			System.out.println(pro.findProductByCateID(1));
-//			System.out.println(pro.findTop6LatestProduct());
-////			System.out.println(pro.findProductByCateParensID(1));
-//		}
+	 public static void main(String[] args) {
+			IProductDAO pro = new ProductDAOImpl();
+//			System.out.println(pro.countAll());
+//			System.out.println(pro.findAllProduct());
+//			System.out.println(pro.findProductByCateID(1));
+			System.out.println((pro.findProductByPage(0, 12)).size());
+//			System.out.println(pro.findProductByCateParensID(1));
+		}
 	
 	@Override
 	public List<Product> findAllProduct() {
@@ -80,5 +80,21 @@ public class ProductDAOImpl implements IProductDAO{
 		query.setMaxResults(6);
 		return query.getResultList();
 	}
+	
+	@Override
+	public List<Product> findProductByPage(int page, int pagesize) {
+
+		EntityManager enma = JPAConfig.getEntityManager();
+
+		TypedQuery<Product> query = enma.createNamedQuery("Product.findAll", Product.class);
+
+		query.setFirstResult(page * pagesize);
+
+		query.setMaxResults(pagesize);
+
+		return query.getResultList();
+
+	}
+
 
 }

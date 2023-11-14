@@ -13,4 +13,5 @@ public interface IProductDAO {
 	List<Product> findProductByCateParensID(int cateparentsid);
 	List<Product> findTop6LatestProduct();
 	int countAll();
+	List<Product> findProductByPage(int page, int pagesize);
 }

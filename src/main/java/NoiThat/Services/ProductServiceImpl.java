@@ -47,4 +47,9 @@ public class ProductServiceImpl implements IProductService{
 		return pro.findTop6LatestProduct();
 	}
 
+	@Override
+	public List<Product> findProductByPage(int page, int pagesize) {
+		return pro.findProductByPage(page, pagesize);
+	}
+
 }
