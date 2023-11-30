@@ -64,7 +64,7 @@ public class LoginController extends HttpServlet {
 			}
 		}
 		
-		resp.sendRedirect(req.getContextPath() + "/login");
+		resp.sendRedirect(req.getContextPath() + "/home");
 	}
 
 	private void getWaiting(HttpServletRequest req, HttpServletResponse resp) throws IOException {

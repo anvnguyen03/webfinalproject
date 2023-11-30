@@ -85,15 +85,41 @@ public class ProductDAOImpl implements IProductDAO{
 	public List<Product> findProductByPage(int page, int pagesize) {
 
 		EntityManager enma = JPAConfig.getEntityManager();
-
 		TypedQuery<Product> query = enma.createNamedQuery("Product.findAll", Product.class);
-
 		query.setFirstResult(page * pagesize);
-
 		query.setMaxResults(pagesize);
-
 		return query.getResultList();
 
+	}
+
+	@Override
+	public List<Product> findProductByCateIDPaging(int cateid, int page, int pagesize) {
+		EntityManager enma = JPAConfig.getEntityManager();
+		String jpql = "SELECT p FROM Product p " +
+					  "WHERE p.category.cateID = :cateid";
+		TypedQuery<Product> query = enma.createQuery(jpql, Product.class);
+		query.setParameter("cateid", cateid);
+		
+		query.setFirstResult(page * pagesize);
+		query.setMaxResults(pagesize);
+		
+		return query.getResultList();
+	}
+
+	@Override
+	public List<Product> findProductByCateParensIDPaging(int cateparentsid, int page, int pagesize) {
+		EntityManager enma = JPAConfig.getEntityManager();
+		String jpql = "SELECT p FROM Product p " +
+					  "JOIN p.category c " +
+					  "JOIN c.cateParent cp " +
+					  "WHERE cp.cateParentsID = :cateParentsID";
+		TypedQuery<Product> query = enma.createQuery(jpql, Product.class);
+		query.setParameter("cateParentsID", cateparentsid);
+		
+		query.setFirstResult(page * pagesize);
+		query.setMaxResults(pagesize);
+		
+		return query.getResultList();
 	}
 
 

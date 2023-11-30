@@ -52,4 +52,14 @@ public class ProductServiceImpl implements IProductService{
 		return pro.findProductByPage(page, pagesize);
 	}
 
+	@Override
+	public List<Product> findProductByCateIDPaging(int cateid, int page, int pagesize) {
+		return pro.findProductByCateIDPaging(cateid, page, pagesize);
+	}
+
+	@Override
+	public List<Product> findProductByCateParensIDPaging(int cateparentsid, int page, int pagesize) {
+		return pro.findProductByCateParensIDPaging(cateparentsid, page, pagesize);
+	}
+
 }

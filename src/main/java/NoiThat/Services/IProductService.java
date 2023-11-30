@@ -13,4 +13,6 @@ public interface IProductService {
 	List<Product> findTop6LatestProduct();
 	int countAll();
 	List<Product> findProductByPage(int page, int pagesize);
+	List<Product> findProductByCateIDPaging(int cateid, int page, int pagesize);
+	List<Product> findProductByCateParensIDPaging(int cateparentsid, int page, int pagesize);
 }

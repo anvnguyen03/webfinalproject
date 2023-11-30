@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/common/taglib.jsp"%>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
 
 <!-- Breadcrumb Section Begin -->
 <section class="breadcrumb-section set-bg"
@@ -162,15 +163,66 @@
 				<!-- ***************************************  -->
 				<div class="product__pagination">
 					<c:if test="${tag > 1}">
-						<a href="allproduct?index=${tag-1 }">&laquo;</a>
+						<a href="
+							<c:url value="">
+		
+								<c:set var="queryString" value="${pageContext.request.queryString}"/>
+								
+								<c:if test="${not empty queryString && queryString.contains('categoryparentsid')}">
+									<c:param name="categoryparentsid" value="${param.categoryparentsid}" />
+								</c:if>
+								
+								<c:if test="${not empty queryString && queryString.contains('categoryid')}">
+									<c:param name="categoryid" value="${param.categoryid}" />
+								</c:if>
+								
+								<c:param name="index" value="${tag-1}" />
+								
+							</c:url>">
+							&laquo;
+						</a>
 					</c:if>
 					<c:forEach begin="1" end="${endP }" var="i">
-
-						<a href="allproduct?index=${i }">${i}</a>
-
+						
+						<a href="
+							<c:url value="">
+		
+								<c:set var="queryString" value="${pageContext.request.queryString}"/>
+								
+								<c:if test="${not empty queryString && queryString.contains('categoryparentsid')}">
+									<c:param name="categoryparentsid" value="${param.categoryparentsid}" />
+								</c:if>
+								
+								<c:if test="${not empty queryString && queryString.contains('categoryid')}">
+									<c:param name="categoryid" value="${param.categoryid}" />
+								</c:if>
+								
+								<c:param name="index" value="${i}" />
+								
+							</c:url>">
+							${i}
+						</a>
+						
 					</c:forEach>
 					<c:if test="${tag < endP}">
-						<a href="allproduct?index=${tag+1 }">&raquo;</a>
+						<a href="
+							<c:url value="">
+		
+								<c:set var="queryString" value="${pageContext.request.queryString}"/>
+								
+								<c:if test="${not empty queryString && queryString.contains('categoryparentsid')}">
+									<c:param name="categoryparentsid" value="${param.categoryparentsid}" />
+								</c:if>
+								
+								<c:if test="${not empty queryString && queryString.contains('categoryid')}">
+									<c:param name="categoryid" value="${param.categoryid}" />
+								</c:if>
+								
+								<c:param name="index" value="${tag+1}" />
+								
+							</c:url>">
+							&raquo;
+						</a>
 					</c:if>
 
 				</div>

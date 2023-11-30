@@ -1,22 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
-<%
-String msg = request.getParameter("msg");
-if ("done".equals(msg)) {
-%>
-<h2>Xóa thành công</h2>
-<%
-}
-%>
-<%
-if ("invalid".equals(msg)) {
-%>
-<h2>Xóa thất bại</h2>
-
-<%
-}
-%>
+<%@ include file="/common/taglib.jsp"%>
 <!-- Header Section Begin -->
 <header class="header">
 	<div class="header__top">
@@ -31,9 +15,24 @@ if ("invalid".equals(msg)) {
 								class="fa fa-linkedin"></i></a> <a href="#"><i
 								class="fa fa-pinterest-p"></i></a>
 						</div>
-						<div class="header__top__right__auth">
-							<a href="#"><i class="fa fa-user"></i> Login</a>
+						
+						<c:set var="account" value="${account}"/>
+						
+						<c:if test="${not empty account}">
+							<div class="header__top__right__auth">
+								<a href="<c:url value="/login"/>"><i class="fa fa-user"></i>${account.username}</a>
+							</div>
+							<div class="header__top__right__auth">
+								<a href="<c:url value="/logout"/>"><i class="fa fa-sign-out"></i> Logout</a>
+							</div>
+						</c:if>
+						
+						<c:if test="${empty account}">
+							<div class="header__top__right__auth">
+							<a href="<c:url value="/login"/>"><i class="fa fa-user"></i> Login</a>
 						</div>
+						</c:if>
+						
 					</div>
 				</div>
 			</div>
@@ -43,7 +42,7 @@ if ("invalid".equals(msg)) {
 		<div class="row">
 			<div class="col-lg-3">
 				<div class="header__logo">
-					<a href="./index.html"><img
+					<a href="<c:url value="/home"/>"><img
 						src="<c:url value="/templates/img/hero/logo.png" />" alt=""></a>
 				</div>
 			</div>
@@ -55,17 +54,24 @@ if ("invalid".equals(msg)) {
 							<a href="<c:url value="/shop/allproduct" />">Shop</a>
 							<ul class="header__menu__dropdown">
 								<c:forEach items="${listcatepa}" var="cateParent">
-									<li class="menu-item"><a href="<c:url value="/shop/productbycateparents?categoryparentsid=${cateParent.cateParentsID}"/>">${cateParent.cateParentsName}</a>
-										<ul class="sub-menu">
-											<c:forEach items="${cateParent.categories}" var="category">
-												<li><a href="<c:url value="/shop/productbycategory?categoryid=${category.cateID}"/>">${category.cateName}</a></li>
-											</c:forEach>
-										</ul></li>
+									<c:if test="${cateParent.state == 1}">
+										<li class="menu-item"><a href="<c:url value="/shop/productbycateparents?categoryparentsid=${cateParent.cateParentsID}"/>">${cateParent.cateParentsName}</a>
+											<ul class="sub-menu">
+												<c:forEach items="${cateParent.categories}" var="category">
+													<c:if test="${category.state == 1}">
+														<li><a href="<c:url value="/shop/productbycategory?categoryid=${category.cateID}"/>">${category.cateName}</a></li>
+													</c:if>
+												</c:forEach>
+											</ul>
+										</li>
+									</c:if>
 								</c:forEach>
 							</ul>
 						</li>
-						<li><a href="./blog.html">Blog</a></li>
 						<li><a href="<c:url value="/views/contact/contact.jsp" />" >Contact</a></li>
+						<c:if test="${not empty account && account.roleID==1}">
+							<li><a href="<c:url value="/admin/home"/>">Admin page</a></li>
+						</c:if>
 					</ul>
 				</nav>
 			</div>

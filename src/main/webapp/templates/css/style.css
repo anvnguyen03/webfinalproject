@@ -400,6 +400,7 @@ ol {
 
 .header__top__right__auth {
 	display: inline-block;
+	padding-right: 10px;
 }
 
 .header__top__right__auth a {
@@ -1693,7 +1694,8 @@ ol {
 
 .product__pagination,
 .blog__pagination {
-	padding-left: 40%;
+	display: flex;
+	justify-content: center;
 	padding-top: 10px;
 }
 
