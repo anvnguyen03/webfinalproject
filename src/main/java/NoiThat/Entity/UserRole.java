@@ -4,10 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "UserRole")
+@NamedQuery(name = "UserRole.findAll", query = "SELECT u FROM UserRole u")
 public class UserRole {
 	
 	@Id

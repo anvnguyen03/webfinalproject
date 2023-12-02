@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -25,11 +27,12 @@ public class User {
 	private int state;
 	private String code;
 	private String fullname;
-	private int roleID;
+	@ManyToOne
+	@JoinColumn(name = "roleID")
+	private UserRole userrole;
 	
 	public User(int userID, String username, String password, String email, Timestamp createdAt, Timestamp modifiedAt,
-			int state, String code, String fullname, int roleID) {
-		super();
+			int state, String code, String fullname, UserRole userrole) {
 		this.userID = userID;
 		this.username = username;
 		this.password = password;
@@ -39,18 +42,7 @@ public class User {
 		this.state = state;
 		this.code = code;
 		this.fullname = fullname;
-		this.roleID = roleID;
-	}
-
-	public User(String username, String password, String email, int state, String code, String fullname, int roleID) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.state = state;
-		this.code = code;
-		this.fullname = fullname;
-		this.roleID = roleID;
+		this.userrole = userrole;
 	}
 
 	public User(String username, String email, String code, String fullname) {
@@ -59,6 +51,18 @@ public class User {
 		this.email = email;
 		this.code = code;
 		this.fullname = fullname;
+	}
+
+	public User(String username, String password, String email, int state, String code, String fullname,
+			UserRole userrole) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.state = state;
+		this.code = code;
+		this.fullname = fullname;
+		this.userrole = userrole;
 	}
 
 	public User() {
@@ -137,21 +141,12 @@ public class User {
 		this.fullname = fullname;
 	}
 
-	public int getRoleID() {
-		return roleID;
+	public UserRole getUserrole() {
+		return userrole;
 	}
 
-	public void setRoleID(int roleID) {
-		this.roleID = roleID;
+	public void setUserrole(UserRole userrole) {
+		this.userrole = userrole;
 	}
-
-	@Override
-	public String toString() {
-		return "User [userID=" + userID + ", username=" + username + ", password=" + password + ", email=" + email
-				+ ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt + ", state=" + state + ", code=" + code
-				+ ", fullname=" + fullname + ", roleID=" + roleID + "]";
-	}
-	
-	
 	
 }

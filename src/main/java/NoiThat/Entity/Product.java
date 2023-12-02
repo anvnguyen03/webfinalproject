@@ -30,15 +30,12 @@ public class Product {
     private String imgLink3;
     private String imgLink4;
     private String imgLink5;
-    private String provider;
-    private String locate;
     private int stoke;
-    private boolean state;
+    private int state;
     private String information;
 
 	public Product(int productID, Category category, String productName, String description, double price,
-			String imgLink1, String imgLink2, String imgLink3, String imgLink4, String imgLink5, String provider,
-			String locate, int stoke, boolean state, String information) {
+			String imgLink1, String imgLink2, String imgLink3, String imgLink4, String imgLink5, int stoke, int state, String information) {
 		super();
 		this.productID = productID;
 		this.category = category;
@@ -50,8 +47,6 @@ public class Product {
 		this.imgLink3 = imgLink3;
 		this.imgLink4 = imgLink4;
 		this.imgLink5 = imgLink5;
-		this.provider = provider;
-		this.locate = locate;
 		this.stoke = stoke;
 		this.state = state;
 		this.information = information;
@@ -142,22 +137,6 @@ public class Product {
 		this.imgLink5 = imgLink5;
 	}
 
-	public String getProvider() {
-		return provider;
-	}
-
-	public void setProvider(String provider) {
-		this.provider = provider;
-	}
-
-	public String getLocate() {
-		return locate;
-	}
-
-	public void setLocate(String locate) {
-		this.locate = locate;
-	}
-
 	public int getStoke() {
 		return stoke;
 	}
@@ -166,11 +145,11 @@ public class Product {
 		this.stoke = stoke;
 	}
 
-	public boolean isState() {
+	public int getState() {
 		return state;
 	}
 
-	public void setState(boolean state) {
+	public void setState(int state) {
 		this.state = state;
 	}
 

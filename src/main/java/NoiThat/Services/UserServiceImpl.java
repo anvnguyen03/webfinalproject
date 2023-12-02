@@ -5,6 +5,7 @@ import java.util.List;
 import NoiThat.DAO.IUserDAO;
 import NoiThat.DAO.UserDAOImpl;
 import NoiThat.Entity.User;
+import NoiThat.Entity.UserRole;
 
 public class UserServiceImpl implements IUserService{
 
@@ -66,7 +67,7 @@ public class UserServiceImpl implements IUserService{
 		if (this.user.checkExistUsername(username)) {
 			return false;
 		}
-		user.insertRegister(new User(username, password, email, 0, code, fullname, 2));
+		user.insertRegister(new User(username, password, email, 0, code, fullname, new UserRole(2, "user") ));
 		return true;
 	}
 

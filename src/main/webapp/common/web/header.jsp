@@ -69,7 +69,7 @@
 							</ul>
 						</li>
 						<li><a href="<c:url value="/views/contact/contact.jsp" />" >Contact</a></li>
-						<c:if test="${not empty account && account.roleID==1}">
+						<c:if test="${not empty account && account.userrole.roleID==1}">
 							<li><a href="<c:url value="/admin/home"/>">Admin page</a></li>
 						</c:if>
 					</ul>

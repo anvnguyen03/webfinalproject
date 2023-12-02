@@ -62,4 +62,9 @@ public class ProductServiceImpl implements IProductService{
 		return pro.findProductByCateParensIDPaging(cateparentsid, page, pagesize);
 	}
 
+	@Override
+	public Product findOne(int productid) {
+		return pro.findOne(productid);
+	}
+
 }

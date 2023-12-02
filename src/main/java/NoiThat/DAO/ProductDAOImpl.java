@@ -17,8 +17,9 @@ public class ProductDAOImpl implements IProductDAO{
 //			System.out.println(pro.countAll());
 //			System.out.println(pro.findAllProduct());
 //			System.out.println(pro.findProductByCateID(1));
-			System.out.println((pro.findProductByPage(0, 12)).size());
+//			System.out.println((pro.findProductByPage(0, 12)).size());
 //			System.out.println(pro.findProductByCateParensID(1));
+			System.out.println(pro.findOne(1));
 		}
 	
 	@Override
@@ -120,6 +121,16 @@ public class ProductDAOImpl implements IProductDAO{
 		query.setMaxResults(pagesize);
 		
 		return query.getResultList();
+	}
+
+	@Override
+	public Product findOne(int productid) {
+		EntityManager enma = JPAConfig.getEntityManager();
+		String jpql = "SELECT p FROM Product p " +
+					  "WHERE p.productID = :productid";
+		TypedQuery<Product> query = enma.createQuery(jpql, Product.class);
+		query.setParameter("productid", productid);
+		return query.getSingleResult();
 	}
 
 

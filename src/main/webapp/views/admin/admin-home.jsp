@@ -120,8 +120,8 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-medium d-block">${account.username}</span>
-                            <small class="text-muted">Admin</small>
+                            <span class="fw-medium d-block">${account.fullname}</span>
+                            <small class="text-muted">${account.userrole.roleName}</small>
                           </div>
                         </div>
                       </a>

@@ -9750,14 +9750,22 @@ button.list-group-item-gray.active {
 
 .card-header,
 .card-footer {
-  border-color: #d9dee3;
-  display: flex;
-  justify-content: center;
+  	border-color: #d9dee3;
+    display: flex;
+    justify-content: center;
+    padding: 5px 10px;
+    margin-bottom: 15px;
+    background-color: rgba(0,0,0,.03);
+    border-bottom: 1px solid rgba(0,0,0,.125);
 }
 
 .my-btn-custom {
 	float: right;
     margin-right: 20px;
+}
+
+.btn:hover {
+	color: #fa023c;
 }
 
 .card hr {
@@ -18569,4 +18577,25 @@ html:not(.layout-footer-fixed) .content-wrapper {
 }
 .footer.bg-light hr {
   border-color: rgba(105, 122, 141, 0.0783835294);
+}
+
+.modal.fade.show {
+	display: block!important;
+    opacity: 1;
+    visibility: visible;
+    transition: all .3s ease 0s;
+    background: rgba(0,0,0,.5);
+    overflow: unset;
+}
+
+.notEdit {
+	background-color: gainsboro;
+}
+
+.a-for-btn {
+	display: inline-block;
+}
+
+.a-for-addproductbtn {
+	display: inherit;
 }

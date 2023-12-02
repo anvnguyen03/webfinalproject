@@ -50,6 +50,11 @@ public class UserDAOImpl implements IUserDAO{
 		EntityTransaction trans = enma.getTransaction();
 		try {
 			trans.begin();
+			
+			long currentTimeMillis = System.currentTimeMillis();
+			Timestamp currentTimestamp = new Timestamp(currentTimeMillis);
+			user.setModifiedAt(currentTimestamp);
+			
 			enma.merge(user);
 			trans.commit();
 		} catch (Exception e) {
@@ -86,6 +91,11 @@ public class UserDAOImpl implements IUserDAO{
 		EntityTransaction trans = enma.getTransaction();
 		try {
 			trans.begin();
+			
+			long currentTimeMillis = System.currentTimeMillis();
+			Timestamp currentTimestamp = new Timestamp(currentTimeMillis);
+			user.setCreatedAt(currentTimestamp);
+			
 			enma.persist(user);
 			trans.commit();
 		} catch (Exception e) {
@@ -106,12 +116,16 @@ public class UserDAOImpl implements IUserDAO{
 			trans.begin();
 			
 			String jpql = "UPDATE User u " +
-						  "SET u.state = :newState, u.code = :newCode " +
+						  "SET u.state = :newState, u.code = :newCode, u.modifiedAt = :modifiedAt " +
 						  "WHERE u.email = :email";
 			Query query = enma.createQuery(jpql);
 			query.setParameter("newState", user.getState());
 			query.setParameter("newCode", user.getCode());
 			query.setParameter("email", user.getEmail());
+			
+			long currentTimeMillis = System.currentTimeMillis();
+			Timestamp currentTimestamp = new Timestamp(currentTimeMillis);
+			query.setParameter("modifiedAt", currentTimestamp);
 			
 			int updatedCount = query.executeUpdate();
 			

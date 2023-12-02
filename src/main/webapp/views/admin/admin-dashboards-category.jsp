@@ -120,8 +120,8 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-medium d-block">${account.username}</span>
-                            <small class="text-muted">Admin</small>
+                            <span class="fw-medium d-block">${account.fullname}</span>
+                            <small class="text-muted">${account.userrole.roleName}</small>
                           </div>
                         </div>
                       </a>
@@ -160,10 +160,14 @@
             <div class="container-xxl flex-grow-1 container-p-y">
              	<h4 class="py-3 mb-4"><span class="text-muted fw-light">Dashboards /</span> Category</h4>
              	<!-- Hoverable Table rows -->
-	              <div class="card">
+	            <div class="card">
 		              <div>
 			            <h5 class="card-header">Category</h5>
-		              	<button type="button" class="btn btn-primary my-btn-custom"><i class="bx bx-plus me-0 me-sm-1"></i>Add Category</button>
+		              	<button class="dt-button add-new btn btn-primary ms-2 my-btn-custom" 
+		              			tabindex="0" aria-controls="DataTables_Table_0" 
+		              			type="button" data-bs-toggle="offcanvas" 
+		              			data-bs-target="#offcanvasEcommerceCategoryList"><i class="bx bx-plus me-0 me-sm-1"></i>Add Category
+		              	</button>
 		              </div>
 	                <div class="table-responsive text-nowrap">
 	                  <table id="example" class="table table-hover display" style="width:100%">
@@ -180,32 +184,177 @@
 		                    <c:forEach items="${listcate}" var="i">
 		                      <tr>
 		                        <td>
-		                          <i class="bx bxl-angular bx-sm text-danger me-3"></i>
 		                          <span class="fw-medium">${i.cateID}</span>
 		                        </td>
 		                        <td>${i.cateName}</td>
 		                        <td>${i.cateParent.cateParentsName}</td>
 		                        <td>
-		                        	<c:if test="${i.state == 1}"><span class="badge bg-label-success me-1">Active</span></c:if>
-		                        	<c:if test="${i.state == 0}"><span class="badge bg-label-danger me-1">Not available</span></c:if>
+		                        	<c:if test="${i.state == 1}"><span class="badge bg-success me-1">Active</span></c:if>
+		                        	<c:if test="${i.state == 0}"><span class="badge bg-warning me-1">Inactive</span></c:if>
 		                        </td>
 		                        <td>
-		                          <div class="dropdown">
-		                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-		                              <i class="bx bx-edit-alt me-1"></i>
-		                            </button>
-		                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-		                              <i class="bx bx-trash me-1"></i>
-		                            </button>
+		                          <div class="">
+			                          <a href="#pop-up${i.cateID}" class="toggle-pop-up a-for-btn">
+			                          	  	<button type="button" class="btn p-0 hide-arrow edit-button">
+			                              	<i class="bx bx-edit-alt me-1"></i>
+			                            	</button>
+			                          </a> 
+			                          <a href="#del-pop-up${i.cateID}" class="toggle-del-pop-up a-for-btn">
+				                            <button type="button" class="btn p-0 hide-arrow delete-button">
+				                            <i class="bx bx-trash me-1"></i>
+				                            </button>
+			                          </a>
 		                          </div>
 		                        </td>
 		                      </tr>
+		                      
+		                    	<!-- Start Modal Quickview -->
+							    <div class="modal fade pop-up${i.cateID}" id="pop-up${i.cateID}" tabindex="-1" role="dialog" aria-hidden="true">
+							        <div class="modal-dialog  modal-dialog-centered" role="document">
+							            <div class="modal-content">
+							                <div class="modal-body">
+							                    <div class="container-fluid">
+							                    	<h5 class="card-header">Edit category</h5>
+							                       	<form class="pt-0" id="eCommerceCategoryListForm" onsubmit="return true">
+								                       	<!-- ID -->
+												        <div class="mb-3">
+												          <label class="form-label" for="ecommerce-category-title">Category ID</label>
+												          <input type="text" class="form-control notEdit" id="ecommerce-category-title" aria-label="category parents id" readonly="readonly" value="${i.cateID}">
+												        </div>
+												        <!-- Title -->
+												        <div class="mb-3">
+												          <label class="form-label" for="ecommerce-category-title">Category Name</label>
+												          <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter parents category title" name="cateParentsName" aria-label="category title" value="${i.cateName}">
+												        </div>
+												        
+												        <div class="mb-4 ecommerce-select2-dropdown">
+												          <label class="form-label">Parents Category</label>
+												          <select id="ecommerce-category-status" class="select2 form-select" data-placeholder="Select category status" name="state" >
+												            <c:forEach items="${listcateparents}" var="u">
+												          		<c:if test="${u.state == 1}">
+													            	<option value="${cateParentsID}">${u.cateParentsName}</option>
+													            </c:if>
+												            </c:forEach>
+												          </select>
+												        </div>
+												        <!-- Status -->
+												        <div class="mb-4 ecommerce-select2-dropdown">
+												          <label class="form-label">Current status</label>
+												          <c:if test="${i.state == 1}"><span class="badge bg-success me-1">Active</span></c:if>
+		                        						  <c:if test="${i.state == 0}"><span class="badge bg-warning me-1">Inactive</span></c:if>
+		                        						  <c:if test="${i.state == 2}"><span class="badge bg-dark me-1">Deleted</span></c:if>
+												          <select id="ecommerce-category-status" class="select2 form-select" data-placeholder="Select category status" name="state" >
+												            <option value="1">Active</option>
+												            <option value="0">Inactive</option>
+												          </select>
+												        </div>
+												        <!-- Submit and reset -->
+												        <div class="mb-3">
+												          <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit save-button">Save</button>
+												          <button type="reset" class="btn bg-label-danger close-button">Discard</button>
+												        </div>
+											      	</form>
+							                    </div>
+							                </div>
+							            </div>
+							        </div>
+							    </div> 
+							    <!-- End Modal Quickview cart --> 
+							    
+							    <!-- Start Modal delete -->
+							    <div class="modal fade del-pop-up${i.cateID}" id="del-pop-up${i.cateID}" tabindex="-1" role="dialog" aria-hidden="true">
+							        <div class="modal-dialog  modal-dialog-centered" role="document">
+							            <div class="modal-content">
+							                <div class="modal-body">
+							                    <div class="container-fluid">
+							                    	<h5 class="card-header">Delete this category?</h5>
+							                       		<form class="pt-0" id="del-form" onsubmit="return true">
+									                       	<!-- ID -->
+													        <div class="mb-3">
+													          <label class="form-label" for="ecommerce-category-title">Category ID</label>
+													          <input type="text" class="form-control notEdit" id="ecommerce-category-title" aria-label="category id" readonly="readonly" value="${i.cateID}">
+													        </div>
+													        <!-- Title -->
+													        <div class="mb-3">
+													          <label class="form-label" for="ecommerce-category-title">Category Name</label>
+													          <input type="text" class="form-control notEdit" id="ecommerce-category-title" name="cateName" aria-label="category title" readonly="readonly" value="${i.cateName}">
+													        </div>
+													        
+													        <div class="mb-4 ecommerce-select2-dropdown">
+													          <label class="form-label">Parents Category</label>
+													          <input type="text" class="form-control notEdit" name="cateParentsName" aria-label="category title" readonly="readonly" value="${i.cateParent.cateParentsName}">
+													        </div>
+													        
+													        <!-- Status -->
+													        <div class="mb-4 ecommerce-select2-dropdown">
+													          <label class="form-label">Status</label>
+													          <c:if test="${i.state == 1}"><span class="badge bg-success me-1">Active</span></c:if>
+			                        						  <c:if test="${i.state == 0}"><span class="badge bg-warning me-1">Inactive</span></c:if>
+			                        						  <c:if test="${i.state == 2}"><span class="badge bg-dark me-1">Deleted</span></c:if>
+													        </div>
+													        <!-- Submit and reset -->
+													        <div class="mb-3">
+													          <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit delete-button">Delete</button>
+													          <button type="reset" class="btn bg-label-danger del-close-button">Discard</button>
+													        </div>
+											      		</form>
+							                    </div>
+							                </div>
+							            </div>
+							        </div>
+							    </div> 
+							    <!-- End Modal delete --> 
+		                      
 		                    </c:forEach>
 	                    </tbody>
 	                  </table>
 	                </div>
 	              </div>
-             	 <!--/ Hoverable Table rows -->
+             	<!--/ Hoverable Table rows -->
+             	
+             	 <!-- Offcanvas to add new category -->
+				  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEcommerceCategoryList" aria-labelledby="offcanvasEcommerceCategoryListLabel">
+				    <!-- Offcanvas Header -->
+				    <div class="offcanvas-header py-4">
+				      <h5 id="offcanvasEcommerceCategoryListLabel" class="offcanvas-title">Add Category</h5>
+				      <button type="button" class="btn-close bg-label-secondary text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+				    </div>
+				    <!-- Offcanvas Body -->
+				    <div class="offcanvas-body border-top">
+				      <form class="pt-0" id="eCommerceCategoryListForm" onsubmit="return true">
+				        <!-- Title -->
+				        <div class="mb-3">
+				          <label class="form-label" for="ecommerce-category-title">Category Name</label>
+				          <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter category title" name="categoryName" aria-label="category title">
+				        </div>
+				        <!-- Parent category -->
+				        <div class="mb-3 ecommerce-select2-dropdown">
+				          <label class="form-label" for="ecommerce-category-parent-category">Parent category</label>
+				          <select id="ecommerce-category-parent-category" class="select2 form-select" data-placeholder="Select parent category" name="state">
+				          	<c:forEach items="${listcateparents}" var="i">
+				          		<c:if test="${i.state == 1}">
+					            	<option value="${i.cateParentsID}">${i.cateParentsName}</option>
+					            </c:if>
+				            </c:forEach>
+				          </select>
+				        </div>
+				        <!-- Status -->
+				        <div class="mb-4 ecommerce-select2-dropdown">
+				          <label class="form-label">Select category status</label>
+				          <select id="ecommerce-category-status" class="select2 form-select" data-placeholder="Select category status">
+				            <option value="1">Active</option>
+				            <option value="0">Inactive</option>
+				          </select>
+				        </div>
+				        <!-- Submit and reset -->
+				        <div class="mb-3">
+				          <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Add</button>
+				          <button type="reset" class="btn bg-label-danger" data-bs-dismiss="offcanvas">Discard</button>
+				        </div>
+				      </form>
+				    </div>
+				  </div>
+             	 <!-- End Offcanvas -->
             </div>
             <!-- / Content -->
 
@@ -220,6 +369,50 @@
       <div class="layout-overlay layout-menu-toggle"></div>
     </div>
     <!-- / Layout wrapper -->
+    
+    <script>
+ 	
+	    $(document).ready(function() {
+	        $('#example').on('click', 'a.toggle-pop-up', function(event) {
+	            event.preventDefault();
+	
+	            const targetId = $(this).attr('href').substring(1);
+	            const targetDiv = $('.' + targetId)[0];
+	
+	            if (targetDiv) {
+	                $(targetDiv).addClass('show');
+	
+	                $(targetDiv).find('.close-button').on('click', function() {
+	                    $(targetDiv).removeClass('show');
+	                });
+	            } else {
+	                console.log('Không tìm thấy phần tử với lớp:', targetId);
+	            }
+	        });
+	    });
+
+	 	// delete pop-up
+	    $(document).ready(function() {
+	        $('#example').on('click', 'a.toggle-del-pop-up', function(event) {
+	            event.preventDefault();
+	
+	            const targetId = $(this).attr('href').substring(1);
+	            const targetDiv = $('.' + targetId)[0];
+	
+	            if (targetDiv) {
+	                $(targetDiv).addClass('show');
+	
+	                $(targetDiv).find('.del-close-button').on('click', function() {
+	                    $(targetDiv).removeClass('show');
+	                });
+	            } else {
+	                console.log('Không tìm thấy phần tử với lớp:', targetId);
+	            }
+	        });
+	    });
+	    
+    </script>
+    
   </body>
 
     

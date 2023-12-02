@@ -72,9 +72,9 @@ public class LoginController extends HttpServlet {
 		if (session != null && session.getAttribute("account") != null) {
 			User u = (User) session.getAttribute("account");
 			req.setAttribute("username", u.getUsername());
-			if (u.getRoleID() == 1) {
+			if (u.getUserrole().getRoleID() == 1) {
 				resp.sendRedirect(req.getContextPath() + "/admin/home");
-			} else if (u.getRoleID() == 2) {
+			} else if (u.getUserrole().getRoleID() == 2) {
 				resp.sendRedirect(req.getContextPath() + "/home");
 			}
 			

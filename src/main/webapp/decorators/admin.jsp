@@ -50,6 +50,7 @@
 		<link rel="stylesheet" href="<c:url value="/templates/admin-templates/assets/vendor/libs/quill/katex.css"/>">
 		<link rel="stylesheet" href="<c:url value="/templates/admin-templates/assets/vendor/libs/quill/editor.css"/>">
 	    
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	
 	    <!-- Page CSS -->
 		<link rel="stylesheet" href="<c:url value="/templates/admin-templates/assets/vendor/css/pages/app-ecommerce.css"/>">
@@ -60,6 +61,11 @@
 	    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
 	    <script src="<c:url value="/templates/admin-templates/assets/js/config.js"/>"></script>
 	    
+	    <!-- dev forum css -->
+	    <%-- <link rel="stylesheet" href="<c:url value="/templates/devforum-templates/assets/css/vendor/vendor.min.css"/>">
+    	<link rel="stylesheet" href="<c:url value="/templates/devforum-templates/assets/css/plugins/plugins.min.css"/>">
+    	<link rel="stylesheet" href="<c:url value="/templates/devforum-templates/assets/css/style.min.css"/>"> --%>
+	    
 </head>
 <title>Azshop - Admin</title>
 </head>
@@ -69,12 +75,11 @@
 	<!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
 
-    <script src="<c:url value="/templates/admin-templates/assets/vendor/libs/jquery/jquery.js"/>"></script>
+    <%-- <script src="<c:url value="/templates/admin-templates/assets/vendor/libs/jquery/jquery.js"/>"></script> --%>
     <script src="<c:url value="/templates/admin-templates/assets/vendor/libs/popper/popper.js"/>"></script>
     <script src="<c:url value="/templates/admin-templates/assets/vendor/js/bootstrap.js"/>"></script>
     <script src="<c:url value="/templates/admin-templates/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"/>"></script>
     <script src="<c:url value="/templates/admin-templates/assets/vendor/libs/hammer/hammer.js"/>"></script>
-  	<script src="<c:url value="/templates/admin-templates/assets/vendor/libs/i18n/i18n.js"/>"></script>
   	<script src="<c:url value="/templates/admin-templates/assets/vendor/libs/typeahead-js/typeahead.js"/>"></script>
     <script src="<c:url value="/templates/admin-templates/assets/vendor/js/menu.js"/>"></script>
 
@@ -82,15 +87,20 @@
 
     <!-- Main JS -->
     <script src="<c:url value="/templates/admin-templates/assets/js/main.js"/>"></script>
-    <!-- Page JS -->
-  	<%-- <script src="<c:url value="/templates/admin-templates/assets/js/app-ecommerce-category-list.js"/>"></script> --%>
+   
+   	<!-- dev forum js-->
+<%--    	<script src="<c:url value="/templates/devforum-templates/assets/js/vendor/vendor.min.js"/>"></script>
+    <script src="<c:url value="/templates/devforum-templates/assets/js/plugins/plugins.min.js"/>"></script> 
+    <script src="<c:url value="/templates/devforum-templates/assets/js/main.js"/>"></script> --%>
   
- 	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+ 	<!-- <script src="https://code.jquery.com/jquery-3.7.0.js"></script> -->
  	<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+ 	
  	<script>
 	    new DataTable('#example', {
 	        pagingType: 'full_numbers'
 	    });
     </script>
+    
 </body>
 </html>
