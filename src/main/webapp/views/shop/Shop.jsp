@@ -260,9 +260,9 @@
 	                                                <!-- Start Product Defautlt Single -->
 	                                                <div class="product-list-single product-color--golden">
 	                                                    <a href="<c:url value="/shop/productdetails?id=${product.productID}"/>" class="product-list-img-link" >
-		                                                        <img class="img-fluid" style="width: 300px; height: 300px; padding-right: 20px" 
+		                                                        <img class="" style="width: 300px; height: 300px; padding-right: 20px" 
 		                                                        	src="<c:url value="/uploads/${product.imgLink1}"/>" alt="">
-		                                                        <img class="img-fluid" style="width: 300px; height: 300px; padding-right: 20px" 
+		                                                        <img class="" style="width: 300px; height: 300px; padding-right: 20px" 
 		                                                        	src="<c:url value="/uploads/${product.imgLink2}"/>" alt="">
 	                                                    </a>
 	                                                    <div class="product-list-content">
