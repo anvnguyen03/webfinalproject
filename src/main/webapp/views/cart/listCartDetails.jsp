@@ -4,7 +4,7 @@
 
 <!-- Breadcrumb Section Begin -->
 <section class="breadcrumb-section set-bg"
-	data-setbg="/WebFinalProject/templates/img/breadcrumb.jpg">
+	data-setbg="/WebFinalProject/templates/img/breadcrumb_1.jpg">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12 text-center">
@@ -100,13 +100,7 @@
 			</div>
 			<div class="col-lg-6">
 				<div class="shoping__continue">
-					<div class="shoping__discount">
-						<h5>Discount Codes</h5>
-						<form action="#">
-							<input type="text" placeholder="Enter your coupon code">
-							<button type="submit" class="site-btn">APPLY COUPON</button>
-						</form>
-					</div>
+					
 				</div>
 			</div>
 			<div class="col-lg-6">

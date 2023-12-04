@@ -126,7 +126,7 @@ public class AdminController extends HttpServlet{
 				}
 			} else {
 				resp.sendRedirect(req.getContextPath() + "/home");
-				System.out.println("Tài khoản của bạn không có quyền truy cập servlet này!");
+				System.out.println("Tài khoản của bạn không có quyền truy cập trang này!");
 			}
 		} else {
 			resp.sendRedirect(req.getContextPath() + "/home");

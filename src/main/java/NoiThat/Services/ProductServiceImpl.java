@@ -43,8 +43,8 @@ public class ProductServiceImpl implements IProductService{
 	}
 
 	@Override
-	public List<Product> findTop6LatestProduct() {
-		return pro.findTop6LatestProduct();
+	public List<Product> findTop12LatestProduct() {
+		return pro.findTop12LatestProduct();
 	}
 
 	@Override

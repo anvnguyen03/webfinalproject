@@ -12,10 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import NoiThat.Entity.Category;
 import NoiThat.Entity.CategoryParents;
+import NoiThat.Entity.Product;
 import NoiThat.Services.CateParentsServiceImpl;
 import NoiThat.Services.CateServiceImpl;
 import NoiThat.Services.ICateParentsService;
 import NoiThat.Services.ICateService;
+import NoiThat.Services.IProductService;
+import NoiThat.Services.ProductServiceImpl;
 
 @WebServlet( urlPatterns = {"/home"} )
 
@@ -25,17 +28,30 @@ public class HomeController extends HttpServlet{
 	
 	ICateParentsService catepase = new CateParentsServiceImpl();
 	ICateService cate = new CateServiceImpl();
+	IProductService prod = new ProductServiceImpl();
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		String url = req.getRequestURI().toString();
 		
+		findCategoryOfEachCateParents(req, resp);
+		
 		if (url.contains("/home")) {
-			findCategoryOfEachCateParents(req, resp);
+
+			find12LatestProducts(req, resp);
 			req.getRequestDispatcher("/views/home/Home.jsp").forward(req, resp);
 		}
 
 	}	
+
+	private void find12LatestProducts(HttpServletRequest req, HttpServletResponse resp) {
+		try {
+			List<Product> listlatestprod = prod.findTop12LatestProduct();
+			req.setAttribute("listlatestprod", listlatestprod);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	private void findCategoryOfEachCateParents(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
 		resp.setContentType("text/html");
@@ -52,7 +68,6 @@ public class HomeController extends HttpServlet{
 	        }
 	        
 	        req.setAttribute("listcatepa", listcatepa);
-//	        req.getRequestDispatcher("/views/home/Home.jsp").forward(req, resp);
 		}
 		catch (Exception e){
 			e.printStackTrace();

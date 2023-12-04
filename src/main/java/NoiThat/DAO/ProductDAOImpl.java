@@ -72,13 +72,13 @@ public class ProductDAOImpl implements IProductDAO{
 	}
 
 	@Override
-	public List<Product> findTop6LatestProduct() {
+	public List<Product> findTop12LatestProduct() {
 		EntityManager enma = JPAConfig.getEntityManager();
 		String jpql = "SELECT p FROM Product p " +
 					  "ORDER BY p.productID " +
 					  "DESC";
 		TypedQuery<Product> query = enma.createQuery(jpql, Product.class);
-		query.setMaxResults(6);
+		query.setMaxResults(12);
 		return query.getResultList();
 	}
 	

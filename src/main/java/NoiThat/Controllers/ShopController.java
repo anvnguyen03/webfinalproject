@@ -21,7 +21,8 @@ import NoiThat.Services.ICateService;
 import NoiThat.Services.IProductService;
 import NoiThat.Services.ProductServiceImpl;
 
-@WebServlet(urlPatterns = { "/shop/allproduct", "/shop/productbycategory", "/shop/productbycateparents", "/shop/search" })
+@WebServlet(urlPatterns = { "/shop/allproduct", "/shop/findByCategory", "/shop/findByCateParents", "/shop/search",
+							"/shop/productdetails"})
 
 public class ShopController extends HttpServlet {
 
@@ -40,22 +41,33 @@ public class ShopController extends HttpServlet {
 
 		// list category to shop dropdown menu
 		findCategoryOfEachCateParents(req, resp);
-		// list 6 latest product
-		find6LatestProducts(req, resp);
+		find12LatestProducts(req, resp);
 
 		String url = req.getRequestURI();
 		if (url.contains("/allproduct")) {
 //			findAndCountAllProduct(req, resp);
 			findAndCountProductByPage(req, resp);
 			req.getRequestDispatcher("/views/shop/Shop.jsp").forward(req, resp);
-		} else if (url.contains("/productbycategory")) {
+		} else if (url.contains("/findByCategory")) {
 			findProductByCategory(req, resp);
 			req.getRequestDispatcher("/views/shop/Shop.jsp").forward(req, resp);
-		} else if (url.contains("/productbycateparents")) {
+		} else if (url.contains("/findByCateParents")) {
 			findProductByCateParent(req, resp);
 			req.getRequestDispatcher("/views/shop/Shop.jsp").forward(req, resp);
 		} else if (url.contains("/search")) {
 			searchProduct(req, resp);
+		} else if (url.contains("/productdetails")) {
+			
+			int productid = Integer.parseInt(req.getParameter("id"));
+			Product product_detailed = prod.findOne(productid);
+			
+			Category category = product_detailed.getCategory();
+			List<Product> relatedProducts = category.getProduct();
+			
+			req.setAttribute("product_detailed", product_detailed);
+			req.setAttribute("relatedProducts", relatedProducts);
+			req.getRequestDispatcher("/views/shop/Shop-ProductDetails.jsp").forward(req, resp);
+			
 		}
 	}
 
@@ -64,10 +76,10 @@ public class ShopController extends HttpServlet {
 		
 	}
 
-	private void find6LatestProducts(HttpServletRequest req, HttpServletResponse resp)
+	private void find12LatestProducts(HttpServletRequest req, HttpServletResponse resp)
 			throws UnsupportedEncodingException {
 		try {
-			List<Product> listlatestprod = prod.findTop6LatestProduct();
+			List<Product> listlatestprod = prod.findTop12LatestProduct();
 			req.setAttribute("listlatestprod", listlatestprod);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -93,9 +105,17 @@ public class ShopController extends HttpServlet {
 				endP++;
 			}
 			
-			List<Product> listprodByPage = prod.findProductByCateParensIDPaging(cateparentid, Integer.parseInt(indexPage)-1,pagesize);
-			int countProd = listprodByPage.size();
+			List<Product> listprodByPage = prod.findProductByCateParensIDPaging(cateparentid, Integer.parseInt(indexPage)-1,pagesize);	
+			int startProduct;
+			if (Integer.parseInt(indexPage) == 1) {
+				startProduct = 1;
+			} else {
+				startProduct = (Integer.parseInt(indexPage)-1)*pagesize;
+			}
+			int endProduct = (Integer.parseInt(indexPage)-1)*pagesize + listprodByPage.size();
 			
+			req.setAttribute("startProduct", startProduct);
+			req.setAttribute("endProduct", endProduct);
 			req.setAttribute("tag", indexPage);
 			req.setAttribute("endP", endP);
 			req.setAttribute("countproduct", countProduct);
@@ -128,8 +148,16 @@ public class ShopController extends HttpServlet {
 			}
 			
 			List<Product> listprodByPage = prod.findProductByCateIDPaging(cateid, Integer.parseInt(indexPage)-1,pagesize);
-			int countProd = listprodByPage.size();
+			int startProduct;
+			if (Integer.parseInt(indexPage) == 1) {
+				startProduct = 1;
+			} else {
+				startProduct = (Integer.parseInt(indexPage)-1)*pagesize;
+			}
+			int endProduct = (Integer.parseInt(indexPage)-1)*pagesize + listprodByPage.size();
 			
+			req.setAttribute("startProduct", startProduct);
+			req.setAttribute("endProduct", endProduct);
 			req.setAttribute("tag", indexPage);
 			req.setAttribute("endP", endP);
 			req.setAttribute("countproduct", countProduct);
@@ -156,8 +184,16 @@ public class ShopController extends HttpServlet {
 			}
 			
 			List<Product> listprodByPage = prod.findProductByPage(Integer.parseInt(indexPage)-1,pagesize);
-			int countProd = listprodByPage.size();
+			int startProduct;
+			if (Integer.parseInt(indexPage) == 1) {
+				startProduct = 1;
+			} else {
+				startProduct = (Integer.parseInt(indexPage)-1)*pagesize;
+			}
+			int endProduct = (Integer.parseInt(indexPage)-1)*pagesize + listprodByPage.size();
 			
+			req.setAttribute("startProduct", startProduct);
+			req.setAttribute("endProduct", endProduct);
 			req.setAttribute("tag", indexPage);
 			req.setAttribute("endP", endP);
 			req.setAttribute("countproduct", countProduct);

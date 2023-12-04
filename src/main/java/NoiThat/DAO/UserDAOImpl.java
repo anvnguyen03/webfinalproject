@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -74,7 +75,13 @@ public class UserDAOImpl implements IUserDAO{
 					  "WHERE u.username = :username ";
 		TypedQuery<User> query = enma.createQuery(jpql, User.class);
 		query.setParameter("username", username);
-		return query.getSingleResult();
+
+		try {
+	        return query.getSingleResult();
+	    } catch (NoResultException ex) {
+	        // Không tìm thấy người dùng với username đã nhập
+	        return null;
+	    }
 	}
 	@Override
 	public User findOne(int id) {
