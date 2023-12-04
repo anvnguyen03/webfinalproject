@@ -17,7 +17,7 @@
                     <div class="header-top-right">
                         <div class="header-top-user-link header-top-user-link-color--white header-top-user-link-hover-color--green">
                             <a href="wishlist.html"><i class="fa fa-heart"></i> Wishlist</a>
-                            <a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a> 
+                            <a href="<c:url value="/cart"/>"><i class="fa fa-shopping-cart"></i> Cart</a> 
                             
                             <c:set var="account" value="${account}"/>
                             
@@ -236,7 +236,7 @@
 
             <ul class="user-link">
                 <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="cart.html">Cart</a></li>
+                <li><a href="<c:url value="/cart"/>">Cart</a></li>
                 <li><a href="checkout.html">Checkout</a></li>
             </ul>
         </div>
@@ -270,7 +270,7 @@
 
             <ul class="user-link">
                 <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="cart.html">Cart</a></li>
+                <li><a href="<c:url value="/cart"/>">Cart</a></li>
                 <li><a href="checkout.html">Checkout</a></li>
             </ul>
         </div>
@@ -379,7 +379,7 @@
             <span class="offcanvas-cart-total-price-value">$170.00</span>
         </div>
         <ul class="offcanvas-cart-action-button">
-            <li><a href="cart.html" class="btn btn-block btn-golden">View Cart</a></li>
+            <li><a href="<c:url value="/cart"/>" class="btn btn-block btn-golden">View Cart</a></li>
             <li><a href="compare.html" class=" btn btn-block btn-golden mt-5">Checkout</a></li>
         </ul>
     </div> <!-- End  Offcanvas Addcart Wrapper -->

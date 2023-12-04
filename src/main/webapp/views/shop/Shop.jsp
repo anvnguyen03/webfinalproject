@@ -218,9 +218,16 @@
 					                                            <span>new</span>
 					                                        </div> -->
 					                                        <div class="action-link">
-					                                            <div class="action-link-left">
-					                                                <a href="#" data-bs-target="#modalAddcart">Add to Cart</a>
-					                                            </div>
+					                                        	<c:if test="${product.stoke != 0}">
+						                                            <div class="action-link-left">
+						                                                <a href="#" data-bs-target="#modalAddcart">Add to Cart</a>
+						                                            </div>
+					                                            </c:if>
+					                                            <c:if test="${product.stoke == 0}">
+						                                            <div class="action-link-left">
+						                                                <a href="#" >Out of Stock</a>
+						                                            </div>
+					                                            </c:if>
 					                                            <div class="action-link-right">
 					                                                <a href="<c:url value="/shop/productdetails?id=${product.productID}"/>" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
 					                                                <a href="wishlist.html"><i class="icon-heart"></i></a>
@@ -278,7 +285,12 @@
 	                                                        <span class="product-list-price"><fmt:formatNumber value="${product.price}" pattern="#,###,###.##" />$</span>
 	                                                        <p>${product.description}</p>
 	                                                        <div class="product-action-icon-link-list">
-	                                                            <a href="#" data-bs-target="#modalAddcart" class="btn btn-lg btn-black-default-hover">Add to cart</a>
+	                                                        	<c:if test="${product.stoke != 0}">
+	                                                            	<a href="#" data-bs-target="#modalAddcart" class="btn btn-lg btn-black-default-hover">Add to cart</a>
+	                                                            </c:if>
+	                                                            <c:if test="${product.stoke == 0}">
+	                                                            	<a href="#" data-bs-target="#modalAddcart" class="btn btn-lg btn-black-default-hover">Out of stock</a>
+	                                                            </c:if>
 	                                                            <a href="<c:url value="/shop/productdetails?id=${product.productID}"/>" data-bs-target="#modalQuickview" class="btn btn-lg btn-black-default-hover"><i class="icon-magnifier"></i></a>
 	                                                            <a href="wishlist.html" class="btn btn-lg btn-black-default-hover"><i class="icon-heart"></i></a>
 	                                                            <!-- <a href="compare.html" class="btn btn-lg btn-black-default-hover"><i class="icon-shuffle"></i></a> -->

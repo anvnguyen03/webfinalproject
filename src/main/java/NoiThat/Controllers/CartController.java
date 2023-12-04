@@ -18,7 +18,7 @@ import NoiThat.Services.ICateService;
 import NoiThat.Services.IProductService;
 import NoiThat.Services.ProductServiceImpl;
 
-@WebServlet(urlPatterns = {"/cart/orderitems"})
+@WebServlet(urlPatterns = {"/cart"})
 public class CartController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -37,8 +37,8 @@ public class CartController extends HttpServlet{
 		// list category to shop dropdown menu
 		findCategoryOfEachCateParents(req, resp);
 		String url = req.getRequestURI();
-		if (url.contains("/orderitems")) {
-			req.getRequestDispatcher("/views/cart/listCartDetails.jsp").forward(req, resp);
+		if (url.contains("/cart")) {
+			req.getRequestDispatcher("/views/cart/cart.jsp").forward(req, resp);
 		}
 		
 	}
