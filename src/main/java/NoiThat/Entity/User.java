@@ -1,14 +1,18 @@
 package NoiThat.Entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -31,8 +35,15 @@ public class User {
 	@JoinColumn(name = "roleID")
 	private UserRole userrole;
 	
+	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
+	private Cart cart;
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private List<Bill> bill;
+
+
 	public User(int userID, String username, String password, String email, Timestamp createdAt, Timestamp modifiedAt,
-			int state, String code, String fullname, UserRole userrole) {
+			int state, String code, String fullname, UserRole userrole, Cart cart, List<Bill> bill) {
 		this.userID = userID;
 		this.username = username;
 		this.password = password;
@@ -43,10 +54,11 @@ public class User {
 		this.code = code;
 		this.fullname = fullname;
 		this.userrole = userrole;
+		this.cart = cart;
+		this.bill = bill;
 	}
 
 	public User(String username, String email, String code, String fullname) {
-		super();
 		this.username = username;
 		this.email = email;
 		this.code = code;
@@ -55,7 +67,6 @@ public class User {
 
 	public User(String username, String password, String email, int state, String code, String fullname,
 			UserRole userrole) {
-		super();
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -148,5 +159,23 @@ public class User {
 	public void setUserrole(UserRole userrole) {
 		this.userrole = userrole;
 	}
+
+	public Cart getCart() {
+		return cart;
+	}
+
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
+
+	public List<Bill> getBill() {
+		return bill;
+	}
+
+	public void setBill(List<Bill> bill) {
+		this.bill = bill;
+	}
+	
+	
 	
 }

@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import NoiThat.Entity.Cart;
 import NoiThat.Entity.User;
+import NoiThat.Services.CartServiceImpl;
+import NoiThat.Services.ICartService;
 import NoiThat.Services.IUserService;
 import NoiThat.Services.UserServiceImpl;
 import utils.Email;
@@ -22,6 +25,7 @@ public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	IUserService userService = new UserServiceImpl();
+	ICartService cartService = new CartServiceImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -184,6 +188,7 @@ public class LoginController extends HttpServlet {
 			
 			//truy cập session 
 			HttpSession session = req.getSession();
+			// user tại đây lấy từ register, chưa có userID
 			User user = (User) session.getAttribute("account");
 			
 			String code = req.getParameter("authcode");
@@ -193,6 +198,14 @@ public class LoginController extends HttpServlet {
 				user.setState(1);
 				
 				userService.updateState(user);
+				
+				// tạo cart cho user mới đăng kí
+				User us = userService.findOne(user.getUsername());
+				session.setAttribute("account", us);
+				Cart cart = new Cart();
+				cart.setUser(us);
+				cartService.insert(cart);
+				
 				resp.sendRedirect(req.getContextPath() + "/verify-success");
 			} else {
 				req.setAttribute("error_otp", "Lỗi OTP không trùng khớp");

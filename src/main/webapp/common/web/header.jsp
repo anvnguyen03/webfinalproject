@@ -16,13 +16,13 @@
                     </div>
                     <div class="header-top-right">
                         <div class="header-top-user-link header-top-user-link-color--white header-top-user-link-hover-color--green">
-                            <a href="wishlist.html"><i class="fa fa-heart"></i> Wishlist</a>
+                            <a href="<c:url value="/recentlyview"/>"><i class="fa fa-heart"></i> Recently view</a>
                             <a href="<c:url value="/cart"/>"><i class="fa fa-shopping-cart"></i> Cart</a> 
                             
                             <c:set var="account" value="${account}"/>
                             
                             <c:if test="${not empty account}">
-								<a href="<c:url value="/login"/>"><i class="fa fa-user"></i> ${account.fullname}</a>
+								<a href="<c:url value="/myaccount"/>"><i class="fa fa-user"></i> ${account.fullname}</a>
 								<a href="<c:url value="/logout"/>"><i class="fa fa-sign-out"></i> Logout</a>
 							</c:if>
 							
@@ -93,15 +93,19 @@
                         <!-- Start Header Action Link -->
                         <ul class="header-action-link action-color--black action-hover-color--golden">
                             <li>
-                                <a href="#offcanvas-wishlish" class="offcanvas-toggle">
+                                <a href="<c:url value="/recentlyview"/>">
                                     <i class="icon-heart"></i>
-                                    <span class="item-count">3</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#offcanvas-add-cart" class="offcanvas-toggle">
                                     <i class="icon-bag"></i>
-                                    <span class="item-count">3</span>
+                                    <c:if test="${account == null}">
+                                    	<span class="item-count">0</span>
+                                    </c:if>
+                                    <c:if test="${account != null}">
+                                    	<span class="item-count">${count_items}</span>
+                                    </c:if>
                                 </a>
                             </li>
                             <li>
@@ -153,15 +157,19 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#offcanvas-wishlish" class="offcanvas-toggle">
+                            <a href="<c:url value="/recentlyview"/>">
                                 <i class="icon-heart"></i>
-                                <span class="item-count">3</span>
                             </a>
                         </li>
                         <li>
                             <a href="#offcanvas-add-cart" class="offcanvas-toggle">
                                 <i class="icon-bag"></i>
-                                <span class="item-count">3</span>
+                                <c:if test="${account == null}">
+                                	<span class="item-count">0</span>
+                                </c:if>
+                                <c:if test="${account != null}">
+                                	<span class="item-count">${count_items}</span>
+                                </c:if>
                             </a>
                         </li>
                         <li>
@@ -235,9 +243,9 @@
             </ul>
 
             <ul class="user-link">
-                <li><a href="wishlist.html">Wishlist</a></li>
+                <li><a href="<c:url value="/recentlyview"/>">Recently view</a></li>
                 <li><a href="<c:url value="/cart"/>">Cart</a></li>
-                <li><a href="checkout.html">Checkout</a></li>
+                <li><a href="<c:url value="/recentlyview"/>">Checkout</a></li>
             </ul>
         </div>
         <!-- End Mobile contact Info -->
@@ -269,9 +277,9 @@
             </ul>
 
             <ul class="user-link">
-                <li><a href="wishlist.html">Wishlist</a></li>
+                <li><a href="<c:url value="/recentlyview"/>">Recently view</a></li>
                 <li><a href="<c:url value="/cart"/>">Cart</a></li>
-                <li><a href="checkout.html">Checkout</a></li>
+                <li><a href="<c:url value="/checkout"/>">Checkout</a></li>
             </ul>
         </div>
         <!-- End Mobile contact Info -->
@@ -287,176 +295,38 @@
     <!-- Start  Offcanvas Addcart Wrapper -->
     <div class="offcanvas-add-cart-wrapper">
         <h4 class="offcanvas-title">Shopping Cart</h4>
-        <ul class="offcanvas-cart">
-            <li class="offcanvas-cart-item-single">
-                <div class="offcanvas-cart-item-block">
-                    <a href="#" class="offcanvas-cart-item-image-link">
-                        <img src="<c:url value="/templates/assets/images/product/default/home-1/default-1.jpg"/>" alt="" class="offcanvas-cart-image">
-                    </a>
-                    <div class="offcanvas-cart-item-content">
-                        <a href="#" class="offcanvas-cart-item-link">Car Wheel</a>
-                        <div class="offcanvas-cart-item-details">
-                            <span class="offcanvas-cart-item-details-quantity">1 x </span>
-                            <span class="offcanvas-cart-item-details-price">$49.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="offcanvas-cart-item-delete text-right">
-                    <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
-                </div>
-            </li>
-            <li class="offcanvas-cart-item-single">
-                <div class="offcanvas-cart-item-block">
-                    <a href="#" class="offcanvas-cart-item-image-link">
-                        <img src="assets/images/product/default/home-1/default-1.jpg" alt="" class="offcanvas-cart-image">
-                    </a>
-                    <div class="offcanvas-cart-item-content">
-                        <a href="#" class="offcanvas-cart-item-link">Car Wheel</a>
-                        <div class="offcanvas-cart-item-details">
-                            <span class="offcanvas-cart-item-details-quantity">1 x </span>
-                            <span class="offcanvas-cart-item-details-price">$49.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="offcanvas-cart-item-delete text-right">
-                    <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
-                </div>
-            </li>
-            <li class="offcanvas-cart-item-single">
-                <div class="offcanvas-cart-item-block">
-                    <a href="#" class="offcanvas-cart-item-image-link">
-                        <img src="assets/images/product/default/home-1/default-1.jpg" alt="" class="offcanvas-cart-image">
-                    </a>
-                    <div class="offcanvas-cart-item-content">
-                        <a href="#" class="offcanvas-cart-item-link">Car Wheel</a>
-                        <div class="offcanvas-cart-item-details">
-                            <span class="offcanvas-cart-item-details-quantity">1 x </span>
-                            <span class="offcanvas-cart-item-details-price">$49.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="offcanvas-cart-item-delete text-right">
-                    <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
-                </div>
-            </li>
-            <li class="offcanvas-cart-item-single">
-                <div class="offcanvas-cart-item-block">
-                    <a href="#" class="offcanvas-cart-item-image-link">
-                        <img src="assets/images/product/default/home-2/default-1.jpg" alt="" class="offcanvas-cart-image">
-                    </a>
-                    <div class="offcanvas-cart-item-content">
-                        <a href="#" class="offcanvas-cart-item-link">Car Vails</a>
-                        <div class="offcanvas-cart-item-details">
-                            <span class="offcanvas-cart-item-details-quantity">3 x </span>
-                            <span class="offcanvas-cart-item-details-price">$500.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="offcanvas-cart-item-delete text-right">
-                    <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
-                </div>
-            </li>
-            <li class="offcanvas-cart-item-single">
-                <div class="offcanvas-cart-item-block">
-                    <a href="#" class="offcanvas-cart-item-image-link">
-                        <img src="assets/images/product/default/home-3/default-1.jpg" alt="" class="offcanvas-cart-image">
-                    </a>
-                    <div class="offcanvas-cart-item-content">
-                        <a href="#" class="offcanvas-cart-item-link">Shock Absorber</a>
-                        <div class="offcanvas-cart-item-details">
-                            <span class="offcanvas-cart-item-details-quantity">1 x </span>
-                            <span class="offcanvas-cart-item-details-price">$350.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="offcanvas-cart-item-delete text-right">
-                    <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
-                </div>
-            </li>
-        </ul>
+        <c:forEach items="${cartitems}" var="i">
+		        <ul class="offcanvas-cart">
+		            <li class="offcanvas-cart-item-single" style="margin-bottom: 20px">
+		                <div class="offcanvas-cart-item-block">
+		                    <a href="<c:url value="/shop/productdetails?id=${i.product.productID}"/>" class="offcanvas-cart-item-image-link" style="display: inline-table;">
+		                        <img src="<c:url value="/uploads/${i.product.imgLink1}"/>" style="width: 90px; height: 90px; object-fit: cover" alt="" class="">
+		                    </a>
+		                    <div class="offcanvas-cart-item-content">
+		                        <a href="<c:url value="/shop/productdetails?id=${i.product.productID}"/>" class="offcanvas-cart-item-link">${i.product.productName}</a>
+		                        <div class="offcanvas-cart-item-details">
+		                            <span class="offcanvas-cart-item-details-quantity">${i.quantity} x </span>
+		                            <span class="offcanvas-cart-item-details-price">$<fmt:formatNumber value="${i.product.price}" pattern="#,###,###.##" /></span>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="offcanvas-cart-item-delete text-right">
+		                    <a href="<c:url value="/deletecartitem?id=${i.cartItemsID}"/>" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
+		                </div>
+		            </li>
+		        </ul>
+        </c:forEach>
         <div class="offcanvas-cart-total-price">
             <span class="offcanvas-cart-total-price-text">Subtotal:</span>
-            <span class="offcanvas-cart-total-price-value">$170.00</span>
+            <span class="offcanvas-cart-total-price-value">$<fmt:formatNumber value="${total}" pattern="#,###,###.##" /></span>
         </div>
         <ul class="offcanvas-cart-action-button">
             <li><a href="<c:url value="/cart"/>" class="btn btn-block btn-golden">View Cart</a></li>
-            <li><a href="compare.html" class=" btn btn-block btn-golden mt-5">Checkout</a></li>
+            <li><a href="<c:url value="/checkout"/>" class=" btn btn-block btn-golden mt-5">Checkout</a></li>
         </ul>
     </div> <!-- End  Offcanvas Addcart Wrapper -->
 
 </div> <!-- End  Offcanvas Addcart Section -->
-
-<!-- Start Offcanvas Mobile Menu Section -->
-<div id="offcanvas-wishlish" class="offcanvas offcanvas-rightside offcanvas-add-cart-section">
-    <!-- Start Offcanvas Header -->
-    <div class="offcanvas-header text-right">
-        <button class="offcanvas-close" style="cursor: pointer"><i class="ion-android-close"></i></button>
-    </div> <!-- ENd Offcanvas Header -->
-
-    <!-- Start Offcanvas Mobile Menu Wrapper -->
-    <div class="offcanvas-wishlist-wrapper">
-        <h4 class="offcanvas-title">Wishlist</h4>
-        <ul class="offcanvas-wishlist">
-            <li class="offcanvas-wishlist-item-single">
-                <div class="offcanvas-wishlist-item-block">
-                    <a href="#" class="offcanvas-wishlist-item-image-link">
-                        <img src="assets/images/product/default/home-1/default-1.jpg" alt="" class="offcanvas-wishlist-image">
-                    </a>
-                    <div class="offcanvas-wishlist-item-content">
-                        <a href="#" class="offcanvas-wishlist-item-link">Car Wheel</a>
-                        <div class="offcanvas-wishlist-item-details">
-                            <span class="offcanvas-wishlist-item-details-quantity">1 x </span>
-                            <span class="offcanvas-wishlist-item-details-price">$49.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="offcanvas-wishlist-item-delete text-right">
-                    <a href="#" class="offcanvas-wishlist-item-delete"><i class="fa fa-trash-o"></i></a>
-                </div>
-            </li>
-            <li class="offcanvas-wishlist-item-single">
-                <div class="offcanvas-wishlist-item-block">
-                    <a href="#" class="offcanvas-wishlist-item-image-link">
-                        <img src="assets/images/product/default/home-2/default-1.jpg" alt="" class="offcanvas-wishlist-image">
-                    </a>
-                    <div class="offcanvas-wishlist-item-content">
-                        <a href="#" class="offcanvas-wishlist-item-link">Car Vails</a>
-                        <div class="offcanvas-wishlist-item-details">
-                            <span class="offcanvas-wishlist-item-details-quantity">3 x </span>
-                            <span class="offcanvas-wishlist-item-details-price">$500.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="offcanvas-wishlist-item-delete text-right">
-                    <a href="#" class="offcanvas-wishlist-item-delete"><i class="fa fa-trash-o"></i></a>
-                </div>
-            </li>
-            <li class="offcanvas-wishlist-item-single">
-                <div class="offcanvas-wishlist-item-block">
-                    <a href="#" class="offcanvas-wishlist-item-image-link">
-                        <img src="assets/images/product/default/home-3/default-1.jpg" alt="" class="offcanvas-wishlist-image">
-                    </a>
-                    <div class="offcanvas-wishlist-item-content">
-                        <a href="#" class="offcanvas-wishlist-item-link">Shock Absorber</a>
-                        <div class="offcanvas-wishlist-item-details">
-                            <span class="offcanvas-wishlist-item-details-quantity">1 x </span>
-                            <span class="offcanvas-wishlist-item-details-price">$350.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="offcanvas-wishlist-item-delete text-right">
-                    <a href="#" class="offcanvas-wishlist-item-delete"><i class="fa fa-trash-o"></i></a>
-                </div>
-            </li>
-        </ul>
-        <ul class="offcanvas-wishlist-action-button">
-            <li><a href="#" class="btn btn-block btn-golden">View wishlist</a></li>
-        </ul>
-    </div> 
-    <!-- End Offcanvas Mobile Menu Wrapper -->
-
-</div> 
-<!-- End Offcanvas Mobile Menu Section -->
 
 <!-- Start Offcanvas Search Bar Section -->
 <div id="search" class="search-modal">

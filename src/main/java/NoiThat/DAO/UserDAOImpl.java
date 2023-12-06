@@ -9,7 +9,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import NoiThat.Entity.Category;
 import NoiThat.Entity.User;
 import NoiThat.JPAConfig.JPAConfig;
 
@@ -40,9 +39,29 @@ public class UserDAOImpl implements IUserDAO{
 //	}
 	@Override
 	public List<User> findAllUser() {
+//		EntityManager enma = JPAConfig.getEntityManager();
+//		TypedQuery<User> query = enma.createNamedQuery("User.findAll", User.class);
+//		return query.getResultList();
+		
+		List<User> users = null;
 		EntityManager enma = JPAConfig.getEntityManager();
-		TypedQuery<User> query = enma.createNamedQuery("User.findAll", User.class);
-		return query.getResultList();
+		EntityTransaction trans = enma.getTransaction();
+		try {
+			trans.begin();
+			
+			TypedQuery<User> query = enma.createNamedQuery("User.findAll", User.class);
+			
+			users = query.getResultList();
+			
+			trans.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			trans.rollback();
+			throw e;
+		} finally {
+			enma.close();
+		}
+		return users;
 	}
 
 	@Override
@@ -70,14 +89,41 @@ public class UserDAOImpl implements IUserDAO{
 
 	@Override
 	public User findOne(String username) {
+//		EntityManager enma = JPAConfig.getEntityManager();
+//		String jpql = "SELECT u FROM User u " +
+//					  "WHERE u.username = :username ";
+//		TypedQuery<User> query = enma.createQuery(jpql, User.class);
+//		query.setParameter("username", username);
+//		try {
+//	        return query.getSingleResult();
+//	    } catch (NoResultException ex) {
+//	        // Không tìm thấy người dùng với username đã nhập
+//	        return null;
+//	    }
+		
+		User user = null;
 		EntityManager enma = JPAConfig.getEntityManager();
-		String jpql = "SELECT u FROM User u " +
-					  "WHERE u.username = :username ";
-		TypedQuery<User> query = enma.createQuery(jpql, User.class);
-		query.setParameter("username", username);
-
+		EntityTransaction trans = enma.getTransaction();
 		try {
-	        return query.getSingleResult();
+			trans.begin();
+			
+			String jpql = "SELECT u FROM User u " +
+						  "WHERE u.username = :username ";
+			TypedQuery<User> query = enma.createQuery(jpql, User.class);
+			query.setParameter("username", username);
+			
+			user = query.getSingleResult();
+			
+			trans.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			trans.rollback();
+			throw e;
+		} finally {
+			enma.close();
+		}
+		try {
+	        return user;
 	    } catch (NoResultException ex) {
 	        // Không tìm thấy người dùng với username đã nhập
 	        return null;
@@ -85,12 +131,36 @@ public class UserDAOImpl implements IUserDAO{
 	}
 	@Override
 	public User findOne(int id) {
+//		EntityManager enma = JPAConfig.getEntityManager();
+//		String jpql = "SELECT u FROM User u " +
+//					  "WHERE u.userID = :id ";
+//		TypedQuery<User> query = enma.createQuery(jpql, User.class);
+//		query.setParameter("id", id);
+//		return query.getSingleResult();
+		
+		User user = null;
 		EntityManager enma = JPAConfig.getEntityManager();
-		String jpql = "SELECT u FROM User u " +
-					  "WHERE u.userID = :id ";
-		TypedQuery<User> query = enma.createQuery(jpql, User.class);
-		query.setParameter("id", id);
-		return query.getSingleResult();
+		EntityTransaction trans = enma.getTransaction();
+		try {
+			trans.begin();
+			
+			String jpql = "SELECT u FROM User u " +
+						  "WHERE u.userID = :id ";
+			TypedQuery<User> query = enma.createQuery(jpql, User.class);
+			query.setParameter("id", id);
+			
+			user = query.getSingleResult();
+			
+			trans.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			trans.rollback();
+			throw e;
+		} finally {
+			enma.close();
+		}
+	    return user;
+
 	}
 	@Override
 	public void insertRegister(User user) {

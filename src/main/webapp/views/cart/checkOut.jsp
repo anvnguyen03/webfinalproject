@@ -1,167 +1,122 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="/common/taglib.jsp"%>
 
-<!-- Breadcrumb Section Begin -->
-<section class="breadcrumb-section set-bg"
-	data-setbg="/WebFinalProject/templates/img/breadcrumb.jpg">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12 text-center">
-				<div class="breadcrumb__text">
-					<h2>Checkout</h2>
-					<div class="breadcrumb__option">
-						<a href="/WebFinalProject/views/home/listCategoryToHome.jsp">Home</a> <span>Checkout</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<!-- Breadcrumb Section End -->
+<!-- ...:::: Start Breadcrumb Section:::... -->
+<div class="breadcrumb-section breadcrumb-bg-color--golden">
+    <div class="breadcrumb-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="breadcrumb-title">Checkout</h3>
+                    <div class="breadcrumb-nav breadcrumb-nav-color--black breadcrumb-nav-hover-color--golden">
+                        <nav aria-label="breadcrumb">
+                            <ul>
+                                <li><a href="<c:url value="/home"/>">Home</a></li>
+                                <li><a href="<c:url value="/shop/allproduct"/>">Shop</a></li>
+                                <li class="active" aria-current="page">Checkout</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- ...:::: End Breadcrumb Section:::... -->
 
-<!-- Checkout Section Begin -->
-<section class="checkout spad">
-	<div class="container">
-		<div class="checkout__form">
-			<h4>Billing Details</h4>
-			<form action="#">
-				<div class="row">
-					<div class="col-lg-8 col-md-6">
-						<div class="row">
-							<div class="col-lg-6">
-								<div class="checkout__input">
-									<p>
-										Fist Name<span>*</span>
-									</p>
-									<input type="text">
-								</div>
-							</div>
-							<div class="col-lg-6">
-								<div class="checkout__input">
-									<p>
-										Last Name<span>*</span>
-									</p>
-									<input type="text">
-								</div>
-							</div>
-						</div>
-						<div class="checkout__input">
-							<p>
-								Country<span>*</span>
-							</p>
-							<input type="text">
-						</div>
-						<div class="checkout__input">
-							<p>
-								Address<span>*</span>
-							</p>
-							<input type="text" placeholder="Street Address"
-								class="checkout__input__add"> <input type="text"
-								placeholder="Apartment, suite, unite ect (optinal)">
-						</div>
-						<div class="checkout__input">
-							<p>
-								Town/City<span>*</span>
-							</p>
-							<input type="text">
-						</div>
-						<div class="checkout__input">
-							<p>
-								Country/State<span>*</span>
-							</p>
-							<input type="text">
-						</div>
-						<div class="checkout__input">
-							<p>
-								Postcode / ZIP<span>*</span>
-							</p>
-							<input type="text">
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<div class="checkout__input">
-									<p>
-										Phone<span>*</span>
-									</p>
-									<input type="text">
-								</div>
-							</div>
-							<div class="col-lg-6">
-								<div class="checkout__input">
-									<p>
-										Email<span>*</span>
-									</p>
-									<input type="text">
-								</div>
-							</div>
-						</div>
-						<div class="checkout__input__checkbox">
-							<label for="acc"> Create an account? <input
-								type="checkbox" id="acc"> <span class="checkmark"></span>
-							</label>
-						</div>
-						<p>Create an account by entering the information below. If you
-							are a returning customer please login at the top of the page</p>
-						<div class="checkout__input">
-							<p>
-								Account Password<span>*</span>
-							</p>
-							<input type="text">
-						</div>
-						<div class="checkout__input__checkbox">
-							<label for="diff-acc"> Ship to a different address? <input
-								type="checkbox" id="diff-acc"> <span class="checkmark"></span>
-							</label>
-						</div>
-						<div class="checkout__input">
-							<p>
-								Order notes<span>*</span>
-							</p>
-							<input type="text"
-								placeholder="Notes about your order, e.g. special notes for delivery.">
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-6">
-						<div class="checkout__order">
-							<h4>Your Order</h4>
-							<div class="checkout__order__products">
-								Products <span>Total</span>
-							</div>
-							<ul>
-								<li>Vegetable’s Package <span>$75.99</span></li>
-								<li>Fresh Vegetable <span>$151.99</span></li>
-								<li>Organic Bananas <span>$53.99</span></li>
-							</ul>
-							<div class="checkout__order__subtotal">
-								Subtotal <span>$750.99</span>
-							</div>
-							<div class="checkout__order__total">
-								Total <span>$750.99</span>
-							</div>
-							<div class="checkout__input__checkbox">
-								<label for="acc-or"> Create an account? <input
-									type="checkbox" id="acc-or"> <span class="checkmark"></span>
-								</label>
-							</div>
-							<p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do
-								eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-							<div class="checkout__input__checkbox">
-								<label for="payment"> Check Payment <input
-									type="checkbox" id="payment"> <span class="checkmark"></span>
-								</label>
-							</div>
-							<div class="checkout__input__checkbox">
-								<label for="paypal"> Paypal <input type="checkbox"
-									id="paypal"> <span class="checkmark"></span>
-								</label>
-							</div>
-							<button type="submit" class="site-btn">PLACE ORDER</button>
-						</div>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-</section>
-<!-- Checkout Section End -->
+<!-- ...:::: Start Checkout Section:::... -->
+<div class="checkout-section">
+    <div class="container">
+        <!-- Start User Details Checkout Form -->
+        <div class="checkout_form" data-aos="fade-up"  data-aos-delay="400">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <form action="addbill" method="post">
+                        <h3>Billing Details</h3>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="default-form-box">
+                                    <label>Full name</label>
+                                    <input type="text" value="${account.fullname}" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="default-form-box">
+                                    <label>Email address</label>
+                                    <input type="text" value="${account.email}" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="default-form-box">
+                                    <label>Address <span>*</span></label>
+                                    <input type="text" name="address">
+                                </div>
+                            </div><div class="col-12">
+                                <div class="default-form-box">
+                                    <label>Phone <span>*</span></label>
+                                    <input type="text" name="phone">
+                                </div>
+                            </div>
+                            <div class="order_button pt-3">
+                                <button class="btn btn-md btn-black-default-hover" type="submit">Checkout</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <form action="#">
+                        <h3>Your order</h3>
+                        <div class="order_table table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                	<c:forEach items="${cartitems}" var="i">
+	                                    <tr>
+	                                        <td> ${i.product.productName} <strong> × ${i.quantity}</strong></td>
+	                                        <td> <span class="price">$<fmt:formatNumber value="${i.product.price*i.quantity}" pattern="#,###,###.##" /></span></td>
+	                                    </tr>
+                                   	</c:forEach>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Cart Subtotal</th>
+                                        <td>$<fmt:formatNumber value="${total}" pattern="#,###,###.##" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Shipping</th>
+                                        <td><strong>$1000.00</strong></td>
+                                    </tr>
+                                    <tr class="order_total">
+                                        <th>Order Total</th>
+                                        <td><strong>$<fmt:formatNumber value="${total+1000.00}" pattern="#,###,###.##" /></strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="payment_method">
+                            <div class="panel-default">
+                                <label class="checkbox-default" for="currencyCod" data-bs-toggle="collapse" data-bs-target="#methodCod">
+                                    <input type="checkbox" id="currencyCod">
+                                    <span>Cash on Delivery</span>
+                                </label>
+
+                                <div id="methodCod" class="collapse" data-parent="#methodCod">
+                                    <div class="card-body1">
+                                        <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> 
+        <!-- Start User Details Checkout Form -->
+    </div>
+</div>
+<!-- ...:::: End Checkout Section:::... -->

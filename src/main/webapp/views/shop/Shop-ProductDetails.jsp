@@ -135,13 +135,13 @@
                             <div class="variable-single-item ">
                                 <span>Quantity</span>
                                 <div class="product-variable-quantity">
-                                    <input min="1" max="100" value="1" type="number">
+                                    <input id="quantityInput" min="1" max="100" value="1" type="number">
                                 </div>
                             </div>
                             
 							<c:if test="${product.stoke != 0}">
 								<div class="product-add-to-cart-btn">
-	                                <a href="#" class="btn btn-block btn-lg btn-black-default-hover" data-bs-target="#modalAddcart">+ Add To Cart</a>
+	                                <a href="#" onclick="addToCart('<c:url value="/addtocart?id=${product.productID}"/>', event)" class="btn btn-block btn-lg btn-black-default-hover">+ Add To Cart</a>
 	                            </div>
 	                        </c:if>
 	                        <c:if test="${product.stoke == 0}">
@@ -152,10 +152,11 @@
                         </div>
                         <!-- Start  Product Details Meta Area-->
                         <div class="product-details-meta mb-20">
-                            <a href="wishlist.html" class="icon-space-right"><i class="icon-heart"></i>Add to wishlist</a>
-                            <a href="compare.html" class="icon-space-right"><i class="icon-refresh"></i>Compare</a>
-                        </div> <!-- End  Product Details Meta Area-->
-                    </div> <!-- End Product Variable Area -->
+                            <!-- <a href="wishlist.html" class="icon-space-right"><i class="icon-heart"></i>Add to wishlist</a> -->
+                        </div> 
+                        <!-- End  Product Details Meta Area-->
+                    </div> 
+                    <!-- End Product Variable Area -->
                     
                     <!-- Start  Product Details Catagories Area-->
                     <div class="product-details-catagory mb-2">
@@ -267,7 +268,7 @@
 	                                        <div class="action-link">
 	                                            <c:if test="${u.stoke != 0}">
 		                                            <div class="action-link-left">
-		                                                <a href="#" data-bs-target="#modalAddcart">Add to Cart</a>
+		                                                <a href="<c:url value="/addtocart?id=${u.productID}"/>" data-bs-target="#modalAddcart">Add to Cart</a>
 		                                            </div>
 	                                            </c:if>
 	                                            <c:if test="${u.stoke == 0}">
@@ -277,8 +278,7 @@
 	                                            </c:if>
 	                                            <div class="action-link-right">
 	                                                <a href="<c:url value="/shop/productdetails?id=${u.productID}"/>" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
-	                                                <a href="wishlist.html"><i class="icon-heart"></i></a>
-	                                                <a href="compare.html"><i class="icon-shuffle"></i></a>
+	                                                <!-- <a href="wishlist.html"><i class="icon-heart"></i></a> -->
 	                                            </div>
 	                                        </div>
 	                                    </div>
@@ -313,3 +313,15 @@
     </div>
 </div> 
 <!-- End Product Default Slider Section -->
+
+<script>
+    function addToCart(addProductIdLink, event) {
+    	event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+    	
+        var quantity = document.getElementById('quantityInput').value;
+        var url = addProductIdLink + '&quantity=' + quantity;
+        console.log("quantity: ", quantity);
+        console.log("url: ", url);
+        window.location.href = url;
+    }
+</script>

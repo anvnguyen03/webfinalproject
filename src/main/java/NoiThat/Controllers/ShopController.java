@@ -9,13 +9,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
+import NoiThat.Entity.Cart;
+import NoiThat.Entity.CartItems;
 import NoiThat.Entity.Category;
 import NoiThat.Entity.CategoryParents;
 import NoiThat.Entity.Product;
+import NoiThat.Entity.User;
+import NoiThat.Services.CartItemsServiceImpl;
+import NoiThat.Services.CartServiceImpl;
 import NoiThat.Services.CateParentsServiceImpl;
 import NoiThat.Services.CateServiceImpl;
+import NoiThat.Services.ICartItemsService;
+import NoiThat.Services.ICartService;
 import NoiThat.Services.ICateParentsService;
 import NoiThat.Services.ICateService;
 import NoiThat.Services.IProductService;
@@ -31,6 +39,8 @@ public class ShopController extends HttpServlet {
 	ICateParentsService catepase = new CateParentsServiceImpl();
 	ICateService cate = new CateServiceImpl();
 	IProductService prod = new ProductServiceImpl();
+	ICartService cartService = new CartServiceImpl();
+	ICartItemsService cartitemsService = new CartItemsServiceImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -42,6 +52,7 @@ public class ShopController extends HttpServlet {
 		// list category to shop dropdown menu
 		findCategoryOfEachCateParents(req, resp);
 		find12LatestProducts(req, resp);
+		findCart(req, resp);
 
 		String url = req.getRequestURI();
 		if (url.contains("/allproduct")) {
@@ -67,6 +78,26 @@ public class ShopController extends HttpServlet {
 			req.setAttribute("product_detailed", product_detailed);
 			req.setAttribute("relatedProducts", relatedProducts);
 			req.getRequestDispatcher("/views/shop/Shop-ProductDetails.jsp").forward(req, resp);
+			
+		}
+	}
+
+	private void findCart(HttpServletRequest req, HttpServletResponse resp) {
+		HttpSession session = req.getSession();
+		if (session != null && session.getAttribute("account") != null) {
+			
+			User u = (User) session.getAttribute("account");
+			Cart cart = cartService.findOne(u.getUserID());
+			List<CartItems> ci = cartitemsService.findItemsInCart(cart.getCartID());
+			req.setAttribute("cartitems", ci);
+			
+			int count_items = ci.size();
+			double total = 0;
+			for (CartItems i : ci) {
+					total += i.getProduct().getPrice()*i.getQuantity();
+			}
+			req.setAttribute("count_items", count_items);
+			req.setAttribute("total", total);
 			
 		}
 	}

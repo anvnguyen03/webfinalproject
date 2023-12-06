@@ -13,11 +13,30 @@ public class CateDAOImpl implements ICateDAO{
 
 	@Override
 	public List<Category> findAllCategories() {
+//		EntityManager enma = JPAConfig.getEntityManager();
+//		
+//		TypedQuery<Category> query = enma.createNamedQuery("Category.findAll", Category.class);
+//		return query.getResultList();
+		
+		List<Category> categories = null;
 		EntityManager enma = JPAConfig.getEntityManager();
-		
-		TypedQuery<Category> query = enma.createNamedQuery("Category.findAll", Category.class);
-		
-		return query.getResultList();
+		EntityTransaction trans = enma.getTransaction();
+		try {
+			trans.begin();
+			
+			TypedQuery<Category> query = enma.createNamedQuery("Category.findAll", Category.class);
+			
+			categories = query.getResultList();
+			
+			trans.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			trans.rollback();
+			throw e;
+		} finally {
+			enma.close();
+		}
+		return categories;
 	} 
 
 	@Override
@@ -81,20 +100,62 @@ public class CateDAOImpl implements ICateDAO{
 
 	@Override
 	public List<Category> findByCategoryParentsID(int cateparentsid) {
-		EntityManager enma = JPAConfig.getEntityManager();
-		String jpql = "SELECT c from Category c WHERE c.cateParent.cateParentsID like :cateparentsid";
-		TypedQuery<Category> query = enma.createQuery(jpql, Category.class);
-		query.setParameter("cateparentsid", cateparentsid);
+//		EntityManager enma = JPAConfig.getEntityManager();
+//		String jpql = "SELECT c from Category c WHERE c.cateParent.cateParentsID like :cateparentsid";
+//		TypedQuery<Category> query = enma.createQuery(jpql, Category.class);
+//		query.setParameter("cateparentsid", cateparentsid);
+//		return query.getResultList();
 		
-		return query.getResultList();
+		List<Category> categories = null;
+		EntityManager enma = JPAConfig.getEntityManager();
+		EntityTransaction trans = enma.getTransaction();
+		try {
+			trans.begin();
+			
+			String jpql = "SELECT c from Category c WHERE c.cateParent.cateParentsID like :cateparentsid";
+			TypedQuery<Category> query = enma.createQuery(jpql, Category.class);
+			query.setParameter("cateparentsid", cateparentsid);
+			
+			categories = query.getResultList();
+			
+			trans.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			trans.rollback();
+			throw e;
+		} finally {
+			enma.close();
+		}
+		return categories;
 	}
 
 	@Override
 	public int count() {
+//		EntityManager enma = JPAConfig.getEntityManager();
+//		String jpql = "SELECT count(c) FROM Category c";
+//		javax.persistence.Query query = enma.createQuery(jpql);
+//		return ((Long)query.getSingleResult()).intValue();
+		
+		int count = 0;
 		EntityManager enma = JPAConfig.getEntityManager();
-		String jpql = "SELECT count(c) FROM Category c";
-		javax.persistence.Query query = enma.createQuery(jpql);
-		return ((Long)query.getSingleResult()).intValue();
+		EntityTransaction trans = enma.getTransaction();
+		try {
+			trans.begin();
+			
+			String jpql = "SELECT count(c) FROM Category c";
+			javax.persistence.Query query = enma.createQuery(jpql);
+			
+			count = ((Long)query.getSingleResult()).intValue();
+			
+			trans.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			trans.rollback();
+			throw e;
+		} finally {
+			enma.close();
+		}
+		return count;
 	}
 	
 //	public static void main(String[] args) {

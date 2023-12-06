@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="/common/taglib.jsp"%>
 
 <!-- ...:::: Start Breadcrumb Section:::... -->
 <div class="breadcrumb-section breadcrumb-bg-color--golden">
@@ -29,6 +29,19 @@
     <!-- Start Cart Table -->
     <div class="cart-table-wrapper"  data-aos="fade-up"  data-aos-delay="0">
         <div class="container">
+        
+        <div class="row">
+				<div class="col">
+					<c:if test="${not empty message}">
+						<div class="alert alert-success">${message}</div>
+					</c:if>
+					
+					<c:if test="${not empty error}">
+						<div class="alert alert-danger">${error}</div>
+					</c:if>
+				</div>
+		</div>
+		
             <div class="row">
                 <div class="col-12">
                     <div class="table_desc">
@@ -43,41 +56,28 @@
                                         <th class="product-price">Price</th>
                                         <th class="product_quantity">Quantity</th>
                                         <th class="product_total">Total</th>
+                                        <th class="product_update">Update</th>
                                     </tr>
                                 </thead> <!-- End Cart Table Head -->
                                 <tbody>
-                                    <!-- Start Cart Single Item-->
-                                    <tr>
-                                        <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        <td class="product_thumb"><a href="product-details-default.html"><img src="<c:url value="/uploads/p12_1.jpg"/>" alt=""></a></td>
-                                        <td class="product_name"><a href="product-details-default.html">Handbag fringilla</a></td>
-                                        <td class="product-price">$65.00</td>
-                                        <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number"></td>
-                                        <td class="product_total">$130.00</td>
-                                    </tr> <!-- End Cart Single Item-->
-                                    <!-- Start Cart Single Item-->
-                                    <tr>
-                                        <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        <td class="product_thumb"><a href="product-details-default.html"><img src="<c:url value="/templates/assets/images/product/default/home-1/default-2.jpg"/>" alt=""></a></td>
-                                        <td class="product_name"><a href="product-details-default.html">Handbags justo</a></td>
-                                        <td class="product-price">$90.00</td>
-                                        <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number"></td>
-                                        <td class="product_total">$180.00</td>
-                                    </tr> <!-- End Cart Single Item-->
-                                    <!-- Start Cart Single Item-->
-                                    <tr>
-                                        <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        <td class="product_thumb"><a href="product-details-default.html"><img src="<c:url value="/templates/assets/images/product/default/home-1/default-3.jpg"/>" alt=""></a></td>
-                                        <td class="product_name"><a href="product-details-default.html">Handbag elit</a></td>
-                                        <td class="product-price">$80.00</td>
-                                        <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number"></td>
-                                        <td class="product_total">$160.00</td>
-                                    </tr> <!-- End Cart Single Item-->
-                                </tbody>
+	                                <c:forEach items="${cartitems}" var="i">
+		                                    <!-- Start Cart Single Item-->
+		                                    <tr>
+		                                        <td class="product_remove"><a href="<c:url value="/deletecartitem?id=${i.cartItemsID}"/>"><i class="fa fa-trash-o"></i></a></td>
+		                                        <td class="product_thumb"><a href="<c:url value="/shop/productdetails?id=${i.product.productID}"/>"><img src="<c:url value="/uploads/${i.product.imgLink1}"/>" alt=""></a></td>
+		                                        <td class="product_name"><a href="<c:url value="/shop/productdetails?id=${i.product.productID}"/>">${i.product.productName}</a></td>
+		                                        <td class="product-price"><span class="price">$<fmt:formatNumber value="${i.product.price}" pattern="#,###,###.##" /></span></td>
+		                                        <td class="product_quantity"><label>Quantity</label> <input id="quantityInput${i.cartItemsID}" min="1" max="100" value="${i.quantity}" type="number"></td>
+		                                        <td class="product_total"><span class="price">$<fmt:formatNumber value="${i.product.price*i.quantity}" pattern="#,###,###.##" /></span></td>
+		                                        <td class="product_update"><a href="<c:url value="/updatecartitem?id=${i.cartItemsID}"/>" class="toggle-update"><i class="fa fa-refresh"></i></a></td>
+		                                    </tr> 
+		                                    <!-- End Cart Single Item-->
+	                                </c:forEach>
+                            	</tbody>
                             </table>
                         </div>
                         <div class="cart_submit">
-                            <button class="btn btn-md btn-golden" type="submit">update cart</button>
+                            <a href="<c:url value="/shop/allproduct"/>"><button class="btn btn-md btn-golden">Continue shopping</button></a>
                         </div>
                     </div>
                 </div>
@@ -93,8 +93,8 @@
                     <div class="coupon_code left"  data-aos="fade-up"  data-aos-delay="200">
                         <h3>Coupon</h3>
                         <div class="coupon_inner">
-                            <p>Enter your coupon code if you have one.</p>
-                            <input class="mb-2" placeholder="Coupon code" type="text">
+                            <p>Cửa hàng hiện chưa có mã giảm giá nào!!!!.</p>
+                            <input class="mb-2" placeholder="Hãy chờ thêm nhé" type="text" readonly="readonly">
                             <button type="submit" class="btn btn-md btn-golden">Apply coupon</button>
                         </div>
                     </div>
@@ -105,20 +105,20 @@
                         <div class="coupon_inner">
                             <div class="cart_subtotal">
                                 <p>Subtotal</p>
-                                <p class="cart_amount">$215.00</p>
+                                <p class="cart_amount">$<fmt:formatNumber value="${total}" pattern="#,###,###.##" /></p>
                             </div>
                             <div class="cart_subtotal ">
                                 <p>Shipping</p>
-                                <p class="cart_amount"><span>Flat Rate:</span> $255.00</p>
+                                <p class="cart_amount"><span>Flat Rate:</span> $1000.00</p>
                             </div>
                             <a href="#">Calculate shipping</a>
 
                             <div class="cart_subtotal">
                                 <p>Total</p>
-                                <p class="cart_amount">$215.00</p>
+                                <p class="cart_amount">$<fmt:formatNumber value="${total+1000.00}" pattern="#,###,###.##" /></p>
                             </div>
                             <div class="checkout_btn">
-                                <a href="#" class="btn btn-md btn-golden">Proceed to Checkout</a>
+                                <a href="<c:url value="/checkout"/>" class="btn btn-md btn-golden">Proceed to Checkout</a>
                             </div>
                         </div>
                     </div>
@@ -127,3 +127,32 @@
         </div>
     </div> <!-- End Coupon Start -->
 </div> <!-- ...:::: End Cart Section:::... -->
+
+<script>
+    
+	//Lấy tất cả các phần tử a có class "toggle-update"
+	const toggleUpdateLinks = document.querySelectorAll('a.toggle-update');
+	
+	// Lặp qua từng phần tử a và thêm sự kiện onclick
+	toggleUpdateLinks.forEach(link => {
+	    link.addEventListener('click', function(event) {
+	        event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ a
+	
+	        // Lấy cartID từ href của thẻ a
+	        const cartID = this.getAttribute('href').split('=')[1];
+	
+	        // Lấy quantity từ input có id tương ứng
+	        const quantityInput = document.getElementById('quantityInput' + cartID);
+	        const quantity = quantityInput.value;
+	
+	        // Lấy url từ href của thẻ a
+	        var url = this.getAttribute('href') + '&quantity=' + quantity;
+	        
+	        // console.log('cartID: ' + cartID + ', Quantity: ' + quantity + ', url: ' + url);
+	        window.location.href = url;
+
+	    });
+	});
+
+    
+</script>

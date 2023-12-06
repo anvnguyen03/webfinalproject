@@ -14,11 +14,30 @@ public class CateParentsDAOImpl implements ICateParentsDAO{
 
 	@Override
 	public List<CategoryParents> findAllCateParents() {
+//		EntityManager enma = JPAConfig.getEntityManager();
+//
+//		TypedQuery<CategoryParents> query = enma.createNamedQuery("CategoryParent.findAll", CategoryParents.class);
+//		return query.getResultList();
+		
+		List<CategoryParents> cateparents = null;
 		EntityManager enma = JPAConfig.getEntityManager();
-
-		TypedQuery<CategoryParents> query = enma.createNamedQuery("CategoryParent.findAll", CategoryParents.class);
-
-		return query.getResultList();
+		EntityTransaction trans = enma.getTransaction();
+		try {
+			trans.begin();
+			
+			TypedQuery<CategoryParents> query = enma.createNamedQuery("CategoryParent.findAll", CategoryParents.class);
+			
+			cateparents = query.getResultList();
+			
+			trans.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			trans.rollback();
+			throw e;
+		} finally {
+			enma.close();
+		}
+		return cateparents;
 	}
 
 	@Override
