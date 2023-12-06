@@ -3,6 +3,7 @@ package NoiThat.DAO;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -12,15 +13,15 @@ import NoiThat.JPAConfig.JPAConfig;
 
 public class ProductDAOImpl implements IProductDAO{
 
-	 public static void main(String[] args) {
-			IProductDAO pro = new ProductDAOImpl();
-//			System.out.println(pro.countAll());
-//			System.out.println(pro.findAllProduct());
-//			System.out.println(pro.findProductByCateID(1));
-//			System.out.println((pro.findProductByPage(0, 12)).size());
-//			System.out.println(pro.findProductByCateParensID(1));
-			System.out.println(pro.findOne(1));
-		}
+//	 public static void main(String[] args) {
+//			IProductDAO pro = new ProductDAOImpl();
+////			System.out.println(pro.countAll());
+////			System.out.println(pro.findAllProduct());
+////			System.out.println(pro.findProductByCateID(1));
+////			System.out.println((pro.findProductByPage(0, 12)).size());
+////			System.out.println(pro.findProductByCateParensID(1));
+//			System.out.println(pro.findOne(1));
+//		}
 	
 	@Override
 	public List<Product> findAllProduct() {
@@ -31,15 +32,70 @@ public class ProductDAOImpl implements IProductDAO{
 
 	@Override
 	public void insert(Product product) {
-		// TODO Auto-generated method stub
+		EntityManager enma = JPAConfig.getEntityManager();
+		EntityTransaction trans = enma.getTransaction();
+		try {
+			trans.begin();
+			enma.persist(product);
+			trans.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			trans.rollback();
+			throw e;
+		} finally {
+			enma.close();
+		}
 		
 	}
 
 	@Override
 	public void update(Product product) {
-		// TODO Auto-generated method stub
+		EntityManager enma = JPAConfig.getEntityManager();
+		EntityTransaction trans = enma.getTransaction();
+		try {
+			trans.begin();
+			enma.merge(product);
+			trans.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			trans.rollback();
+			throw e;
+		} finally {
+			enma.close();
+		}
 		
 	}
+	
+	@Override
+	public void delete(int productID, int newState) throws Exception {
+	    EntityManager enma = JPAConfig.getEntityManager();
+		EntityTransaction trans = enma.getTransaction();
+
+	    try {
+	        trans.begin();
+
+	        // Tìm sản phẩm theo productID
+	        Product product = enma.find(Product.class, productID);
+
+	        if (product != null) {
+	            // Cập nhật trạng thái của sản phẩm
+	            product.setState(newState);
+	            enma.merge(product);
+	        } else {
+	            // Xử lý khi không tìm thấy sản phẩm
+	            System.out.println("Không tìm thấy sản phẩm với ID: " + productID);
+	        }
+
+	        trans.commit();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        trans.rollback();
+	        throw e;
+	    } finally {
+	        enma.close();
+	    }
+	}
+
 
 	@Override
 	public int countAll() {

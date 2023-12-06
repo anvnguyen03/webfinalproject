@@ -167,7 +167,7 @@
 					      <h5 class="card-header">Add product form</h5>
 					      <div class="card-body">
 					
-					        <form id="formValidationExamples" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate">
+					        <form id="formValidationExamples" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" action="addpro" method="post" enctype="multipart/form-data">
 					
 					          <!-- Account Details -->
 					
@@ -186,7 +186,7 @@
 					          	  <label class="form-label" for="formValidationName">Category</label>
 						          <div class="input-group">
 		                            <label class="input-group-text" for="inputGroupSelect01">Category</label>
-		                            <select class="form-select" id="inputGroupSelect01">
+		                            <select class="form-select" id="inputGroupSelect01" name="cateID">
 		                              <option selected="">Choose...</option>
 		                              <c:forEach items="${listcate}" var="i">
 		                              	<c:if test="${i.state ==1 }">
@@ -202,14 +202,14 @@
 						          <div class="input-group">
 			                        <span class="input-group-text">$</span>
 			                        
-			                        <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+			                        <input type="text" class="form-control" name="price" aria-label="Dollar amount (with dot and two decimal places)">
 			                      </div>
 		                      </div>
 					          
 					          <div class="col-md-6 fv-plugins-icon-container">
 					            <label class="form-label" for="formValidationName">Stoke</label>
 						          <div class="input-group">
-			                        <input type="number" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+			                        <input type="number" class="form-control" name="stoke" aria-label="Dollar amount (with dot and two decimal places)">
 			                      </div>
 					          </div>
 					
@@ -219,7 +219,7 @@
 					          	  <span class="badge bg-warning me-1">Not available</span>
 						          <div class="input-group">
 		                            <label class="input-group-text" for="inputGroupSelect01">State</label>
-		                            <select class="form-select" id="inputGroupSelect01">
+		                            <select class="form-select" id="inputGroupSelect01" name="state">
 		                              <option selected="">Choose...</option>
 		                              <option value="1">Available</option>
 		                              <option value="0">Not available</option>
@@ -230,14 +230,14 @@
 	                          <div class="col-md-6 fv-plugins-icon-container">
 		                          <div>
 			                        <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-			                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name=""></textarea>
+			                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
 			                      </div>
 			                  </div>
 			                  
 			                  <div class="col-md-6 fv-plugins-icon-container">
 		                          <div>
 			                        <label for="exampleFormControlTextarea1" class="form-label">Information</label>
-			                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name=""></textarea>
+			                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="information"></textarea>
 			                      </div>
 			                  </div>
 					

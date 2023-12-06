@@ -118,6 +118,20 @@
 			<version>1.6.2</version>
 		</dependency>
 
+		<!-- Jackson Core -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.13.0</version> <!-- Adjust the version accordingly -->
+		</dependency>
+
+		<!-- Jackson Databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.13.0</version> <!-- Adjust the version accordingly -->
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>

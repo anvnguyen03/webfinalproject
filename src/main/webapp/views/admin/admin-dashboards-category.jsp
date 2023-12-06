@@ -191,6 +191,8 @@
 		                        <td>
 		                        	<c:if test="${i.state == 1}"><span class="badge bg-success me-1">Active</span></c:if>
 		                        	<c:if test="${i.state == 0}"><span class="badge bg-warning me-1">Inactive</span></c:if>
+		                        	 <c:if test="${i.state == 2}"><span class="badge bg-dark me-1">Deleted</span></c:if>
+		                        	
 		                        </td>
 		                        <td>
 		                          <div class="">
@@ -215,24 +217,24 @@
 							                <div class="modal-body">
 							                    <div class="container-fluid">
 							                    	<h5 class="card-header">Edit category</h5>
-							                       	<form class="pt-0" id="eCommerceCategoryListForm" onsubmit="return true">
+							                       	<form class="pt-0" id="eCommerceCategoryListForm" onsubmit="return true" action="updatecate" method="post">
 								                       	<!-- ID -->
 												        <div class="mb-3">
 												          <label class="form-label" for="ecommerce-category-title">Category ID</label>
-												          <input type="text" class="form-control notEdit" id="ecommerce-category-title" aria-label="category parents id" readonly="readonly" value="${i.cateID}">
+												          <input type="text" class="form-control notEdit" id="ecommerce-category-title" name="cateID" aria-label="category parents id" readonly="readonly" value="${i.cateID}">
 												        </div>
 												        <!-- Title -->
 												        <div class="mb-3">
 												          <label class="form-label" for="ecommerce-category-title">Category Name</label>
-												          <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter parents category title" name="cateParentsName" aria-label="category title" value="${i.cateName}">
+												          <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter parents category title" name="cateName" aria-label="category title" value="${i.cateName}">
 												        </div>
-												        
+												        <!--Parents Category  -->
 												        <div class="mb-4 ecommerce-select2-dropdown">
 												          <label class="form-label">Parents Category</label>
-												          <select id="ecommerce-category-status" class="select2 form-select" data-placeholder="Select category status" name="state" >
+												          <select id="ecommerce-category-status" class="select2 form-select" data-placeholder="Select category status" name="cateParentsID" >
 												            <c:forEach items="${listcateparents}" var="u">
 												          		<c:if test="${u.state == 1}">
-													            	<option value="${cateParentsID}">${u.cateParentsName}</option>
+													            	<option value="${u.cateParentsID}">${u.cateParentsName}</option>
 													            </c:if>
 												            </c:forEach>
 												          </select>
@@ -268,11 +270,11 @@
 							                <div class="modal-body">
 							                    <div class="container-fluid">
 							                    	<h5 class="card-header">Delete this category?</h5>
-							                       		<form class="pt-0" id="del-form" onsubmit="return true">
+							                       		<form class="pt-0" id="del-form" onsubmit="return true" action="deletecate" method="post">
 									                       	<!-- ID -->
 													        <div class="mb-3">
 													          <label class="form-label" for="ecommerce-category-title">Category ID</label>
-													          <input type="text" class="form-control notEdit" id="ecommerce-category-title" aria-label="category id" readonly="readonly" value="${i.cateID}">
+													          <input type="text" class="form-control notEdit" id="ecommerce-category-title" name="cateID" aria-label="category id" readonly="readonly" value="${i.cateID}">
 													        </div>
 													        <!-- Title -->
 													        <div class="mb-3">
@@ -282,6 +284,7 @@
 													        
 													        <div class="mb-4 ecommerce-select2-dropdown">
 													          <label class="form-label">Parents Category</label>
+													          <input type="text" class="form-control notEdit" name="cateParentsID" aria-label="category title" readonly="readonly" value="${i.cateParent.cateParentsID}">
 													          <input type="text" class="form-control notEdit" name="cateParentsName" aria-label="category title" readonly="readonly" value="${i.cateParent.cateParentsName}">
 													        </div>
 													        
@@ -321,16 +324,16 @@
 				    </div>
 				    <!-- Offcanvas Body -->
 				    <div class="offcanvas-body border-top">
-				      <form class="pt-0" id="eCommerceCategoryListForm" onsubmit="return true">
+				      <form class="pt-0" id="eCommerceCategoryListForm" onsubmit="return true" action="addcate" method="post">
 				        <!-- Title -->
 				        <div class="mb-3">
 				          <label class="form-label" for="ecommerce-category-title">Category Name</label>
-				          <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter category title" name="categoryName" aria-label="category title">
+				          <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter category title" name="cateName" aria-label="category title">
 				        </div>
 				        <!-- Parent category -->
 				        <div class="mb-3 ecommerce-select2-dropdown">
 				          <label class="form-label" for="ecommerce-category-parent-category">Parent category</label>
-				          <select id="ecommerce-category-parent-category" class="select2 form-select" data-placeholder="Select parent category" name="state">
+				          <select id="ecommerce-category-parent-category" class="select2 form-select" data-placeholder="Select parent category" name="cateParentsID">
 				          	<c:forEach items="${listcateparents}" var="i">
 				          		<c:if test="${i.state == 1}">
 					            	<option value="${i.cateParentsID}">${i.cateParentsName}</option>
@@ -341,7 +344,7 @@
 				        <!-- Status -->
 				        <div class="mb-4 ecommerce-select2-dropdown">
 				          <label class="form-label">Select category status</label>
-				          <select id="ecommerce-category-status" class="select2 form-select" data-placeholder="Select category status">
+				          <select id="ecommerce-category-status" class="select2 form-select" data-placeholder="Select category status" name="state">
 				            <option value="1">Active</option>
 				            <option value="0">Inactive</option>
 				          </select>

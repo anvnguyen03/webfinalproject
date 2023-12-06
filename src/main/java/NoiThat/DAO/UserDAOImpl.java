@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import NoiThat.Entity.Category;
+import NoiThat.Entity.Product;
 import NoiThat.Entity.User;
 import NoiThat.JPAConfig.JPAConfig;
 
@@ -148,28 +149,35 @@ public class UserDAOImpl implements IUserDAO{
 		
 	}
 	@Override
-	public void delete(int id) throws Exception {
+	public void delete(int id, int state) throws Exception {
 		EntityManager enma = JPAConfig.getEntityManager();
 		EntityTransaction trans = enma.getTransaction();
-		try {
-			trans.begin();
-			User user = enma.find(User.class, id);
-			if (user != null) {
-				enma.remove(user);
-			} else {
-				throw new Exception("Không tìm thấy!!");
-			}
-			
-			trans.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-			trans.rollback();
-			throw e;
-		} finally {
-			enma.close();
-		}
-		
+
+	    try {
+	        trans.begin();
+
+	        // Tìm sản phẩm theo productID
+	        User user = enma.find(User.class, id);
+
+	        if (user != null) {
+	            // Cập nhật trạng thái của sản phẩm
+	            user.setState(state);
+	            enma.merge(user);
+	        } else {
+	            // Xử lý khi không tìm thấy sản phẩm
+	            System.out.println("Không tìm thấy sản phẩm với ID: " + id);
+	        }
+
+	        trans.commit();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        trans.rollback();
+	        throw e;
+	    } finally {
+	        enma.close();
+	    }
 	}
+		
 	@Override
 	public boolean checkExistEmai(String email) {
 		boolean duplicate = false;

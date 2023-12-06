@@ -229,16 +229,16 @@
 							                <div class="modal-body">
 							                    <div class="container-fluid">
 							                    	<h5 class="card-header">Delete this user?</h5>
-							                       		<form class="pt-0" id="del-form" onsubmit="return true">
+							                       		<form class="pt-0" id="del-form" onsubmit="return true" action="deleteuser" method="post">
 									                       	<!-- ID -->
 													        <div class="mb-3">
 													          <label class="form-label" for="ecommerce-category-title">User ID</label>
-													          <input type="text" class="form-control notEdit" id="" aria-label="category id" readonly="readonly" value="${i.userID}">
+													          <input type="text" class="form-control notEdit" id="" name="userID" aria-label="category id" readonly="readonly" value="${i.userID}">
 													        </div>
 													        <!-- Title -->
 													        <div class="mb-3">
 													          <label class="form-label" for="ecommerce-category-title">Username</label>
-													          <input type="text" class="form-control notEdit" id="" name="cateName" aria-label="category title" readonly="readonly" value="${i.username}">
+													          <input type="text" class="form-control notEdit" id="" name="userName" aria-label="category title" readonly="readonly" value="${i.username}">
 													        </div>
 													        
 													        <div class="mb-3">

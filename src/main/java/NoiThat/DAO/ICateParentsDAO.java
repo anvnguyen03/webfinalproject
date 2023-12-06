@@ -6,7 +6,7 @@ import NoiThat.Entity.CategoryParents;
 
 public interface ICateParentsDAO {
 
-	void delete(int cateParentsid) throws Exception;
+	void delete(CategoryParents cateparents) throws Exception;
 
 	void update(CategoryParents cateparents);
 

@@ -17,16 +17,21 @@ public class ProductServiceImpl implements IProductService{
 
 	@Override
 	public void insert(Product product) {
-		// TODO Auto-generated method stub
+		pro.insert(product);
 		
 	}
 
 	@Override
 	public void update(Product product) {
-		// TODO Auto-generated method stub
+		pro.update(product);
 		
 	}
 
+	@Override
+	public void delete(int productID, int newState) throws Exception {
+		pro.delete(productID, newState);
+	}
+	
 	@Override
 	public List<Product> findProductByCateID(int cateid) {
 		return pro.findProductByCateID(cateid);
@@ -66,5 +71,7 @@ public class ProductServiceImpl implements IProductService{
 	public Product findOne(int productid) {
 		return pro.findOne(productid);
 	}
+
+
 
 }

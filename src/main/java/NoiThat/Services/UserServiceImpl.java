@@ -44,8 +44,8 @@ public class UserServiceImpl implements IUserService{
 	}
 
 	@Override
-	public void delete(int id) throws Exception {
-		this.user.delete(id);
+	public void delete(int id, int state) throws Exception {
+		this.user.delete(id, state);
 		
 	}
 

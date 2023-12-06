@@ -253,16 +253,16 @@
 							                <div class="modal-body">
 							                    <div class="container-fluid">
 							                    	<h5 class="card-header">Delete this product?</h5>
-							                       		<form class="pt-0" id="del-form" onsubmit="return true">
+							                       		<form class="pt-0" id="del-form" onsubmit="return true" action="deletepro" method="post">
 									                       	<!-- ID -->
 													        <div class="mb-3">
 													          <label class="form-label" for="ecommerce-category-title">Product ID</label>
-													          <input type="text" class="form-control notEdit" id="ecommerce-category-title" aria-label="category id" readonly="readonly" value="${i.productID}">
+													          <input type="text" class="form-control notEdit" id="ecommerce-category-title" name="productID" aria-label="category id" readonly="readonly" value="${i.productID}">
 													        </div>
 													        <!-- Title -->
 													        <div class="mb-3">
 													          <label class="form-label" for="ecommerce-category-title">Product Name</label>
-													          <input type="text" class="form-control notEdit" id="ecommerce-category-title" name="cateName" aria-label="category title" readonly="readonly" value="${i.productName}">
+													          <input type="text" class="form-control notEdit" id="ecommerce-category-title" name="productName" aria-label="category title" readonly="readonly" value="${i.productName}">
 													        </div>
 													        
 													        <div class="mb-4 ecommerce-select2-dropdown">
