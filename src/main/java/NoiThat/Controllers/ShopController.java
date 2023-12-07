@@ -72,6 +72,12 @@ public class ShopController extends HttpServlet {
 			int productid = Integer.parseInt(req.getParameter("id"));
 			Product product_detailed = prod.findOne(productid);
 			
+			HttpSession session = req.getSession(false);
+			if (session != null) {
+				String attributeName = "product_" + productid;
+				session.setAttribute(attributeName, product_detailed);
+			}
+			
 			Category category = product_detailed.getCategory();
 			List<Product> relatedProducts = category.getProduct();
 			

@@ -144,14 +144,6 @@
                         </div>
                     </div> <!-- End Single Sidebar Widget -->
 
-                    <!-- Start Single Sidebar Widget -->
-                    <div class="sidebar-single-widget">
-                        <div class="sidebar-content">
-                            <a href="product-details-default.html" class="sidebar-banner img-hover-zoom">
-                                <img class="img-fluid" src="assets/images/banner/side-banner.jpg" alt="">
-                            </a>
-                        </div>
-                    </div> <!-- End Single Sidebar Widget -->
 
                 </div> <!-- End Sidebar Area -->
             </div>

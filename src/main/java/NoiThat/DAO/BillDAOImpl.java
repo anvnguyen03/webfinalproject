@@ -39,7 +39,7 @@ public class BillDAOImpl implements IBillDAO{
 	}
 
 	@Override
-	public List<Bill> findByID(int billid) {
+	public Bill findByID(int billid) {
 //		EntityManager enma = JPAConfig.getEntityManager();
 //		String jpql = "SELECT b FROM Bill b " +
 //				  	  "WHERE b.billID = :billid";
@@ -47,7 +47,7 @@ public class BillDAOImpl implements IBillDAO{
 //		query.setParameter("billid", billid);
 //		return query.getResultList();
 		
-		List<Bill> bills = null;
+		Bill bill = null;
 		EntityManager enma = JPAConfig.getEntityManager();
 		EntityTransaction trans = enma.getTransaction();
 		try {
@@ -58,7 +58,7 @@ public class BillDAOImpl implements IBillDAO{
 			TypedQuery<Bill> query = enma.createQuery(jpql, Bill.class);
 			query.setParameter("billid", billid);
 			
-			bills = query.getResultList();
+			bill = query.getSingleResult();
 			
 			trans.commit();
 		} catch (Exception e) {
@@ -68,7 +68,7 @@ public class BillDAOImpl implements IBillDAO{
 		} finally {
 			enma.close();
 		}
-		return bills;
+		return bill;
 		
 	}
 

@@ -32,7 +32,7 @@ import NoiThat.Services.ICateService;
 import NoiThat.Services.IProductService;
 import NoiThat.Services.ProductServiceImpl;
 
-@WebServlet( urlPatterns = {"/home", "/myaccount"} )
+@WebServlet( urlPatterns = {"/home", "/myaccount", "/orderdetails"} )
 
 public class HomeController extends HttpServlet{
 
@@ -68,6 +68,17 @@ public class HomeController extends HttpServlet{
 			} else {
 				resp.sendRedirect(req.getContextPath() + "/login");
 			}
+		} else if (url.contains("/orderdetails")) {
+			HttpSession session = req.getSession();
+			if (session != null && session.getAttribute("account") != null) {
+				int bilid = Integer.parseInt(req.getParameter("id"));
+				Bill bill = billService.findByID(bilid);
+				req.setAttribute("bill", bill);
+				req.getRequestDispatcher("views/home/order-details.jsp").forward(req, resp);
+			} else {
+				resp.sendRedirect(req.getContextPath() + "/login");
+			}
+			
 		}
 
 	}	

@@ -59,7 +59,7 @@
 	                                        <td>${i.billID}</td>
 	                                        <td><c:out value="${fn:substring(i.createdAt, 0, 10)}" /></td>
 	                                        <td><span class="price">$<fmt:formatNumber value="${i.total}" pattern="#,###,###.##" /></span></td>
-	                                        <td><a href="cart.html" class="view">view</a></td>
+	                                        <td><a href="<c:url value="/orderdetails?id=${i.billID}"/>" class="view">view</a></td>
 	                                    </tr>
                                     </c:forEach>
                                 </tbody>

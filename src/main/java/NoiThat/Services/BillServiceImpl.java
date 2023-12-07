@@ -14,7 +14,7 @@ public class BillServiceImpl implements IBillService{
 	}
 
 	@Override
-	public List<Bill> findByID(int billid) {
+	public Bill findByID(int billid) {
 		return bd.findByID(billid);
 	}
 
