@@ -167,7 +167,7 @@
 					      <h5 class="card-header">Update product form</h5>
 					      <div class="card-body">
 					
-					        <form id="formValidationExamples" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate">
+					        <form id="formValidationExamples" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" action="updatepro" method="post" enctype="multipart/form-data">
 					
 					          <c:set var="product" value="${product}"/>
 					          <div class="col-12">
@@ -189,7 +189,7 @@
 					          	  <label class="form-label" for="formValidationName">Category</label>
 						          <div class="input-group">
 		                            <label class="input-group-text" for="inputGroupSelect01">Category</label>
-		                            <select class="form-select" id="inputGroupSelect01">
+		                            <select class="form-select" id="inputGroupSelect01" name="cateID">
 		                              <option value="${product.category.cateID}">${product.category.cateName}</option>
 		                              <c:forEach items="${listcate}" var="i">
 		                              	<c:if test="${i.state == 1 && i.cateID != product.category.cateID}">
@@ -226,7 +226,7 @@
 		                          <c:if test="${product.state == 0}"><span class="badge bg-warning me-1">Not available</span></c:if>
 						          <div class="input-group">
 		                            <label class="input-group-text" for="inputGroupSelect01">State</label>
-		                            <select class="form-select" id="inputGroupSelect01">
+		                            <select class="form-select" id="inputGroupSelect01" name="state">
 		                              <option value="1">Available</option>
 		                              <option value="0">Not available</option>
 		                            </select>
@@ -236,14 +236,14 @@
 	                          <div class="col-md-6 fv-plugins-icon-container">
 		                          <div>
 			                        <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-			                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="">${product.description}</textarea>
+			                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description">${product.description}</textarea>
 			                      </div>
 			                  </div>
 			                  
 			                  <div class="col-md-6 fv-plugins-icon-container">
 		                          <div>
 			                        <label for="exampleFormControlTextarea1" class="form-label">Information</label>
-			                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="">${product.information}</textarea>
+			                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="information">${product.information}</textarea>
 			                      </div>
 			                  </div>
 					
@@ -259,7 +259,7 @@
 					          		<img id="previewImage1" src="<c:url value="/uploads/${product.imgLink1}"/>" style="width: 100%; height: 100%; object-fit: cover">
 					          	</div>
 					            <label for="formValidationFile" class="form-label">Product img1</label>
-					            <input class="form-control" type="file" id="formValidationFile1" name="imgLink1" onchange="previewFile(1)">
+					            <input class="form-control" type="file" id="formValidationFile1" name="imgLink1" onchange="previewFile(1)" value="${product.imgLink1}">
 					          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
 					          
 					          <div class="col-md-6 fv-plugins-icon-container">
@@ -267,7 +267,7 @@
 					          		<img id="previewImage2" src="<c:url value="/uploads/${product.imgLink2}"/>" style="width: 100%; height: 100%; object-fit: cover">
 					          	</div>
 					            <label for="formValidationFile" class="form-label">Product img2</label>
-					            <input class="form-control" type="file" id="formValidationFile2" name="imgLink2" onchange="previewFile(2)">
+					            <input class="form-control" type="file" id="formValidationFile2" name="imgLink2" onchange="previewFile(2)" value="${product.imgLink2}">
 					          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
 					          
 					          <div class="col-md-6 fv-plugins-icon-container">
@@ -275,7 +275,7 @@
 					          		<img id="previewImage3" src="<c:url value="/uploads/${product.imgLink3}"/>" style="width: 100%; height: 100%; object-fit: cover">
 					          	</div>
 					            <label for="formValidationFile" class="form-label">Product img3</label>
-					            <input class="form-control" type="file" id="formValidationFile3" name="imgLink3" onchange="previewFile(3)">
+					            <input class="form-control" type="file" id="formValidationFile3" name="imgLink3" onchange="previewFile(3)" value="${product.imgLink3}">
 					          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
 					          
 					          <div class="col-md-6 fv-plugins-icon-container">
@@ -283,7 +283,7 @@
 					          		<img id="previewImage4" src="<c:url value="/uploads/${product.imgLink4}"/>" style="width: 100%; height: 100%; object-fit: cover">
 					          	</div>
 					            <label for="formValidationFile" class="form-label">Product img4</label>
-					            <input class="form-control" type="file" id="formValidationFile4" name="imgLink4" onchange="previewFile(4)">
+					            <input class="form-control" type="file" id="formValidationFile4" name="imgLink4" onchange="previewFile(4)" value="${product.imgLink4}"">
 					          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
 					          
 					          <div class="col-md-6 fv-plugins-icon-container">
@@ -291,7 +291,7 @@
 					          		<img id="previewImage5" src="<c:url value="/uploads/${product.imgLink5}"/>" style="width: 100%; height: 100%; object-fit: cover">
 					          	</div>
 					            <label for="formValidationFile" class="form-label">Product img5</label>
-					            <input class="form-control" type="file" id="formValidationFile5" name="imgLink5" onchange="previewFile(5)">
+					            <input class="form-control" type="file" id="formValidationFile5" name="imgLink5" onchange="previewFile(5)" value="${product.imgLink5}">
 					          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
 					          <div class="col-12">
 					            <button type="submit" name="submitButton" class="btn btn-primary">Submit</button>

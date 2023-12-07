@@ -11,7 +11,7 @@ public interface IUserService {
 	void insertRegister(User user);
 	void update(User user);
 	void updateState(User user);
-	void delete(int id) throws Exception;
+	void delete(int id, int state) throws Exception;
 	
 	boolean register(String email, String password, String username, String fullname, String code);
 	User login(String username, String password);

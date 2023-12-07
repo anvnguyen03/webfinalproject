@@ -216,11 +216,11 @@
 							                <div class="modal-body">
 							                    <div class="container-fluid">
 							                    	<h5 class="card-header">Edit parents category</h5>
-							                       	<form class="pt-0" id="eCommerceCategoryListForm" onsubmit="return true">
+							                       	<form class="pt-0" id="eCommerceCategoryListForm" onsubmit="return true" action="updatecategoryparents" method="post">
 								                       	<!-- ID -->
 												        <div class="mb-3">
 												          <label class="form-label" for="ecommerce-category-title">Parents category ID</label>
-												          <input type="text" class="form-control notEdit" id="ecommerce-category-title" aria-label="category parents id" readonly="readonly" value="${i.cateParentsID}">
+												          <input type="text" class="form-control notEdit" id="ecommerce-category-title" name="cateParentsID" aria-label="category parents id" readonly="readonly" value="${i.cateParentsID}">
 												        </div>
 												        <!-- Title -->
 												        <div class="mb-3">
@@ -258,11 +258,11 @@
 							                <div class="modal-body">
 							                    <div class="container-fluid">
 							                    	<h5 class="card-header">Delete this parents category?</h5>
-							                       		<form class="pt-0" id="del-form" onsubmit="return true">
+							                       		<form class="pt-0" id="del-form" onsubmit="return true" action="deletecategoryparents" method="post">
 									                       	<!-- ID -->
 													        <div class="mb-3">
 													          <label class="form-label" for="ecommerce-category-title">Parents category ID</label>
-													          <input type="text" class="form-control notEdit" id="ecommerce-category-title" aria-label="category parents id" readonly="readonly" value="${i.cateParentsID}">
+													          <input type="text" class="form-control notEdit" id="ecommerce-category-title" name="cateParentsID" aria-label="category parents id" readonly="readonly" value="${i.cateParentsID}">
 													        </div>
 													        <!-- Title -->
 													        <div class="mb-3">
@@ -305,7 +305,7 @@
 				    </div>
 				    <!-- Offcanvas Body -->
 				    <div class="offcanvas-body border-top">
-				      <form class="pt-0" id="eCommerceCategoryListForm" onsubmit="return true">
+				      <form class="pt-0" id="eCommerceCategoryListForm" onsubmit="return true" action="addcategoryparents" method="post">
 				        <!-- Title -->
 				        <div class="mb-3">
 				          <label class="form-label" for="ecommerce-category-title">Parents category Name</label>

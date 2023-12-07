@@ -1,5 +1,7 @@
 package NoiThat.Entity;
 
+import java.io.File;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,34 +10,39 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 @Entity
 @Table(name = "Product")
 @NamedQuery(name = "Product.findAll", query = "SELECT c FROM Product c")
 public class Product {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int productID;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "cateID")
 	private Category category;
-	
+
 	private String productName;
-    private String description;
-    private double price;
-    private String imgLink1;
-    private String imgLink2;
-    private String imgLink3;
-    private String imgLink4;
-    private String imgLink5;
-    private int stoke;
-    private int state;
-    private String information;
+	private String description;
+	private double price;
+	private String imgLink1;
+	private String imgLink2;
+	private String imgLink3;
+	private String imgLink4;
+	private String imgLink5;
+	private int stoke;
+	private int state;
+	private String information;
 
 	public Product(int productID, Category category, String productName, String description, double price,
-			String imgLink1, String imgLink2, String imgLink3, String imgLink4, String imgLink5, int stoke, int state, String information) {
+			String imgLink1, String imgLink2, String imgLink3, String imgLink4, String imgLink5, int stoke, int state,
+			String information) {
 		super();
 		this.productID = productID;
 		this.category = category;
@@ -50,7 +57,7 @@ public class Product {
 		this.stoke = stoke;
 		this.state = state;
 		this.information = information;
-		
+
 	}
 
 	public Product() {
@@ -160,7 +167,49 @@ public class Product {
 	public void setInformation(String information) {
 		this.information = information;
 	}
-    
-    
-    
+
+	public String ProcessImage(String image, HttpServletRequest req) {
+		String imageName = null;
+
+		try {
+			Part part = req.getPart(image);
+
+			// Kiểm tra nếu part chứa dữ liệu ảnh
+//			String storagePath = "D:\\Study\\KH1-3\\Web\\CodeWeb\\WebFinalProject\\src\\main\\webapp\\uploads";
+			String storagePath = "D:\\Study-Space\\Java-Web-Develop\\workspace\\WebFinalProject\\src\\main\\webapp\\uploads";
+			File storageDirectory = new File(storagePath);
+
+			// Tạo thư mục nếu nó không tồn tại
+			if (!storageDirectory.exists()) {
+				storageDirectory.mkdirs();
+			}
+
+			// Tạo tên file mới dựa trên thời gian hiện tại
+			String filename = System.currentTimeMillis() + "_" + part.getSubmittedFileName();
+			String filePath = storagePath + File.separator + filename;
+
+			// Ghi dữ liệu ảnh vào đường dẫn đã tạo
+			part.write(filePath);
+			// Chỉ lấy tên file, không kèm theo đường dẫn
+			imageName = filename;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return imageName;
+	}
+
+//	public static void main(String[] args) {
+//		String storagePath = "\\WebFinalProject\\uploads";
+//
+//		File storageDirectory = new File(storagePath);
+//
+//		if (storageDirectory.exists()) {
+//			System.out.println("Đường dẫn tồn tại: " + storageDirectory.getAbsolutePath());
+//		} else {
+//			System.out.println("Đường dẫn không tồn tại hoặc là thư mục rỗng: " + storageDirectory.getAbsolutePath());
+//		}
+//	}
+
 }

@@ -39,29 +39,9 @@ public class UserDAOImpl implements IUserDAO{
 //	}
 	@Override
 	public List<User> findAllUser() {
-//		EntityManager enma = JPAConfig.getEntityManager();
-//		TypedQuery<User> query = enma.createNamedQuery("User.findAll", User.class);
-//		return query.getResultList();
-		
-		List<User> users = null;
 		EntityManager enma = JPAConfig.getEntityManager();
-		EntityTransaction trans = enma.getTransaction();
-		try {
-			trans.begin();
-			
-			TypedQuery<User> query = enma.createNamedQuery("User.findAll", User.class);
-			
-			users = query.getResultList();
-			
-			trans.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-			trans.rollback();
-			throw e;
-		} finally {
-			enma.close();
-		}
-		return users;
+		TypedQuery<User> query = enma.createNamedQuery("User.findAll", User.class);
+		return query.getResultList();
 	}
 
 	@Override
@@ -89,41 +69,14 @@ public class UserDAOImpl implements IUserDAO{
 
 	@Override
 	public User findOne(String username) {
-//		EntityManager enma = JPAConfig.getEntityManager();
-//		String jpql = "SELECT u FROM User u " +
-//					  "WHERE u.username = :username ";
-//		TypedQuery<User> query = enma.createQuery(jpql, User.class);
-//		query.setParameter("username", username);
-//		try {
-//	        return query.getSingleResult();
-//	    } catch (NoResultException ex) {
-//	        // Không tìm thấy người dùng với username đã nhập
-//	        return null;
-//	    }
-		
-		User user = null;
 		EntityManager enma = JPAConfig.getEntityManager();
-		EntityTransaction trans = enma.getTransaction();
+		String jpql = "SELECT u FROM User u " +
+					  "WHERE u.username = :username ";
+		TypedQuery<User> query = enma.createQuery(jpql, User.class);
+		query.setParameter("username", username);
+
 		try {
-			trans.begin();
-			
-			String jpql = "SELECT u FROM User u " +
-						  "WHERE u.username = :username ";
-			TypedQuery<User> query = enma.createQuery(jpql, User.class);
-			query.setParameter("username", username);
-			
-			user = query.getSingleResult();
-			
-			trans.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-			trans.rollback();
-			throw e;
-		} finally {
-			enma.close();
-		}
-		try {
-	        return user;
+	        return query.getSingleResult();
 	    } catch (NoResultException ex) {
 	        // Không tìm thấy người dùng với username đã nhập
 	        return null;
@@ -131,36 +84,12 @@ public class UserDAOImpl implements IUserDAO{
 	}
 	@Override
 	public User findOne(int id) {
-//		EntityManager enma = JPAConfig.getEntityManager();
-//		String jpql = "SELECT u FROM User u " +
-//					  "WHERE u.userID = :id ";
-//		TypedQuery<User> query = enma.createQuery(jpql, User.class);
-//		query.setParameter("id", id);
-//		return query.getSingleResult();
-		
-		User user = null;
 		EntityManager enma = JPAConfig.getEntityManager();
-		EntityTransaction trans = enma.getTransaction();
-		try {
-			trans.begin();
-			
-			String jpql = "SELECT u FROM User u " +
-						  "WHERE u.userID = :id ";
-			TypedQuery<User> query = enma.createQuery(jpql, User.class);
-			query.setParameter("id", id);
-			
-			user = query.getSingleResult();
-			
-			trans.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-			trans.rollback();
-			throw e;
-		} finally {
-			enma.close();
-		}
-	    return user;
-
+		String jpql = "SELECT u FROM User u " +
+					  "WHERE u.userID = :id ";
+		TypedQuery<User> query = enma.createQuery(jpql, User.class);
+		query.setParameter("id", id);
+		return query.getSingleResult();
 	}
 	@Override
 	public void insertRegister(User user) {
@@ -218,28 +147,35 @@ public class UserDAOImpl implements IUserDAO{
 		
 	}
 	@Override
-	public void delete(int id) throws Exception {
+	public void delete(int id, int state) throws Exception {
 		EntityManager enma = JPAConfig.getEntityManager();
 		EntityTransaction trans = enma.getTransaction();
-		try {
-			trans.begin();
-			User user = enma.find(User.class, id);
-			if (user != null) {
-				enma.remove(user);
-			} else {
-				throw new Exception("Không tìm thấy!!");
-			}
-			
-			trans.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-			trans.rollback();
-			throw e;
-		} finally {
-			enma.close();
-		}
-		
+
+	    try {
+	        trans.begin();
+
+	        // Tìm sản phẩm theo productID
+	        User user = enma.find(User.class, id);
+
+	        if (user != null) {
+	            // Cập nhật trạng thái của sản phẩm
+	            user.setState(state);
+	            enma.merge(user);
+	        } else {
+	            // Xử lý khi không tìm thấy sản phẩm
+	            System.out.println("Không tìm thấy sản phẩm với ID: " + id);
+	        }
+
+	        trans.commit();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        trans.rollback();
+	        throw e;
+	    } finally {
+	        enma.close();
+	    }
 	}
+		
 	@Override
 	public boolean checkExistEmai(String email) {
 		boolean duplicate = false;

@@ -167,7 +167,7 @@
 					      <h5 class="card-header">User's details</h5>
 					      <div class="card-body">
 					
-					        <form id="formValidationExamples" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate">
+					        <form id="formValidationExamples" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" action="updateuser" method="post">
 					
 					          <c:set var="user" value="${userUpdate}"/>
 					       
@@ -184,7 +184,7 @@
 					          <div class="form-password-toggle">
 		                        <label class="form-label" for="basic-default-password12">Password</label>
 		                        <div class="input-group">
-		                          <input value="${user.password}" type="password" class="form-control" id="basic-default-password12" placeholder="············" aria-describedby="basic-default-password2">
+		                          <input value="${user.password}" type="password" class="form-control" name="password" id="basic-default-password12" placeholder="············" aria-describedby="basic-default-password2">
 		                          <span id="basic-default-password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
 		                        </div>
 		                      </div>
@@ -192,7 +192,7 @@
 		                      <div class="form-password-toggle">
 		                        <label class="form-label" for="basic-default-password12">Full name</label>
 		                        <div class="input-group">
-		                          <input value="${user.fullname}" type="text" class="form-control" id="" aria-describedby="basic-default-password2">
+		                          <input value="${user.fullname}" type="text" class="form-control" name="fullname" id="" aria-describedby="basic-default-password2">
 		                       
 		                        </div>
 		                      </div>

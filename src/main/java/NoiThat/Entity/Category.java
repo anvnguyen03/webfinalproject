@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 @Entity
 @Table(name = "Category")
@@ -92,6 +94,16 @@ public class Category {
 
 	public void setProduct(List<Product> product) {
 		this.product = product;
+	}
+	
+	public CategoryParents deserializeCategoryParents(String json) {
+	    ObjectMapper objectMapper = new ObjectMapper();
+	    try {
+	        return objectMapper.readValue(json, CategoryParents.class);
+	    } catch (Exception e) {
+	        e.printStackTrace(); // Handle the exception appropriately
+	        return null;
+	    }
 	}
 	
 }

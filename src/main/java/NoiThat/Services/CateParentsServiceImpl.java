@@ -16,17 +16,17 @@ public class CateParentsServiceImpl implements ICateParentsService{
 	}
 	@Override
 	public void insert(CategoryParents cateParents) {
-		// TODO Auto-generated method stub
+		catepa.insert(cateParents);
 		
 	}
 	@Override
 	public void update(CategoryParents cateparents) {
-		// TODO Auto-generated method stub
+		catepa.update(cateparents);
 		
 	}
 	@Override
-	public void delete(int cateParentsid) throws Exception {
-		// TODO Auto-generated method stub
+	public void delete(CategoryParents cateparents) throws Exception {
+		catepa.delete(cateparents);
 		
 	}
 

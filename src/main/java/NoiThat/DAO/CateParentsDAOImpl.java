@@ -14,30 +14,11 @@ public class CateParentsDAOImpl implements ICateParentsDAO{
 
 	@Override
 	public List<CategoryParents> findAllCateParents() {
-//		EntityManager enma = JPAConfig.getEntityManager();
-//
-//		TypedQuery<CategoryParents> query = enma.createNamedQuery("CategoryParent.findAll", CategoryParents.class);
-//		return query.getResultList();
-		
-		List<CategoryParents> cateparents = null;
 		EntityManager enma = JPAConfig.getEntityManager();
-		EntityTransaction trans = enma.getTransaction();
-		try {
-			trans.begin();
-			
-			TypedQuery<CategoryParents> query = enma.createNamedQuery("CategoryParent.findAll", CategoryParents.class);
-			
-			cateparents = query.getResultList();
-			
-			trans.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-			trans.rollback();
-			throw e;
-		} finally {
-			enma.close();
-		}
-		return cateparents;
+
+		TypedQuery<CategoryParents> query = enma.createNamedQuery("CategoryParent.findAll", CategoryParents.class);
+
+		return query.getResultList();
 	}
 
 	@Override
@@ -77,18 +58,12 @@ public class CateParentsDAOImpl implements ICateParentsDAO{
 	}
 
 	@Override
-	public void delete(int cateParentsid) throws Exception {
+	public void delete(CategoryParents cateparents) throws Exception {
 		EntityManager enma = JPAConfig.getEntityManager();
 		EntityTransaction trans = enma.getTransaction();
 		try {
 			trans.begin();
-			Category category = enma.find(Category.class, cateParentsid);
-			if (category != null) {
-				enma.remove(category);
-			} else {
-				throw new Exception("Không tìm thấy!!");
-			}
-			
+			enma.merge(cateparents);
 			trans.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -103,10 +78,10 @@ public class CateParentsDAOImpl implements ICateParentsDAO{
 //	public static void main(String[] args) throws Exception {
 //		ICateParentsDAO catepa = new CateParentsDAOImpl();
 //		
-////		CategoryParents cateparents = new CategoryParents();
-////		cateparents.setCateParentsName("test");
-////		cateparents.setState(0);
-////		catepa.insert(cateparents);
+//		CategoryParents cateparents = new CategoryParents();
+//		cateparents.setCateParentsName("test");
+//		cateparents.setState(0);
+//		catepa.insert(cateparents);
 //		
 ////		cateparents.setCateParentsID(7);
 ////		cateparents.setCateParentsName("not test");
