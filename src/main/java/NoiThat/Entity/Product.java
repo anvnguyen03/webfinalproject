@@ -168,6 +168,7 @@ public class Product {
 		this.information = information;
 	}
 
+
 	public String ProcessImage(String image, HttpServletRequest req) {
 		String imageName = null;
 
@@ -175,8 +176,7 @@ public class Product {
 			Part part = req.getPart(image);
 
 			// Kiểm tra nếu part chứa dữ liệu ảnh
-//			String storagePath = "D:\\Study\\KH1-3\\Web\\CodeWeb\\WebFinalProject\\src\\main\\webapp\\uploads";
-			String storagePath = "D:\\Study-Space\\Java-Web-Develop\\workspace\\WebFinalProject\\src\\main\\webapp\\uploads";
+			String storagePath = "D:\\Study\\KH1-3\\Web\\CodeWeb\\WebFinalProject\\src\\main\\webapp\\uploads";
 			File storageDirectory = new File(storagePath);
 
 			// Tạo thư mục nếu nó không tồn tại

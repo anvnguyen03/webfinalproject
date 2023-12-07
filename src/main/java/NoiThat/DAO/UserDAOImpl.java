@@ -9,6 +9,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import NoiThat.Entity.Category;
+import NoiThat.Entity.Product;
 import NoiThat.Entity.User;
 import NoiThat.JPAConfig.JPAConfig;
 
