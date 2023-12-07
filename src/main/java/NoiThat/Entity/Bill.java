@@ -33,17 +33,18 @@ public class Bill {
 	private String address;
 	private String phone;
 	private Timestamp createdAt;
-	
-	@Transient
 	private double total;
 	
-	public Bill(int billID, User user, List<CartItems> cartitems, String address, String phone, Timestamp createdAt) {
+	
+	public Bill(int billID, User user, List<CartItems> cartitems, String address, String phone, Timestamp createdAt,
+			double total) {
 		this.billID = billID;
 		this.user = user;
 		this.cartitems = cartitems;
 		this.address = address;
 		this.phone = phone;
 		this.createdAt = createdAt;
+		this.total = total;
 	}
 	public Bill() {
 		
@@ -90,6 +91,5 @@ public class Bill {
 	public void setTotal(double total) {
 		this.total = total;
 	}
-	
 	
 }

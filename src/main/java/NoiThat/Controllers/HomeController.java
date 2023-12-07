@@ -62,18 +62,6 @@ public class HomeController extends HttpServlet{
 				User u = (User) session.getAttribute("account");
 				
 				List<Bill> bills = billService.findByUser(u.getUserID());
-				System.out.println("size: "+bills.size());
-				for (Bill bill : bills) {
-					
-					List<CartItems> ci = cartitemsService.findItemsInBill(bill.getBillID());
-					double total = 0;
-					
-					for (CartItems cartitem : ci) {
-						total += cartitem.getProduct().getPrice()*cartitem.getQuantity();
-					}
-					System.out.println("billID: "+ bill.getBillID() +", total:"+ total);
-					bill.setTotal(total);
-				}
 				
 				req.setAttribute("bills", bills);
 				req.getRequestDispatcher("/views/home/my-account.jsp").forward(req, resp);

@@ -29,9 +29,9 @@
     <div class="container">
         <!-- Start User Details Checkout Form -->
         <div class="checkout_form" data-aos="fade-up"  data-aos-delay="400">
-            <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <form action="addbill" method="post">
+	        <form action="addbill" method="post">
+	            <div class="row">
+	                <div class="col-lg-6 col-md-6">
                         <h3>Billing Details</h3>
                         <div class="row">
                             <div class="col-lg-6">
@@ -57,14 +57,9 @@
                                     <input type="text" name="phone">
                                 </div>
                             </div>
-                            <div class="order_button pt-3">
-                                <button class="btn btn-md btn-black-default-hover" type="submit">Checkout</button>
-                            </div>
                         </div>
-                    </form>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <form action="#">
+	                </div>
+	                <div class="col-lg-6 col-md-6">
                         <h3>Your order</h3>
                         <div class="order_table table-responsive">
                             <table>
@@ -112,9 +107,12 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
+                        <div class="order_button pt-3">
+                            <button class="btn btn-md btn-black-default-hover" type="submit">Checkout</button>
+                        </div>
+	                </div>
+	            </div>
+            </form>
         </div> 
         <!-- Start User Details Checkout Form -->
     </div>

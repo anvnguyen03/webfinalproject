@@ -210,11 +210,18 @@ public class CartController extends HttpServlet{
 			try {
 				billService.insert(bill);
 				
+				double total = 0;
 				List<CartItems> cartitems = cartitemsService.findItemsInCart(u.getCart().getCartID());
 				for (CartItems cartitem : cartitems) {
 					cartitem.setBill(bill);
 					cartitemsService.update(cartitem);
+					total += cartitem.getProduct().getPrice()*cartitem.getQuantity();
 				}
+				
+				total += 1000; // 1000$ shipping fee
+				bill.setTotal(total);
+				billService.update(bill);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
