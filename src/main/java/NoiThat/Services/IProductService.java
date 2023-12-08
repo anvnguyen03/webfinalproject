@@ -13,6 +13,7 @@ public interface IProductService {
 	List<Product> findProductByCateParensID(int cateparentsid);
 	List<Product> findTop12LatestProduct();
 	Product findOne(int productid);
+	List<Product> findProductsByName(String productName);
 	int countAll();
 	List<Product> findProductByPage(int page, int pagesize);
 	List<Product> findProductByCateIDPaging(int cateid, int page, int pagesize);

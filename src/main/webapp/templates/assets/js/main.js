@@ -42,6 +42,25 @@
             $(this).removeClass('open');
         }
     });
+    
+    
+    /************************************************
+     * Modal Sort by 
+     ***********************************************/
+     $('#speed').on('change', function () {
+        // Gửi dữ liệu về servlet bằng AJAX
+        $.ajax({
+            type: 'GET',
+            url: 'allproduct',
+            data: $('#sortingForm').serialize(), // Serialize form data
+            success: function (data) {
+                // Xử lý phản hồi từ servlet (nếu cần)
+            },
+            error: function () {
+                // Xử lý khi có lỗi (nếu cần)
+            }
+        });
+    });
 
     /*****************************
      * Off Canvas Function
@@ -429,8 +448,9 @@
     $("#slider-range").slider({
         range: true,
         min: 0,
-        max: 500,
-        values: [75, 300],
+        max: 121000000,
+        step: 100000,
+        values: [0, 10000000],
         slide: function(event, ui) {
             $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
         }

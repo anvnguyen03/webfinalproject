@@ -72,6 +72,11 @@ public class ProductServiceImpl implements IProductService{
 		return pro.findOne(productid);
 	}
 
+	@Override
+	public List<Product> findProductsByName(String productName) {
+		return pro.findProductsByName(productName);
+	}
+
 
 
 }

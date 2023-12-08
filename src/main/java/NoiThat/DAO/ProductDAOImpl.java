@@ -188,6 +188,20 @@ public class ProductDAOImpl implements IProductDAO{
 		query.setParameter("productid", productid);
 		return query.getSingleResult();
 	}
+	
+	@Override
+	public List<Product> findProductsByName(String productName) {
+	    EntityManager entityManager = JPAConfig.getEntityManager();
+
+	    String jpql = "SELECT p FROM Product p " +
+	                  "WHERE LOWER(p.productName) LIKE :productName";
+	    
+	    TypedQuery<Product> query = entityManager.createQuery(jpql, Product.class);
+	    query.setParameter("productName", "%" + productName.toLowerCase() + "%");
+
+	    return query.getResultList();
+	}
+
 
 
 }

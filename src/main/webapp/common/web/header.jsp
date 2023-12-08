@@ -43,7 +43,7 @@
                          <!-- Start Header Logo -->
                         <div class="header-logo">
                             <div class="logo">
-                                <a href="index.html"><img src="<c:url value="/templates/assets/images/logo/logo_red.png"/>" alt=""></a>
+                                <a href="index.jsp"><img src="<c:url value="/templates/assets/images/logo/logo_red.png"/>" alt=""></a>
                             </div>
                         </div>
                         <!-- End Header Logo -->
@@ -331,8 +331,8 @@
 <!-- Start Offcanvas Search Bar Section -->
 <div id="search" class="search-modal">
     <button type="button" class="close">×</button>
-    <form>
-        <input type="search" placeholder="type keyword(s) here" />
+    <form action="/WebFinalProject/shop/search" method="get">
+        <input type="search" placeholder="type keyword(s) here" name="nameprod"/>
         <button type="submit" class="btn btn-lg btn-golden">Search</button>
     </form>
 </div>

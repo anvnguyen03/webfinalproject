@@ -2,7 +2,10 @@ package NoiThat.Controllers;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.PageContext;
 
 import NoiThat.Entity.Cart;
 import NoiThat.Entity.CartItems;
@@ -30,7 +32,7 @@ import NoiThat.Services.IProductService;
 import NoiThat.Services.ProductServiceImpl;
 
 @WebServlet(urlPatterns = { "/shop/allproduct", "/shop/findByCategory", "/shop/findByCateParents", "/shop/search",
-							"/shop/productdetails"})
+		"/shop/productdetails", "/shop/filterprice", "/shop/sortby" })
 
 public class ShopController extends HttpServlet {
 
@@ -41,6 +43,12 @@ public class ShopController extends HttpServlet {
 	IProductService prod = new ProductServiceImpl();
 	ICartService cartService = new CartServiceImpl();
 	ICartItemsService cartitemsService = new CartItemsServiceImpl();
+
+	List<Product> listproprice = new ArrayList<Product>();
+	List<Product> proprice = new ArrayList<Product>();
+	List<Product> listsortpro = new ArrayList<Product>();
+	List<Product> sortby = new ArrayList<Product>();
+
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -65,46 +73,180 @@ public class ShopController extends HttpServlet {
 		} else if (url.contains("/findByCateParents")) {
 			findProductByCateParent(req, resp);
 			req.getRequestDispatcher("/views/shop/Shop.jsp").forward(req, resp);
-		} else if (url.contains("/search")) {
+		} else if (url.contains("/shop/search")) {
 			searchProduct(req, resp);
 		} else if (url.contains("/productdetails")) {
-			
+
 			int productid = Integer.parseInt(req.getParameter("id"));
 			Product product_detailed = prod.findOne(productid);
-			
+
 			Category category = product_detailed.getCategory();
 			List<Product> relatedProducts = category.getProduct();
-			
+
 			req.setAttribute("product_detailed", product_detailed);
 			req.setAttribute("relatedProducts", relatedProducts);
 			req.getRequestDispatcher("/views/shop/Shop-ProductDetails.jsp").forward(req, resp);
-			
+
+		} else if (url.contains("/shop/filterprice")) {
+			filterPriceProduct(req, resp);
+		} else if (url.contains("/shop/sortby")) {
+			sortbyProduct(req, resp);
 		}
+	}
+
+	private void sortbyProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		String sort = req.getParameter("sort");
+		if ("1".equals(sort)) {
+			sortby.clear();
+			// Sắp xếp danh sách theo giá tăng dần
+			Collections.sort(listsortpro, Comparator.comparingDouble(Product::getPrice));
+			// Sao chép danh sách đã sắp xếp vào danh sách mới (nếu cần)
+			sortby = listsortpro;
+		}
+		if ("2".equals(sort)) {
+			sortby.clear();
+			// Sắp xếp danh sách theo giá giảm dần
+			Collections.sort(listsortpro, Comparator.comparingDouble(Product::getPrice).reversed());
+			sortby = listsortpro;
+		}
+		if ("0".equals(sort)) {
+			sortby.clear();
+			sortby = listsortpro;
+		}
+
+		try {
+
+			int countProduct = sortby.size();
+			String indexPage = req.getParameter("index");
+
+			if (indexPage == null) {
+				indexPage = "1";
+			}
+			int pagesize = 12;
+
+			int endP = countProduct / pagesize;
+			if (countProduct % pagesize != 0) {
+				endP++;
+			}
+			int i = 0;
+			int spro = (Integer.parseInt(indexPage) - 1) * pagesize;
+			int epro = (Integer.parseInt(indexPage)) * pagesize;
+			List<Product> listprodByPage = new ArrayList<Product>();
+			for (Product prod_current : sortby) {
+				if (i >= spro && i < epro) {
+					listprodByPage.add(prod_current);
+				}
+				i++;
+			}
+
+			req.setAttribute("startProduct", (listprodByPage).size());
+			req.setAttribute("tag", indexPage);
+			req.setAttribute("endP", endP);
+			req.setAttribute("countproduct", countProduct);
+			req.setAttribute("listprodByPage", listprodByPage);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		req.getRequestDispatcher("/views/shop/Shop.jsp").forward(req, resp);
+
+	}
+
+	private void filterPriceProduct(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+
+		if (req.getParameter("filterprice") != null) {
+			proprice.clear();
+			String filterprice = req.getParameter("filterprice");
+
+			// Chuyển đổi giá trị thành int
+			String cleanPrice = filterprice.replaceAll("[^0-9-]", "");
+			String[] priceRange = cleanPrice.split("-");
+			int minPrice = Integer.parseInt(priceRange[0]);
+			int maxPrice = Integer.parseInt(priceRange[1]);
+			for (Product prod_current : listproprice) {
+				if ((int) prod_current.getPrice() >= minPrice && (int) prod_current.getPrice() <= maxPrice) {
+					proprice.add(prod_current);
+				}
+			}
+		}
+
+		try {
+
+			int countProduct = proprice.size();
+			String indexPage = req.getParameter("index");
+
+			if (indexPage == null) {
+				indexPage = "1";
+			}
+			int pagesize = 12;
+
+			int endP = countProduct / pagesize;
+			if (countProduct % pagesize != 0) {
+				endP++;
+			}
+			int i = 0;
+			int spro = (Integer.parseInt(indexPage) - 1) * pagesize;
+			int epro = (Integer.parseInt(indexPage)) * pagesize;
+			List<Product> listprodByPage = new ArrayList<Product>();
+			for (Product prod_current : proprice) {
+				if (i >= spro && i < epro) {
+					listprodByPage.add(prod_current);
+				}
+				i++;
+			}
+
+			req.setAttribute("startProduct", (listprodByPage).size());
+			req.setAttribute("tag", indexPage);
+			req.setAttribute("endP", endP);
+			req.setAttribute("countproduct", countProduct);
+			req.setAttribute("listprodByPage", listprodByPage);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		req.getRequestDispatcher("/views/shop/Shop.jsp").forward(req, resp);
+
 	}
 
 	private void findCart(HttpServletRequest req, HttpServletResponse resp) {
 		HttpSession session = req.getSession();
 		if (session != null && session.getAttribute("account") != null) {
-			
+
 			User u = (User) session.getAttribute("account");
 			Cart cart = cartService.findOne(u.getUserID());
 			List<CartItems> ci = cartitemsService.findItemsInCart(cart.getCartID());
 			req.setAttribute("cartitems", ci);
-			
+
 			int count_items = ci.size();
 			double total = 0;
 			for (CartItems i : ci) {
-					total += i.getProduct().getPrice()*i.getQuantity();
+				total += i.getProduct().getPrice() * i.getQuantity();
 			}
 			req.setAttribute("count_items", count_items);
 			req.setAttribute("total", total);
-			
+
 		}
 	}
 
-	private void searchProduct(HttpServletRequest req, HttpServletResponse resp) {
-		
-		
+	private void searchProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		String namepro = req.getParameter("nameprod");
+
+		List<Product> prodname = prod.findProductsByName(namepro);
+
+		int startProduct = prodname.size();
+		int endProduct = startProduct;
+		int countProduct = startProduct;
+		String indexPage = "1";
+		int endP = (startProduct / 12) + 1;
+
+		req.setAttribute("tag", indexPage);
+		req.setAttribute("endP", endP);
+		req.setAttribute("countproduct", countProduct);
+		req.setAttribute("startProduct", startProduct);
+		req.setAttribute("endProduct", endProduct);
+		req.setAttribute("listprodByPage", prodname);
+		req.getRequestDispatcher("/views/shop/Shop.jsp").forward(req, resp);
 	}
 
 	private void find12LatestProducts(HttpServletRequest req, HttpServletResponse resp)
@@ -123,28 +265,34 @@ public class ShopController extends HttpServlet {
 		int cateparentid = Integer.parseInt(req.getParameter("categoryparentsid"));
 		try {
 			List<Product> listprodByCateParents = prod.findProductByCateParensID(cateparentid);
+			listproprice.clear();
+			listsortpro.clear();
+			listproprice = listprodByCateParents;
+			listsortpro = listproprice;
+
 			int countProduct = listprodByCateParents.size();
-			
+
 			String indexPage = req.getParameter("index");
 			if (indexPage == null) {
 				indexPage = "1";
 			}
 			int pagesize = 12;
-	
-			int endP = countProduct/pagesize;
+
+			int endP = countProduct / pagesize;
 			if (countProduct % pagesize != 0) {
 				endP++;
 			}
-			
-			List<Product> listprodByPage = prod.findProductByCateParensIDPaging(cateparentid, Integer.parseInt(indexPage)-1,pagesize);	
+
+			List<Product> listprodByPage = prod.findProductByCateParensIDPaging(cateparentid,
+					Integer.parseInt(indexPage) - 1, pagesize);
 			int startProduct;
 			if (Integer.parseInt(indexPage) == 1) {
 				startProduct = 1;
 			} else {
-				startProduct = (Integer.parseInt(indexPage)-1)*pagesize;
+				startProduct = (Integer.parseInt(indexPage) - 1) * pagesize;
 			}
-			int endProduct = (Integer.parseInt(indexPage)-1)*pagesize + listprodByPage.size();
-			
+			int endProduct = (Integer.parseInt(indexPage) - 1) * pagesize + listprodByPage.size();
+
 			req.setAttribute("startProduct", startProduct);
 			req.setAttribute("endProduct", endProduct);
 			req.setAttribute("tag", indexPage);
@@ -165,28 +313,34 @@ public class ShopController extends HttpServlet {
 
 		try {
 			List<Product> listprodByCate = prod.findProductByCateID(cateid);
+			listproprice.clear();
+			listsortpro.clear();
+			listproprice = listprodByCate;
+			listsortpro = listproprice;
+
 			int countProduct = listprodByCate.size();
-			
+
 			String indexPage = req.getParameter("index");
 			if (indexPage == null) {
 				indexPage = "1";
 			}
 			int pagesize = 12;
-	
-			int endP = countProduct/pagesize;
+
+			int endP = countProduct / pagesize;
 			if (countProduct % pagesize != 0) {
 				endP++;
 			}
-			
-			List<Product> listprodByPage = prod.findProductByCateIDPaging(cateid, Integer.parseInt(indexPage)-1,pagesize);
+
+			List<Product> listprodByPage = prod.findProductByCateIDPaging(cateid, Integer.parseInt(indexPage) - 1,
+					pagesize);
 			int startProduct;
 			if (Integer.parseInt(indexPage) == 1) {
 				startProduct = 1;
 			} else {
-				startProduct = (Integer.parseInt(indexPage)-1)*pagesize;
+				startProduct = (Integer.parseInt(indexPage) - 1) * pagesize;
 			}
-			int endProduct = (Integer.parseInt(indexPage)-1)*pagesize + listprodByPage.size();
-			
+			int endProduct = (Integer.parseInt(indexPage) - 1) * pagesize + listprodByPage.size();
+
 			req.setAttribute("startProduct", startProduct);
 			req.setAttribute("endProduct", endProduct);
 			req.setAttribute("tag", indexPage);
@@ -200,7 +354,10 @@ public class ShopController extends HttpServlet {
 
 	private void findAndCountProductByPage(HttpServletRequest req, HttpServletResponse resp)
 			throws UnsupportedEncodingException {
-
+		listproprice.clear();
+		listsortpro.clear();
+		listproprice = prod.findAllProduct();
+		listsortpro = listproprice;
 		try {
 			String indexPage = req.getParameter("index");
 			if (indexPage == null) {
@@ -208,21 +365,22 @@ public class ShopController extends HttpServlet {
 			}
 			int pagesize = 12;
 			int countProduct = prod.countAll();
-			
-			int endP = countProduct/pagesize;
+
+			int endP = countProduct / pagesize;
 			if (countProduct % pagesize != 0) {
 				endP++;
 			}
-			
-			List<Product> listprodByPage = prod.findProductByPage(Integer.parseInt(indexPage)-1,pagesize);
+
+			List<Product> listprodByPage = prod.findProductByPage(Integer.parseInt(indexPage) - 1, pagesize);
+
 			int startProduct;
 			if (Integer.parseInt(indexPage) == 1) {
 				startProduct = 1;
 			} else {
-				startProduct = (Integer.parseInt(indexPage)-1)*pagesize;
+				startProduct = (Integer.parseInt(indexPage) - 1) * pagesize;
 			}
-			int endProduct = (Integer.parseInt(indexPage)-1)*pagesize + listprodByPage.size();
-			
+			int endProduct = (Integer.parseInt(indexPage) - 1) * pagesize + listprodByPage.size();
+
 			req.setAttribute("startProduct", startProduct);
 			req.setAttribute("endProduct", endProduct);
 			req.setAttribute("tag", indexPage);
