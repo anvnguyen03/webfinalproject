@@ -1,6 +1,11 @@
 package NoiThat.Controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -31,7 +36,7 @@ import NoiThat.Services.IProductService;
 import NoiThat.Services.ProductServiceImpl;
 
 @WebServlet(urlPatterns = {"/cart", "/addtocart", "/updatecartitem", "/deletecartitem",
-						   "/checkout", "/recentlyview", "/addbill"})
+						   "/checkout", "/recentlyview"})
 public class CartController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -52,6 +57,7 @@ public class CartController extends HttpServlet{
 		
 		// list category to shop dropdown menu
 		findCategoryOfEachCateParents(req, resp);
+		findCart(req, resp);
 		
 		String url = req.getRequestURI().toString();
 		HttpSession session = req.getSession(false);
@@ -155,9 +161,46 @@ public class CartController extends HttpServlet{
 				} else {
 					req.getRequestDispatcher("/views/cart/empty-cart.jsp").forward(req, resp);
 				}
+			} else if (url.contains("/recentlyview")) {
+				Enumeration<String> attributeNames = session.getAttributeNames();
+				List<Product> productList = new ArrayList<>();
+//				List<Product> recentProducts = new ArrayList<>(); // Danh sách lưu trữ 15 sản phẩm gần đây nhất
+
+				while (attributeNames.hasMoreElements()) {
+				    String attributeName = attributeNames.nextElement();
+				    Object attributeValue = session.getAttribute(attributeName);
+
+				    // Kiểm tra nếu attribute có kiểu Product thì thêm vào danh sách sản phẩm
+				    if (attributeValue instanceof Product) {
+				        productList.add((Product) attributeValue);
+				    }
+				}
+				
+				req.setAttribute("productList", productList);
+				req.getRequestDispatcher("/views/cart/recentlyview.jsp").forward(req, resp);
 			}
 		} else {
 			resp.sendRedirect(req.getContextPath() + "/login");
+		}
+	}
+
+	private void findCart(HttpServletRequest req, HttpServletResponse resp) {
+		HttpSession session = req.getSession();
+		if (session != null && session.getAttribute("account") != null) {
+			
+			User u = (User) session.getAttribute("account");
+			Cart cart = cartService.findOne(u.getUserID());
+			List<CartItems> ci = cartitemsService.findItemsInCart(cart.getCartID());
+			req.setAttribute("cartitems", ci);
+			
+			int count_items = ci.size();
+			double total = 0;
+			for (CartItems i : ci) {
+					total += i.getProduct().getPrice()*i.getQuantity();
+			}
+			req.setAttribute("count_items", count_items);
+			req.setAttribute("total", total);
+			
 		}
 	}
 
@@ -185,23 +228,16 @@ public class CartController extends HttpServlet{
 		resp.setCharacterEncoding("UTF-8");
 		req.setCharacterEncoding("UTF-8");
 		
-		// list category to shop dropdown menu
-		//findCategoryOfEachCateParents(req, resp);
+		findCategoryOfEachCateParents(req, resp);
+		findCart(req, resp);
 		
 		String url = req.getRequestURI().toString();
 		HttpSession session = req.getSession(false);
 		User u = (User) session.getAttribute("account");
-		if (url.contains("/addbill")) {
+		if (url.contains("/checkout")) {
 			String address = req.getParameter("address");
-			if (address == null)
-			{
-				address = "Số 1 VVN";
-			}
 			String phone = req.getParameter("phone");
-			if (phone == null)
-			{
-				phone = "0123456789";
-			}
+
 			Bill bill = new Bill();
 			bill.setUser(u);
 			bill.setAddress(address);
@@ -222,11 +258,14 @@ public class CartController extends HttpServlet{
 				bill.setTotal(total);
 				billService.update(bill);
 				
+				req.setAttribute("bill", bill);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
-			resp.sendRedirect(req.getContextPath() + "/myaccount");
+//			resp.sendRedirect(req.getContextPath() + "/myaccount");
+			req.getRequestDispatcher("/views/cart/checkOut-Success.jsp").forward(req, resp);
 		}
 		
 	}

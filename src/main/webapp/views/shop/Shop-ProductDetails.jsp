@@ -135,7 +135,7 @@
                             <div class="variable-single-item ">
                                 <span>Quantity</span>
                                 <div class="product-variable-quantity">
-                                    <input id="quantityInput" min="1" max="100" value="1" type="number">
+                                    <input id="quantityInput" min="1" max="${product.stoke}" value="1" type="number">
                                 </div>
                             </div>
                             
@@ -315,6 +315,21 @@
 <!-- End Product Default Slider Section -->
 
 <script>
+	
+	const input = document.getElementById('quantityInput');
+	//Lắng nghe sự kiện 'input' khi giá trị thay đổi
+	input.addEventListener('input', function() {
+	 // Lấy giá trị hiện tại của input
+	 let value = parseInt(this.value);
+	 const maxValue = parseInt(this.max);
+	
+	 // Kiểm tra nếu giá trị vượt quá giá trị max thì giới hạn lại
+	 if (value > maxValue) {
+	     value = maxValue;
+	     this.value = value;
+	 }
+	});
+	
     function addToCart(addProductIdLink, event) {
     	event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
     	

@@ -67,7 +67,7 @@
 		                                        <td class="product_thumb"><a href="<c:url value="/shop/productdetails?id=${i.product.productID}"/>"><img src="<c:url value="/uploads/${i.product.imgLink1}"/>" alt=""></a></td>
 		                                        <td class="product_name"><a href="<c:url value="/shop/productdetails?id=${i.product.productID}"/>">${i.product.productName}</a></td>
 		                                        <td class="product-price"><span class="price">$<fmt:formatNumber value="${i.product.price}" pattern="#,###,###.##" /></span></td>
-		                                        <td class="product_quantity"><label>Quantity</label> <input id="quantityInput${i.cartItemsID}" min="1" max="100" value="${i.quantity}" type="number"></td>
+		                                        <td class="product_quantity"><label>Quantity</label> <input id="quantityInput${i.cartItemsID}" min="1" max="${i.product.stoke}" value="${i.quantity}" type="number"></td>
 		                                        <td class="product_total"><span class="price">$<fmt:formatNumber value="${i.product.price*i.quantity}" pattern="#,###,###.##" /></span></td>
 		                                        <td class="product_update"><a href="<c:url value="/updatecartitem?id=${i.cartItemsID}"/>" class="toggle-update"><i class="fa fa-refresh"></i></a></td>
 		                                    </tr> 
@@ -129,10 +129,25 @@
 </div> <!-- ...:::: End Cart Section:::... -->
 
 <script>
+
+	//Lấy danh sách tất cả các thẻ input
+	const inputs = document.querySelectorAll('input[type="number"]');
+	// Lặp qua từng input và gán sự kiện 'input' để kiểm tra giá trị nhập vào
+	inputs.forEach(input => {
+	    input.addEventListener('input', function() {
+	        let value = parseInt(this.value);
+	        const maxValue = parseInt(this.max);
+	
+	        if (value > maxValue) {
+	            value = maxValue;
+	            this.value = value;
+	        }
+	    });
+	});
+
     
 	//Lấy tất cả các phần tử a có class "toggle-update"
 	const toggleUpdateLinks = document.querySelectorAll('a.toggle-update');
-	
 	// Lặp qua từng phần tử a và thêm sự kiện onclick
 	toggleUpdateLinks.forEach(link => {
 	    link.addEventListener('click', function(event) {
