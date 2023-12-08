@@ -72,6 +72,16 @@ public class ProductServiceImpl implements IProductService{
 		return pro.findOne(productid);
 	}
 
+	@Override
+	public List<Product> findProductsByName(String productName) {
+		return pro.findProductsByName(productName);
+	}
+
+	@Override
+	public List<Product> findProductsByNamePaging(String productName, int page, int pagesize) {
+		return pro.findProductsByNamePaging(productName, page, pagesize);
+	}
+
 
 
 }

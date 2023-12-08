@@ -33,16 +33,22 @@
                 <div class="siderbar-section" data-aos="fade-up"  data-aos-delay="0">
 
                     <!-- Start Single Sidebar Widget -->
-                    <div class="sidebar-single-widget">
-                        <h6 class="sidebar-title">FILTER BY PRICE</h6>
-                        <div class="sidebar-content">
-                            <div id="slider-range"></div>
-                            <div class="filter-type-price">
-                                <label for="amount">Price range:</label>
-                                <input type="text" id="amount">
-                            </div>
-                        </div>
-                    </div> <!-- End Single Sidebar Widget -->
+					<div class="sidebar-single-widget">
+						<h6 class="sidebar-title">FILTER BY PRICE</h6>
+						<div class="sidebar-content">
+							<div id="slider-range"></div>
+							<div class="filter-type-price">
+								<form class="pt-0" id="eCommerceCategoryListForm" onsubmit="return true" action="filterprice" method="get">
+									<label for="amount">Price range:</label> 
+									<input type="text"id="amount" name="filterprice">
+									<div class="mb-3">
+										<button type="submit"class="btn btn-md btn-golden">Filter</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<!-- End Single Sidebar Widget -->
 
                     <!-- Start Single Sidebar Widget -->
                     <div class="sidebar-single-widget">
@@ -165,21 +171,28 @@
                                     <div class="page-amount ml-2">
                                         <span>Showing <c:out value="${startProduct}"/>–<c:out value="${endProduct}"/> of <c:out value="${countproduct}"/> results</span>
                                     </div> <!-- End Page Amount -->
-                                </div> <!-- End Sort tab Button -->
+                                </div> 
+                                <!-- End Sort tab Button -->
 
-                                <!-- Start Sort Select Option -->
-                                <div class="sort-select-list d-flex align-items-center">
-                                    <label class="mr-2">Sort By:</label>
-                                    <form action="#">
-                                        <fieldset>
-                                            <select name="speed" id="speed">
-                                                <option selected="selected">Default</option>
-                                                <option>Sort by price: low to high</option>
-                                                <option>Sort by price: high to low</option>
-                                            </select>
-                                        </fieldset>
-                                    </form>
-                                </div> <!-- End Sort Select Option -->
+								<!-- Start Sort Select Option -->
+								<div class="sort-select-list d-flex align-items-center">
+									<label class="mr-2">Sort By:</label>
+									<form id="sortingForm" action="sortby" method="get">
+								        <fieldset>
+								            <select name="sort" id="speed" onchange="submitForm()">
+									<!-- <form  action="sortby" method="get">
+								        <fieldset>
+								            <select name="sort" id="speed" > -->
+								                <option value="0">Default</option>
+								                <option value="1">Sort by price: low to high</option>
+								                <option value="2">Sort by price: high to low</option>
+								            </select>
+								        </fieldset>
+								        <!-- <button type="submit"class="btn btn-primary me-sm-3 me-1 data-submit save-button">Filter</button> -->
+								        
+								    </form>
+								</div>
+								<!-- End Sort Select Option -->
 
                                 
 
@@ -321,6 +334,10 @@
 											<c:param name="categoryid" value="${param.categoryid}" />
 										</c:if>
 										
+										<c:if test="${not empty queryString && queryString.contains('nameprod')}">
+											<c:param name="nameprod" value="${param.nameprod}" />
+										</c:if>
+										
 										<c:param name="index" value="${tag-1}" />
 										
 									</c:url>"><i class="ion-ios-skipbackward"></i>
@@ -347,6 +364,10 @@
 												<c:param name="categoryid" value="${param.categoryid}" />
 											</c:if>
 											
+											<c:if test="${not empty queryString && queryString.contains('nameprod')}">
+												<c:param name="nameprod" value="${param.nameprod}" />
+											</c:if>
+											
 											<c:param name="index" value="${i}" />
 											
 										</c:url>" class="active">
@@ -368,6 +389,10 @@
 											
 											<c:if test="${not empty queryString && queryString.contains('categoryid')}">
 												<c:param name="categoryid" value="${param.categoryid}" />
+											</c:if>
+											
+											<c:if test="${not empty queryString && queryString.contains('nameprod')}">
+												<c:param name="nameprod" value="${param.nameprod}" />
 											</c:if>
 											
 											<c:param name="index" value="${i}" />
@@ -408,5 +433,20 @@
             </div>
         </div>
     </div>
-</div> 
+</div>
+<script>
+    function submitForm() {
+        document.getElementById("sortingForm").submit();
+    }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $('#speed').on('change', function () {
+        var selectedValue = $(this).val();
+        if (selectedValue) {
+            window.location.href = 'allproduct?speed=' + selectedValue;
+        }
+    });
+</script>
 <!-- ...:::: End Shop Section:::... -->

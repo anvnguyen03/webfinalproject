@@ -4,10 +4,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import NoiThat.Entity.Category;
 import NoiThat.Entity.Product;
 import NoiThat.JPAConfig.JPAConfig;
 
@@ -187,6 +185,35 @@ public class ProductDAOImpl implements IProductDAO{
 		TypedQuery<Product> query = enma.createQuery(jpql, Product.class);
 		query.setParameter("productid", productid);
 		return query.getSingleResult();
+	}
+
+	@Override
+	public List<Product> findProductsByName(String productName) {
+		EntityManager entityManager = JPAConfig.getEntityManager();
+
+	    String jpql = "SELECT p FROM Product p " +
+	                  "WHERE LOWER(p.productName) LIKE :productName";
+	    
+	    TypedQuery<Product> query = entityManager.createQuery(jpql, Product.class);
+	    query.setParameter("productName", "%" + productName.toLowerCase() + "%");
+
+	    return query.getResultList();
+	}
+
+	@Override
+	public List<Product> findProductsByNamePaging(String productName, int page, int pagesize) {
+		EntityManager entityManager = JPAConfig.getEntityManager();
+
+	    String jpql = "SELECT p FROM Product p " +
+	                  "WHERE LOWER(p.productName) LIKE :productName";
+	    
+	    TypedQuery<Product> query = entityManager.createQuery(jpql, Product.class);
+	    query.setParameter("productName", "%" + productName.toLowerCase() + "%");
+	    
+	    query.setFirstResult(page * pagesize);
+		query.setMaxResults(pagesize);
+
+	    return query.getResultList();
 	}
 
 
