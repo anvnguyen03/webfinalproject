@@ -19,7 +19,7 @@ import NoiThat.Services.IUserService;
 import NoiThat.Services.UserServiceImpl;
 import utils.Email;
 
-@WebServlet(urlPatterns = { "/register", "/login", "/forgotpass", "/verifycode", "/verify-success", "/waiting", "/logout"})
+@WebServlet(urlPatterns = { "/register", "/login", "/forgotpassword", "/verifycode", "/verify-success", "/waiting", "/logout"})
 public class LoginController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -39,8 +39,8 @@ public class LoginController extends HttpServlet {
 			req.getRequestDispatcher("/decorators/register.jsp").forward(req, resp);
 		} else if (url.contains("/login")) {
 			getLogin(req, resp);
-		} else if (url.contains("/forgotpass")) {
-//			getForgotPass(req, resp);
+		} else if (url.contains("/forgotpassword")) {
+			req.getRequestDispatcher("/decorators/forgotpassword.jsp").forward(req, resp);
 		} else if (url.contains("/verifycode")) {
 			req.getRequestDispatcher("/decorators/verify.jsp").forward(req, resp);
 		} else if (url.contains("/verify-success")) {
@@ -125,10 +125,33 @@ public class LoginController extends HttpServlet {
 			postRegister(req, resp);
 		} else if (url.contains("/login")) {
 			postLogin(req, resp);
-		} else if (url.contains("/forgotpass")) {
-//			postForgotPass(req, resp);
+		} else if (url.contains("/forgotpassword")) {
+			postForgotPass(req, resp);
 		} else if (url.contains("/verifycode")) {
 			postVerifyCode(req, resp);
+		}
+	}
+
+	private void postForgotPass(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String email = req.getParameter("email");
+		User u = userService.findByEmail(email);
+		if (u != null) {
+			Email sm = new Email();
+			
+			boolean test = sm.sendEmailForPassword(u);
+			if (test) {
+				String message = "Mật khẩu đã được gửi đến email của bạn!";
+				req.setAttribute("message", message);
+				req.getRequestDispatcher("/decorators/forgotpassword.jsp").forward(req, resp);
+			} else {
+				PrintWriter out = resp.getWriter();
+				out.println("Lỗi khi gửi mail!!");
+			}
+		} else {
+			String error = "Email không tồn tại!";
+			req.setAttribute("error", error);
+			req.getRequestDispatcher("/decorators/forgotpassword.jsp").forward(req, resp);
+			return;
 		}
 	}
 

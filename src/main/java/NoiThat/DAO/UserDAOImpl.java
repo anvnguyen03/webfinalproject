@@ -225,4 +225,19 @@ public class UserDAOImpl implements IUserDAO{
 		return duplicate;
 	}
 
+	@Override
+	public User findByEmail(String email) {
+		EntityManager enma = JPAConfig.getEntityManager();
+		String jpql = "SELECT u FROM User u " +
+					  "WHERE u.email = :email ";
+		TypedQuery<User> query = enma.createQuery(jpql, User.class);
+		query.setParameter("email", email);
+
+		try {
+	        return query.getSingleResult();
+	    } catch (NoResultException ex) {
+	        return null;
+	    }
+	}
+
 }

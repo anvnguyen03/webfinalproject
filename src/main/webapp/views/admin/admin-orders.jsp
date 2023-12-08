@@ -159,7 +159,124 @@
 
             <div class="container-xxl flex-grow-1 container-p-y">
              	<h4 class="py-3 mb-4"><span class="text-muted fw-light">Dashboards /</span> Orders management</h4>
+            	<!-- Hoverable Table rows -->
+	              <div class="card">
+		              <div>
+			            <h5 class="card-header">Orders</h5>
+		              	
+		              </div>
+	                <div class="table-responsive text-nowrap">
+	                  <table id="example" class="table table-hover display" style="width:100%">
+	                    <thead>
+	                      <tr>
+	                        <th>Bill ID</th>
+	                        <th>User ID</th>
+	                        <th>Address</th>
+	                        <th>Phone</th>
+	                        <th>Datetime</th>
+	                        <th>Total</th>
+	                        <th>Actions</th>
+	                      </tr>
+	                    </thead>
+	                    <tbody class="table-border-bottom-0">
+		                    <c:forEach items="${listbill}" var="i">
+		                      <tr>
+		                        <td>
+		                          <span class="fw-medium">${i.billID}</span>
+		                        </td>
+		                        <td>${i.user.userID}</td>
+		                        <td>${i.address}</td>
+		                        <td>${i.phone}</td>
+		                        <td>${i.createdAt }</td>
+		                        <td><span><fmt:formatNumber value="${i.total}" pattern="#,###,###.##" /> $</span></td>
+		                        <td>
+		                          <div class="dropdown">
+		                          	<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+			                            <li>
+			                            	<a class="a-for-btn" href="<c:url value="/admin/updateusers?userID=${i.billID}"/> ">
+					                            <button type="button" class="btn p-0 hide-arrow">
+					                              <i class="bx bx-edit-alt me-1"></i>
+					                            </button>
+				                            </a>
+			                            </li>
+			                            <li>
+			                            	<a href="#del-pop-up${i.billID}" class="toggle-del-pop-up a-for-btn">
+					                            <button type="button" class="btn p-0 hide-arrow">
+					                              <i class="bx bx-trash me-1"></i>
+					                            </button>
+				                            </a>
+			                            </li>
+			                            <li>
+			                            	<a class="a-for-btn" href="<c:url value="/admin/userDetails?userID=${i.billID}"/>">
+					                            <button type="button" class="btn p-0 hide-arrow">
+					                              <i class="bx bx-info-circle me-1"></i>
+					                            </button>
+				                            </a>
+			                            </li>
+			                      	</ul>
+		                          </div>
+		                        </td>
+		                      </tr>
+		                      
+		                      <!-- Start Modal delete -->
+							    <div class="modal fade del-pop-up${i.billID}" id="del-pop-up${i.billID}" tabindex="-1" role="dialog" aria-hidden="true">
+							        <div class="modal-dialog  modal-dialog-centered" role="document">
+							            <div class="modal-content">
+							                <div class="modal-body">
+							                    <div class="container-fluid">
+							                    	<h5 class="card-header">Delete this bill??</h5>
+							                       		<form class="pt-0" id="del-form" onsubmit="return true" action="deleteuser" method="post">
+									                       	<!-- ID -->
+													        <div class="mb-3">
+													          <label class="form-label" for="ecommerce-category-title">User ID</label>
+													          <input type="text" class="form-control notEdit" id="" name="userID" aria-label="category id" readonly="readonly" value="">
+													        </div>
+													        <!-- Title -->
+													        <div class="mb-3">
+													          <label class="form-label" for="ecommerce-category-title">Username</label>
+													          <input type="text" class="form-control notEdit" id="" name="userName" aria-label="category title" readonly="readonly" value="">
+													        </div>
+													        
+													        <div class="mb-3">
+													          <label class="form-label" for="ecommerce-category-title">Email</label>
+													          <input type="text" class="form-control notEdit" id="" name="" aria-label="category title" readonly="readonly" value="">
+													        </div>
+													        
+													        <div class="mb-3">
+													          <label class="form-label" for="ecommerce-category-title">Full name</label>
+													          <input type="text" class="form-control notEdit" id="ecommerce-category-title" name="cateName" aria-label="category title" readonly="readonly" value="">
+													        </div>										  
+													        
+													        <!-- Status -->
+													        <div class="mb-4 ecommerce-select2-dropdown">
+													          <label class="form-label">State</label>
+													          <%-- <c:if test="${i.state == 1}"><span class="badge bg-success me-1">Active</span></c:if>
+								                              <c:if test="${i.state == 0}"><span class="badge bg-danger me-1">Locked</span></c:if>
+								                        	  <c:if test="${i.state == 2}"><span class="badge bg-dark me-1">Deleted</span></c:if> --%>
+			                
+													        </div>
+													        <!-- Submit and reset -->
+													        <div class="mb-3">
+													          <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit delete-button">Delete</button>
+													          <button type="reset" class="btn bg-label-danger del-close-button">Discard</button>
+													        </div>
+											      		</form>
+							                    </div>
+							                </div>
+							            </div>
+							        </div>
+							    </div> 
+							    <!-- End Modal delete --> 
+		                      
+		                    </c:forEach>
+	                    </tbody>
+	                  </table>
+	                </div>
+	              </div>
+             	 <!--/ Hoverable Table rows -->
             </div>
+            
+            
             <!-- / Content -->
 
             <div class="content-backdrop fade"></div>

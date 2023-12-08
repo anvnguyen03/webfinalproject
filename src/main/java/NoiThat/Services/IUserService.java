@@ -8,6 +8,7 @@ public interface IUserService {
 	List<User> findAllUser();
 	User findOne(String username);
 	User findOne(int id);
+	User findByEmail(String email);
 	void insertRegister(User user);
 	void update(User user);
 	void updateState(User user);

@@ -2,9 +2,6 @@ package NoiThat.Controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -147,20 +144,47 @@ public class CartController extends HttpServlet{
 			} else if (url.contains("/checkout")) {
 				Cart cart = cartService.findOne(u.getUserID());
 				List<CartItems> ci = cartitemsService.findItemsInCart(cart.getCartID());
-				req.setAttribute("cartitems", ci);
 				
 				int count_items = ci.size();
 				double total = 0;
+				List<String> messages = new ArrayList<String>();
+				List<String> errors = new ArrayList<String>();
 				for (CartItems i : ci) {
+						if (i.getProduct().getStoke() != 0) {
+							if (i.getQuantity() > i.getProduct().getStoke()) {
+								int sl = i.getProduct().getStoke();
+								i.setQuantity(sl);
+								cartitemsService.update(i);
+								messages.add("Sản phẩm " + i.getProduct().getProductName() + " chỉ còn lại " + sl + " cái.");
+							}
+						} else {
+							errors.add("Sản phẩm " + i.getProduct().getProductName() + " đã hết hàng!");
+							try {
+								i.setQuantity(0);
+								cartitemsService.update(i);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					
 						total += i.getProduct().getPrice()*i.getQuantity();
 				}
+				req.setAttribute("cartitems", ci);
 				req.setAttribute("count_items", count_items);
 				req.setAttribute("total", total);
-				if (count_items != 0) {
-					req.getRequestDispatcher("/views/cart/checkOut.jsp").forward(req, resp);
+				req.setAttribute("messages", messages);
+				req.setAttribute("errors", errors);
+				
+				if (!messages.isEmpty() || !errors.isEmpty()) {
+					req.getRequestDispatcher("/views/cart/cart.jsp").forward(req, resp);
 				} else {
-					req.getRequestDispatcher("/views/cart/empty-cart.jsp").forward(req, resp);
+					if (count_items != 0) {
+						req.getRequestDispatcher("/views/cart/checkOut.jsp").forward(req, resp);
+					} else {
+						req.getRequestDispatcher("/views/cart/empty-cart.jsp").forward(req, resp);
+					}
 				}
+				
 			} else if (url.contains("/recentlyview")) {
 				Enumeration<String> attributeNames = session.getAttributeNames();
 				List<Product> productList = new ArrayList<>();

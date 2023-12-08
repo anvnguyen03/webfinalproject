@@ -79,6 +79,11 @@ public class UserServiceImpl implements IUserService{
 		}
 		return null;
 	}
+
+	@Override
+	public User findByEmail(String email) {
+		return user.findByEmail(email);
+	}
 	
 
 }

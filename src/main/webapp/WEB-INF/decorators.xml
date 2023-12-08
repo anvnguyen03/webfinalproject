@@ -24,6 +24,10 @@
 	<decorator name="login" page="login.jsp">
 		<pattern>/login*</pattern>
 	</decorator>
+	
+	<decorator name="forgotpassword" page="forgotpassword.jsp">
+		<pattern>/forgotpassword*</pattern>
+	</decorator>
 
 	<decorator name="user" page="userHome.jsp">
 		<pattern>/*</pattern>

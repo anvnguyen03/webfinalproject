@@ -11,13 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.beanutils.BeanUtils;
+
+import NoiThat.Entity.Bill;
 import NoiThat.Entity.Category;
 import NoiThat.Entity.CategoryParents;
 import NoiThat.Entity.Product;
 import NoiThat.Entity.User;
 import NoiThat.Entity.UserRole;
+import NoiThat.Services.BillServiceImpl;
 import NoiThat.Services.CateParentsServiceImpl;
 import NoiThat.Services.CateServiceImpl;
+import NoiThat.Services.IBillService;
 import NoiThat.Services.ICateParentsService;
 import NoiThat.Services.ICateService;
 import NoiThat.Services.IProductService;
@@ -44,6 +48,7 @@ public class AdminController extends HttpServlet {
 	IProductService pro = new ProductServiceImpl();
 	IUserService user = new UserServiceImpl();
 	IRoleService role = new RoleServiceImpl();
+	IBillService bill = new BillServiceImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -85,7 +90,8 @@ public class AdminController extends HttpServlet {
 					req.getRequestDispatcher("/views/admin/admin-dashboards-users.jsp").forward(req, resp);
 
 				} else if (url.contains("/orders")) {
-
+					List<Bill> listbill = bill.findAll();
+					req.setAttribute("listbill", listbill);
 					req.getRequestDispatcher("/views/admin/admin-orders.jsp").forward(req, resp);
 
 				} else if (url.contains("/addproducts")) {

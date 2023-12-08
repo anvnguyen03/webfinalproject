@@ -32,12 +32,16 @@
         
         <div class="row">
 				<div class="col">
-					<c:if test="${not empty message}">
-						<div class="alert alert-success">${message}</div>
+					<c:if test="${not empty messages}">
+						<c:forEach items="${messages}" var="message">
+							<div class="alert alert-success">${message}</div>
+						</c:forEach>
 					</c:if>
 					
-					<c:if test="${not empty error}">
-						<div class="alert alert-danger">${error}</div>
+					<c:if test="${not empty errors}">
+						<c:forEach items="${errors}" var="error">
+							<div class="alert alert-danger">${error}</div>
+						</c:forEach>
 					</c:if>
 				</div>
 		</div>
