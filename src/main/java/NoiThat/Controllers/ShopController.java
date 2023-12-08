@@ -46,7 +46,6 @@ public class ShopController extends HttpServlet {
 
 	List<Product> listproprice = new ArrayList<Product>();
 	List<Product> proprice = new ArrayList<Product>();
-	List<Product> listsortpro = new ArrayList<Product>();
 	List<Product> sortby = new ArrayList<Product>();
 
 
@@ -88,32 +87,45 @@ public class ShopController extends HttpServlet {
 			req.getRequestDispatcher("/views/shop/Shop-ProductDetails.jsp").forward(req, resp);
 
 		} else if (url.contains("/shop/filterprice")) {
+			System.out.println(listproprice.size() + "fil");
 			filterPriceProduct(req, resp);
 		} else if (url.contains("/shop/sortby")) {
+			System.out.println(listproprice.size() + "sort2");
 			sortbyProduct(req, resp);
 		}
 	}
 
 	private void sortbyProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String sort = req.getParameter("sort");
-		if ("1".equals(sort)) {
-			sortby.clear();
-			// Sắp xếp danh sách theo giá tăng dần
-			Collections.sort(listsortpro, Comparator.comparingDouble(Product::getPrice));
-			// Sao chép danh sách đã sắp xếp vào danh sách mới (nếu cần)
-			sortby = listsortpro;
+//		String sort = req.getParameter("sort");
+//		List<Product> listsort = new ArrayList<Product>(listproprice);
+//		List<Product> sortby = new ArrayList<Product>(sortbypro); 
+//		System.out.println(listproprice.size() + "sort");
+//		System.out.println(listsort.size() + "sort1");
+	    System.out.println("Before sorting: listproprice size = " + listproprice.size());
+
+		if (req.getParameter("sort") != null) {
+			if ("1".equals(req.getParameter("sort"))) {
+				List<Product> listsort = new ArrayList<Product>(listproprice);
+				sortby.clear();
+				// Sắp xếp danh sách theo giá tăng dần
+				Collections.sort(listsort, Comparator.comparingDouble(Product::getPrice));
+				// Sao chép danh sách đã sắp xếp vào danh sách mới (nếu cần)
+				sortby = listsort;
+			}
+			if ("2".equals(req.getParameter("sort"))) {
+				List<Product> listsort = new ArrayList<Product>(listproprice);
+				sortby.clear();
+				// Sắp xếp danh sách theo giá giảm dần
+				Collections.sort(listsort, Comparator.comparingDouble(Product::getPrice).reversed());
+				sortby = listsort;
+			}
+			if ("0".equals(req.getParameter("sort"))) {
+				sortby.clear();
+				sortby = listproprice;
+			}
 		}
-		if ("2".equals(sort)) {
-			sortby.clear();
-			// Sắp xếp danh sách theo giá giảm dần
-			Collections.sort(listsortpro, Comparator.comparingDouble(Product::getPrice).reversed());
-			sortby = listsortpro;
-		}
-		if ("0".equals(sort)) {
-			sortby.clear();
-			sortby = listsortpro;
-		}
+	    System.out.println("After sorting: sortby size = " + sortby.size());
 
 		try {
 
@@ -266,10 +278,7 @@ public class ShopController extends HttpServlet {
 		try {
 			List<Product> listprodByCateParents = prod.findProductByCateParensID(cateparentid);
 			listproprice.clear();
-			listsortpro.clear();
 			listproprice = listprodByCateParents;
-			listsortpro = listproprice;
-
 			int countProduct = listprodByCateParents.size();
 
 			String indexPage = req.getParameter("index");
@@ -314,10 +323,7 @@ public class ShopController extends HttpServlet {
 		try {
 			List<Product> listprodByCate = prod.findProductByCateID(cateid);
 			listproprice.clear();
-			listsortpro.clear();
 			listproprice = listprodByCate;
-			listsortpro = listproprice;
-
 			int countProduct = listprodByCate.size();
 
 			String indexPage = req.getParameter("index");
@@ -355,9 +361,8 @@ public class ShopController extends HttpServlet {
 	private void findAndCountProductByPage(HttpServletRequest req, HttpServletResponse resp)
 			throws UnsupportedEncodingException {
 		listproprice.clear();
-		listsortpro.clear();
 		listproprice = prod.findAllProduct();
-		listsortpro = listproprice;
+		
 		try {
 			String indexPage = req.getParameter("index");
 			if (indexPage == null) {
