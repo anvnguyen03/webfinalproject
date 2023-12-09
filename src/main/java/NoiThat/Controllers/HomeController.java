@@ -30,9 +30,11 @@ import NoiThat.Services.ICartService;
 import NoiThat.Services.ICateParentsService;
 import NoiThat.Services.ICateService;
 import NoiThat.Services.IProductService;
+import NoiThat.Services.IUserService;
 import NoiThat.Services.ProductServiceImpl;
+import NoiThat.Services.UserServiceImpl;
 
-@WebServlet( urlPatterns = {"/home", "/myaccount", "/orderdetails"} )
+@WebServlet( urlPatterns = {"/home", "/myaccount", "/orderdetails", "/changepassword", "/changeaccountdetails"})
 
 public class HomeController extends HttpServlet{
 
@@ -44,6 +46,7 @@ public class HomeController extends HttpServlet{
 	ICartService cartService = new CartServiceImpl();
 	ICartItemsService cartitemsService = new CartItemsServiceImpl();
 	IBillService billService = new BillServiceImpl();
+	IUserService userService = new UserServiceImpl();
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -131,6 +134,85 @@ public class HomeController extends HttpServlet{
 		}
 		catch (Exception e){
 			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String url = req.getRequestURI().toString();
+		resp.setContentType("text/html");
+		resp.setCharacterEncoding("UTF-8");
+		req.setCharacterEncoding("UTF-8");
+		
+		findCategoryOfEachCateParents(req, resp);
+		findCart(req, resp);
+		
+		HttpSession session = req.getSession();
+		if (session != null && session.getAttribute("account") != null) {
+			if (url.contains("/changepassword")) {
+					User u = (User) session.getAttribute("account");
+					
+					List<Bill> bills = billService.findByUser(u.getUserID());
+					req.setAttribute("bills", bills);
+					
+					String oldPass = req.getParameter("old_pass");
+					String newPass = req.getParameter("new_pass");
+					String confirmNewPass = req.getParameter("confirm_new_pass");
+					
+					if (!oldPass.equals(u.getPassword().toString())) {
+						String error = "Mật khẩu không chính xác!";
+						req.setAttribute("error", error);
+						req.getRequestDispatcher("/views/home/my-account.jsp").forward(req, resp);
+					} else {
+						if (newPass.equals(confirmNewPass)) {
+							u.setPassword(confirmNewPass);
+							userService.update(u);
+							String message = "Đổi mật khẩu thành công, vui lòng đăng nhập lại để kiểm tra";
+							req.setAttribute("message", message);
+							req.getRequestDispatcher("/views/home/my-account.jsp").forward(req, resp);
+						} else {
+							String error = "Mật khẩu mới không trùng khớp, hãy xác nhận lại!";
+							req.setAttribute("error", error);
+							req.getRequestDispatcher("/views/home/my-account.jsp").forward(req, resp);
+						}
+					}
+			} else if (url.contains("/changeaccountdetails")) {
+				String email = req.getParameter("email");
+				String fullname = req.getParameter("fullname");
+				String password = req.getParameter("password");
+				
+				User u = (User) session.getAttribute("account");
+				List<Bill> bills = billService.findByUser(u.getUserID());
+				req.setAttribute("bills", bills);
+				if (password.equals(u.getPassword().toString())) {
+					if (!email.equals(u.getEmail())) {
+						if (userService.checkExistEmai(email)) {
+							String err = "Email "+email+" đã được sử dụng, hãy sử dụng email khác!";
+							req.setAttribute("err", err);
+							req.getRequestDispatcher("/views/home/my-account.jsp").forward(req, resp);
+						} else {
+							u.setFullname(fullname);
+							u.setEmail(email);
+							userService.update(u);
+							String msg = "Cập nhật thành công!";
+							req.setAttribute("msg", msg);
+							req.getRequestDispatcher("/views/home/my-account.jsp").forward(req, resp);
+						}
+					} else {
+						u.setFullname(fullname);
+						userService.update(u);
+						String msg = "Cập nhật thành công!";
+						req.setAttribute("msg", msg);
+						req.getRequestDispatcher("/views/home/my-account.jsp").forward(req, resp);
+					}
+				} else {
+					String err = "Xác thực mật khẩu không chính xác!!!!";
+					req.setAttribute("err", err);
+					req.getRequestDispatcher("/views/home/my-account.jsp").forward(req, resp);
+				}
+			}
+		} else {
+			resp.sendRedirect(req.getContextPath() + "/login");
 		}
 	}
 }

@@ -42,14 +42,14 @@
                     <div data-i18n="Analytics">Category</div>
                   </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item active">
                   <a
                     href="<c:url value="/admin/products"/>"
                     class="menu-link">
                     <div data-i18n="eCommerce">Products</div>
                   </a>
                 </li>
-                <li class="menu-item active">
+                <li class="menu-item">
                   <a
                     href="<c:url value="/admin/users"/>"
                     class="menu-link">
@@ -67,7 +67,7 @@
                 <div data-i18n="Email">Quản lí doanh thu</div>
               </a>
             </li>
-
+            
             <li class="menu-item">
               <a
                 href="<c:url value="/admin/orders"/>"
@@ -157,109 +157,119 @@
           <div class="content-wrapper">
             <!-- Content -->
 				<div class="container-xxl flex-grow-1 container-p-y">
-             	<h4 class="py-3 mb-4"><span class="text-muted fw-light">Dashboards /</span> Users - Update</h4>
+             	<h4 class="py-3 mb-4"><span class="text-muted fw-light">Dashboards /</span> Orders - Details</h4>
              	<!-- Hoverable Table rows -->	
 	              
 	              <div class="row">
 					  <!-- FormValidation -->
 					  <div class="col-12">
 					    <div class="card">
-					      <h5 class="card-header">User's details</h5>
+					      <h5 class="card-header">Order's details</h5>
 					      <div class="card-body">
 					
-					        <form id="formValidationExamples" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" action="updateuser" method="post">
+					        <form id="formValidationExamples" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate">
 					
-					          <c:set var="user" value="${userUpdate}"/>
-					       
-							  <div class="col-md-6 fv-plugins-icon-container">
-					            <label class="form-label" for="formValidationName">User ID</label>
-					            <input type="text" id="formValidationName" class="form-control notEdit" value="${user.userID}" name="userID" readonly="readonly">
-					          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
-					
-					          <div class="col-md-6 fv-plugins-icon-container">
-					            <label class="form-label" for="formValidationName">Username</label>
-					            <input type="text" id="formValidationName" class="form-control" value="${user.username}" name="username">
-					          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
-					          
-					          <div class="form-password-toggle">
-		                        <label class="form-label" for="basic-default-password12">Password</label>
-		                        <div class="input-group">
-		                          <input value="${user.password}" type="password" class="form-control" name="password" id="basic-default-password12" placeholder="············" aria-describedby="basic-default-password2">
-		                          <span id="basic-default-password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-		                        </div>
-		                      </div>
-		                      
-		                      <div class="form-password-toggle">
-		                        <label class="form-label" for="basic-default-password12">Full name</label>
-		                        <div class="input-group">
-		                          <input value="${user.fullname}" type="text" class="form-control" name="fullname" id="" aria-describedby="basic-default-password2">
-		                       
-		                        </div>
-		                      </div>
-					          
-					          <div class="col-md-6 fv-plugins-icon-container">
-					            <label class="form-label" for="formValidationName">Email</label>
-					            <input type="email" id="" class="form-control" value="${user.email}" name="email">
-					          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
-					          
-					          <div class="col-md-6 fv-plugins-icon-container">
-					            <label class="form-label" for="formValidationName">Code</label>
-					            <input type="text" id="" class="form-control notEdit" value="${user.code}" name="code" readonly="readonly">
-					          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
-					          
-					          <div class="col-md-6 fv-plugins-icon-container">
-					            <label class="form-label" for="formValidationName">Time created</label>
-					            <input type="text" id="" class="form-control notEdit" value="${user.createdAt}" name="createdAt" readonly="readonly">
-					          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
-					          
-					          <div class="col-md-6 fv-plugins-icon-container">
-					            <label class="form-label" for="formValidationName">Time modified</label>
-					            <input type="text" id="" class="form-control notEdit" value="${user.modifiedAt}" name="modifiedAt" readonly="readonly">
-					          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
-					          
-					          <div class="col-md-6 fv-plugins-icon-container">
-					          	  <label class="form-label" for="formValidationName">Current state</label>
-					          	  <c:if test="${user.state == 1}"><span class="badge bg-success me-1">Active</span></c:if>
-		                          <c:if test="${user.state == 0}"><span class="badge bg-danger me-1">Locked</span></c:if>
-		                          <c:if test="${user.state == 2}"><span class="badge bg-dark me-1">Deleted</span></c:if>
-						          <div class="input-group">
-		                            <label class="input-group-text" for="inputGroupSelect01">State</label>
-		                            <select name="state" class="form-select" id="inputGroupSelect01">
-		                              <option value="1">Active</option>
-		                              <option value="0">Lock</option>
-		                              <option value="2">Delete</option>
-		                            </select>
-		                          </div>
-	                          </div>
-	                          
-	                          <div class="col-md-6 fv-plugins-icon-container">
-					          	  <label class="form-label" for="formValidationName">Role</label>
-					          	  
-						          <div class="input-group">
-		                            <label class="input-group-text" for="inputGroupSelect01">Role</label>
-		                            <c:if test="${user.userID == account.userID}">
-		                            	<input type="text" id="" class="form-control notEdit" value="${user.userrole.roleName}" name="roleID" readonly="readonly">     
-		                            </c:if>
-		                            
-		                            <c:if test="${user.userID != account.userID}">
-			                            <select name="roleID" class="form-select" id="inputGroupSelect01">                     
-			                              <option selected="" value="${user.userrole.roleID}">${user.userrole.roleName}</option>
-			                              <c:forEach items="${listrole}" var="i">
-			                              	<c:if test="${i.roleID != user.userrole.roleID}">
-			                              		<option value="${i.roleID}">${i.roleName}</option>
-			                              	</c:if>
-			                              </c:forEach>
-			                            </select>
-		                            </c:if>
-		                            
-		                          </div>
-	                          </div>
-
-					          <div class="col-12">		   
-					            <button type="submit" name="submitButton" class="btn btn-primary">Submit</button>         
-					            <a style="display: contents;" id="discardLink" href="<c:url value="/admin/users"/>"><button onclick="discardAndRedirect()" type="reset" name="resetButton" class="btn bg-label-danger">Discard</button></a>
+					          <c:set var="i" value="${bill}"/>
+					          <div class="col-12">
+					            <h6>1. Order information</h6>
+					            <hr class="mt-0">
 					          </div>
-					        	
+					
+							  <div class="col-md-6 fv-plugins-icon-container">
+					            <label class="form-label" for="formValidationName">Order ID</label>
+					            <input type="text" id="formValidationName" class="form-control notEdit" value="${i.billID}" name="billID" readonly="readonly">
+					          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
+					
+					          <div class="col-md-6 fv-plugins-icon-container">
+					            <label class="form-label" for="formValidationName">Customer's ID & Name</label>
+					            <input type="text" id="formValidationName" class="form-control notEdit" value="${i.user.userID} - ${i.user.fullname}" name="" readonly="readonly">
+					          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
+					         
+					          <div class="col-md-6 fv-plugins-icon-container">
+					            <label class="form-label" for="formValidationName">Address</label>
+					            <input type="text" id="formValidationName" class="form-control notEdit" value="${i.address}" name="address" readonly="readonly">
+					          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
+					          
+					          <div class="col-md-6 fv-plugins-icon-container">
+					            <label class="form-label" for="formValidationName">Phone</label>
+					            <input type="text" id="formValidationName" class="form-control notEdit" value="${i.phone}" name="phone" readonly="readonly">
+					          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
+					         	
+					          <div class="col-md-6 fv-plugins-icon-container">
+					            <label class="form-label" for="formValidationName">Datetime</label>
+					            <input type="text" id="formValidationName" class="form-control notEdit" value="${i.createdAt}" name="createdAt" readonly="readonly">
+					          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
+					         	
+							  <div class="col-md-6 fv-plugins-icon-container">
+								  <label class="form-label" for="formValidationName">Total</label>
+						          <div class="input-group">
+			                        <span class="input-group-text">$</span>
+			                        
+			                        <input type="text" 
+			                        	   class="form-control notEdit" 
+			                        	   aria-label="Dollar amount (with dot and two decimal places)" 
+			                        	   value="<fmt:formatNumber value="${i.total}" pattern="#,###,###.##" />" 
+			                        	   name="price" readonly="readonly">
+			                      </div>
+		                      </div>
+					          
+					          <div class="col-12">
+					            <h6>2. Order items</h6>
+					            <hr class="mt-0">
+					          </div>
+					          <div class="order_table table-responsive" 
+					          		style="margin-bottom: 35px; position: relative; z-index: 1; overflow-x: auto;">
+	                            <table style="width: 100%; caption-side: bottom; border-collapse: collapse;">
+	                                <thead style="background: #f2f2f2; border-color: inherit; border-style: solid; border-width: 0;">
+	                                    <tr style="border-color: inherit; border-style: solid; border-width: 0;">
+	                                        <th style="min-width: 50%; text-align: center; padding: 15px 0; border-bottom: 1px solid #ddd;
+	                                        border-color: inherit; border-style: solid; border-width: 0;">Product</th>
+	                                        <th style="min-width: 50%; text-align: center; padding: 15px 0; border-bottom: 1px solid #ddd;
+	                                        border-color: inherit; border-style: solid; border-width: 0;">Total</th>
+	                                    </tr>
+	                                </thead>
+	                                <tbody style="border-color: inherit; border-style: solid; border-width: 0;">
+	                                	<c:forEach items="${i.cartitems}" var="u">
+		                                    <tr style="border-color: inherit; border-style: solid; border-width: 0;">
+		                                        <td style="min-width: 50%;text-align: left;padding: 15px 30px;border-bottom: 1px solid #ddd;border-color: inherit; border-style: solid; border-width: 0;border-right: 1px solid #ededed;font-weight: 500;text-transform: capitalize;font-size: 14px"> 
+		                                        	${u.product.productName} <strong style="font-weight: bolder;"> × ${u.quantity}</strong>
+		                                        </td>
+		                                        <td style="min-width: 50%;text-align: left;padding: 15px 30px;border-bottom: 1px solid #ddd;border-color: inherit; border-style: solid; border-width: 0;border-right: 1px solid #ededed;font-weight: 500;text-transform: capitalize;font-size: 14px"> 
+		                                        	<span class="price">$<fmt:formatNumber value="${u.product.price*u.quantity}" pattern="#,###,###.##" /></span>
+		                                        </td>
+		                                    </tr>
+	                                   	</c:forEach>
+	                                </tbody>
+	                                <tfoot style="border-color: inherit; border-style: solid; border-width: 0;">
+	                                    <tr style="border-color: inherit; border-style: solid; border-width: 0;">
+	                                        <th style="min-width: 50%; text-align: center; padding: 15px 0; border-bottom: 1px solid #ddd;
+	                                        border-color: inherit; border-style: solid; border-width: 0;">Cart Subtotal</th>
+	                                        <td style="min-width: 50%;text-align: left;padding: 15px 30px;border-bottom: 1px solid #ddd;border-color: inherit; border-style: solid; border-width: 0;border-right: 1px solid #ededed;font-weight: 500;text-transform: capitalize;font-size: 14px">
+	                                        	$<fmt:formatNumber value="${i.total-1000.00}" pattern="#,###,###.##" />
+	                                        </td>
+	                                    </tr>
+	                                    <tr style="border-color: inherit; border-style: solid; border-width: 0;">
+	                                        <th style="min-width: 50%; text-align: center; padding: 15px 0; border-bottom: 1px solid #ddd;
+	                                        border-color: inherit; border-style: solid; border-width: 0;">Shipping</th>
+	                                        <td style="min-width: 50%;text-align: left;padding: 15px 30px;border-bottom: 1px solid #ddd;border-color: inherit; border-style: solid; border-width: 0;border-right: 1px solid #ededed;font-weight: 500;text-transform: capitalize;font-size: 14px">
+	                                        	<strong style="font-weight: bolder;">$1000.00</strong>
+	                                        </td>
+	                                    </tr>
+	                                    <tr class="order_total" style="border-color: inherit; border-style: solid; border-width: 0;">
+	                                        <th style="min-width: 50%; text-align: center; padding: 15px 0; border-bottom: 1px solid #ddd;
+	                                        border-color: inherit; border-style: solid; border-width: 0;">Order Total</th>
+	                                        <td style="min-width: 50%;text-align: left;padding: 15px 30px;border-bottom: 1px solid #ddd;border-color: inherit; border-style: solid; border-width: 0;border-right: 1px solid #ededed;font-weight: 500;text-transform: capitalize;font-size: 14px">
+	                                        	<strong style="font-weight: bolder;">$<fmt:formatNumber value="${i.total}" pattern="#,###,###.##" /></strong>
+	                                        </td>
+	                                    </tr>
+	                                </tfoot>
+	                            </table>
+	                        </div>
+			                  
+					          <div class="col-12">
+					            <a style="display: contents;" id="discardLink" href="<c:url value="/admin/orders"/>"><button onclick="discardAndRedirect()" type="reset" name="resetButton" class="btn bg-label-danger">Back</button></a>
+					          </div>
+					        
 					        </form>
 					      </div>
 					    </div>

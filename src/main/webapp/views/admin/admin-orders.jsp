@@ -58,16 +58,16 @@
                 </li>
               </ul>
             </li>
-
+            
             <li class="menu-item">
               <a
                 href="<c:url value="/admin/home"/>"
                 class="menu-link">
-                <i class="menu-icon tf-icons bx bx-bar-chart"></i>
+                <i class="menu-icon tf-icons bx bx-receipt"></i>
                 <div data-i18n="Email">Quản lí doanh thu</div>
               </a>
             </li>
-            
+
             <li class="menu-item active">
               <a
                 href="<c:url value="/admin/orders"/>"
@@ -193,21 +193,21 @@
 		                          <div class="dropdown">
 		                          	<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
 			                            <li>
-			                            	<a class="a-for-btn" href="<c:url value="/admin/updateusers?userID=${i.billID}"/> ">
+			                            	<a class="toggle-del-pop-up a-for-btn" href="#del-pop-up${i.billID}">
 					                            <button type="button" class="btn p-0 hide-arrow">
 					                              <i class="bx bx-edit-alt me-1"></i>
 					                            </button>
 				                            </a>
 			                            </li>
-			                            <li>
+			                            <%-- <li>
 			                            	<a href="#del-pop-up${i.billID}" class="toggle-del-pop-up a-for-btn">
 					                            <button type="button" class="btn p-0 hide-arrow">
 					                              <i class="bx bx-trash me-1"></i>
 					                            </button>
 				                            </a>
-			                            </li>
+			                            </li> --%>
 			                            <li>
-			                            	<a class="a-for-btn" href="<c:url value="/admin/userDetails?userID=${i.billID}"/>">
+			                            	<a class="a-for-btn" href="<c:url value="/admin/orderDetails?id=${i.billID}"/>">
 					                            <button type="button" class="btn p-0 hide-arrow">
 					                              <i class="bx bx-info-circle me-1"></i>
 					                            </button>
@@ -218,46 +218,36 @@
 		                        </td>
 		                      </tr>
 		                      
-		                      <!-- Start Modal delete -->
+		                      <!-- Start Modal update -->
 							    <div class="modal fade del-pop-up${i.billID}" id="del-pop-up${i.billID}" tabindex="-1" role="dialog" aria-hidden="true">
 							        <div class="modal-dialog  modal-dialog-centered" role="document">
 							            <div class="modal-content">
 							                <div class="modal-body">
 							                    <div class="container-fluid">
-							                    	<h5 class="card-header">Delete this bill??</h5>
+							                    	<h5 class="card-header">Edit order</h5>
 							                       		<form class="pt-0" id="del-form" onsubmit="return true" action="deleteuser" method="post">
 									                       	<!-- ID -->
 													        <div class="mb-3">
-													          <label class="form-label" for="ecommerce-category-title">User ID</label>
-													          <input type="text" class="form-control notEdit" id="" name="userID" aria-label="category id" readonly="readonly" value="">
+													          <label class="form-label" for="ecommerce-category-title">Bill ID</label>
+													          <input type="text" class="form-control notEdit" id="" name="billID" aria-label="category id" readonly="readonly" value="${i.billID}">
 													        </div>
+													        <div class="mb-3">
+													          <label class="form-label" for="ecommerce-category-title">Datetime</label>
+													          <input type="text" class="form-control notEdit" id="ecommerce-category-title" name="createdAt" aria-label="category title" readonly="readonly" value="${i.createdAt}">
+													        </div>		
 													        <!-- Title -->
 													        <div class="mb-3">
-													          <label class="form-label" for="ecommerce-category-title">Username</label>
-													          <input type="text" class="form-control notEdit" id="" name="userName" aria-label="category title" readonly="readonly" value="">
+													          <label class="form-label" for="ecommerce-category-title">Address</label>
+													          <input type="text" class="form-control" id="" name="address" aria-label="category title" value="${i.address}">
 													        </div>
 													        
 													        <div class="mb-3">
-													          <label class="form-label" for="ecommerce-category-title">Email</label>
-													          <input type="text" class="form-control notEdit" id="" name="" aria-label="category title" readonly="readonly" value="">
-													        </div>
-													        
-													        <div class="mb-3">
-													          <label class="form-label" for="ecommerce-category-title">Full name</label>
-													          <input type="text" class="form-control notEdit" id="ecommerce-category-title" name="cateName" aria-label="category title" readonly="readonly" value="">
-													        </div>										  
-													        
-													        <!-- Status -->
-													        <div class="mb-4 ecommerce-select2-dropdown">
-													          <label class="form-label">State</label>
-													          <%-- <c:if test="${i.state == 1}"><span class="badge bg-success me-1">Active</span></c:if>
-								                              <c:if test="${i.state == 0}"><span class="badge bg-danger me-1">Locked</span></c:if>
-								                        	  <c:if test="${i.state == 2}"><span class="badge bg-dark me-1">Deleted</span></c:if> --%>
-			                
+													          <label class="form-label" for="ecommerce-category-title">Phone</label>
+													          <input type="text" class="form-control" id="" name="phone" aria-label="category title" value="${i.phone}">
 													        </div>
 													        <!-- Submit and reset -->
 													        <div class="mb-3">
-													          <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit delete-button">Delete</button>
+													          <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit delete-button">Submit</button>
 													          <button type="reset" class="btn bg-label-danger del-close-button">Discard</button>
 													        </div>
 											      		</form>
@@ -266,7 +256,7 @@
 							            </div>
 							        </div>
 							    </div> 
-							    <!-- End Modal delete --> 
+							    <!-- End Modal update --> 
 		                      
 		                    </c:forEach>
 	                    </tbody>
@@ -290,6 +280,26 @@
       <div class="layout-overlay layout-menu-toggle"></div>
     </div>
     <!-- / Layout wrapper -->
+  <script>
+	  $(document).ready(function() {
+	      $('#example').on('click', 'a.toggle-del-pop-up', function(event) {
+	          event.preventDefault();
+	
+	          const targetId = $(this).attr('href').substring(1);
+	          const targetDiv = $('.' + targetId)[0];
+	
+	          if (targetDiv) {
+	              $(targetDiv).addClass('show');
+	
+	              $(targetDiv).find('.del-close-button').on('click', function() {
+	                  $(targetDiv).removeClass('show');
+	              });
+	          } else {
+	              console.log('Không tìm thấy phần tử với lớp:', targetId);
+	          }
+	      });
+	  });
+  </script>
   </body>
 
     

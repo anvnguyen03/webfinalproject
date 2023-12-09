@@ -58,12 +58,12 @@
                 </li>
               </ul>
             </li>
-
+            
             <li class="menu-item">
               <a
                 href="<c:url value="/admin/home"/>"
                 class="menu-link">
-                <i class="menu-icon tf-icons bx bx-bar-chart"></i>
+                <i class="menu-icon tf-icons bx bx-receipt"></i>
                 <div data-i18n="Email">Quản lí doanh thu</div>
               </a>
             </li>

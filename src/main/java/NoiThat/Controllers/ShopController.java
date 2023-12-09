@@ -62,8 +62,7 @@ public class ShopController extends HttpServlet {
 		findCart(req, resp);
 
 		String url = req.getRequestURI();
-		if (url.contains("/allproduct")) {
-//			findAndCountAllProduct(req, resp);
+		if (url.contains("/allproduct")) {	
 			findAndCountProductByPage(req, resp);
 			req.getRequestDispatcher("/views/shop/Shop.jsp").forward(req, resp);
 		} else if (url.contains("/findByCategory")) {
@@ -421,16 +420,10 @@ public class ShopController extends HttpServlet {
 
 		try {
 			List<CategoryParents> listcatepa = catepase.findAllCateParents();
-
-			// Duyệt qua danh sách CategoryParents và thêm danh sách Category cho mỗi
-			// CategoryParents
-			for (CategoryParents cateParent : listcatepa) {
-				List<Category> listcate = cate.findByCategoryParentsID(cateParent.getCateParentsID());
-				cateParent.setCategories(listcate);
-			}
-
 			req.setAttribute("listcatepa", listcatepa);
-//	        req.getRequestDispatcher("/views/home/Home.jsp").forward(req, resp);
+			List<Category> liscate = cate.findAllCate();
+			
+			req.setAttribute("liscate", liscate);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

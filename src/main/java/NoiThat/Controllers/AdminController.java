@@ -35,7 +35,7 @@ import NoiThat.Services.UserServiceImpl;
 		* 50)
 
 @WebServlet(urlPatterns = { "/admin/home", "/admin/cateparents", "/admin/category", "/admin/products", "/admin/users",
-		"/admin/orders", "/admin/addproducts", "/admin/updateproducts", "/admin/productdetails", "/admin/updateusers",
+		"/admin/orders", "/admin/orderDetails", "/admin/addproducts", "/admin/updateproducts", "/admin/productdetails", "/admin/updateusers",
 		"/admin/userDetails", "/admin/addcategoryparents", "/admin/deletecategoryparents",
 		"/admin/updatecategoryparents", "/admin/addcate", "/admin/deletecate", "/admin/updatecate", "/admin/updatepro",
 		"/admin/addpro", "/admin/deletepro", "/admin/updateuser", "/admin/deleteuser" })
@@ -138,6 +138,11 @@ public class AdminController extends HttpServlet {
 					req.setAttribute("user", us);
 
 					req.getRequestDispatcher("/views/admin/admin-userDetails.jsp").forward(req, resp);
+				} else if (url.contains("/orderDetails")) {
+					int billid = Integer.parseInt(req.getParameter("id"));
+					Bill b = bill.findByID(billid);
+					req.setAttribute("bill", b);
+					req.getRequestDispatcher("/views/admin/admin-orderDetails.jsp").forward(req, resp);
 				}
 			} else {
 				resp.sendRedirect(req.getContextPath() + "/home");
