@@ -34,10 +34,10 @@ public class Bill {
 	private String phone;
 	private Timestamp createdAt;
 	private double total;
-	
+	private int state;
 	
 	public Bill(int billID, User user, List<CartItems> cartitems, String address, String phone, Timestamp createdAt,
-			double total) {
+			double total, int state) {
 		this.billID = billID;
 		this.user = user;
 		this.cartitems = cartitems;
@@ -45,6 +45,7 @@ public class Bill {
 		this.phone = phone;
 		this.createdAt = createdAt;
 		this.total = total;
+		this.state = state;
 	}
 	public Bill() {
 		
@@ -90,6 +91,12 @@ public class Bill {
 	}
 	public void setTotal(double total) {
 		this.total = total;
+	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
 	}
 	
 }

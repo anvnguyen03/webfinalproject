@@ -175,6 +175,7 @@
 	                        <th>Phone</th>
 	                        <th>Datetime</th>
 	                        <th>Total</th>
+	                        <th>Status</th>
 	                        <th>Actions</th>
 	                      </tr>
 	                    </thead>
@@ -189,6 +190,10 @@
 		                        <td>${i.phone}</td>
 		                        <td>${i.createdAt }</td>
 		                        <td><span><fmt:formatNumber value="${i.total}" pattern="#,###,###.##" /> $</span></td>
+		                        <td>
+		                        	<c:if test="${i.state == 0}"><span class="badge bg-success me-1">Delivered</span></c:if>
+		                        	<c:if test="${i.state == 1}"><span class="badge bg-warning me-1">In transit</span></c:if>
+		                        </td>
 		                        <td>
 		                          <div class="dropdown">
 		                          	<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
@@ -245,6 +250,17 @@
 													          <label class="form-label" for="ecommerce-category-title">Phone</label>
 													          <input type="text" class="form-control" id="" name="phone" aria-label="category title" value="${i.phone}">
 													        </div>
+													        
+													        <div class="mb-3">
+													          <label class="form-label" for="ecommerce-category-title">Status</label>
+													          <c:if test="${i.state == 0}"><span class="badge bg-success me-1">Delivered</span></c:if>
+		                        							  <c:if test="${i.state == 1}"><span class="badge bg-warning me-1">In transit</span></c:if>
+													          <select id="ecommerce-category-status" class="select2 form-select" data-placeholder="Select category status" name="state" >
+													            <option value="0">Delivered</option>
+													            <option value="1">In transit</option>
+													          </select>
+													        </div>
+													        
 													        <!-- Submit and reset -->
 													        <div class="mb-3">
 													          <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit delete-button">Submit</button>

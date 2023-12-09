@@ -212,6 +212,12 @@
 			                        	   name="price" readonly="readonly">
 			                      </div>
 		                      </div>
+		                      
+		                      <div class="col-md-6 fv-plugins-icon-container">
+					            <label class="form-label" for="formValidationName">Status</label>
+					            <c:if test="${i.state == 0}"><span class="badge bg-success me-1">Delivered</span></c:if>
+		                        <c:if test="${i.state == 1}"><span class="badge bg-warning me-1">In transit</span></c:if>
+					          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
 					          
 					          <div class="col-12">
 					            <h6>2. Order items</h6>

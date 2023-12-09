@@ -59,10 +59,22 @@
                                     <label>Address <span>*</span></label>
                                     <input type="text" value="${bill.address}" readonly="readonly">
                                 </div>
-                            </div><div class="col-12">
+                            </div>
+                            <div class="col-12">
                                 <div class="default-form-box">
                                     <label>Phone <span>*</span></label>
                                     <input type="text" value="${bill.phone}" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="default-form-box">
+                                    <label>Status</label>
+                                    <c:if test="${bill.state == 0}">
+                                    	<input type="text" value="In transit" readonly="readonly">
+                                    </c:if>
+                                    <c:if test="${bill.state == 1}">
+                                    	<input type="text" value="Delivered" readonly="readonly">
+                                    </c:if>
                                 </div>
                             </div>
                         </div>

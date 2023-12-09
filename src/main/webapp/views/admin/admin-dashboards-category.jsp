@@ -191,7 +191,7 @@
 		                        <td>
 		                        	<c:if test="${i.state == 1}"><span class="badge bg-success me-1">Active</span></c:if>
 		                        	<c:if test="${i.state == 0}"><span class="badge bg-warning me-1">Inactive</span></c:if>
-		                        	 <c:if test="${i.state == 2}"><span class="badge bg-dark me-1">Deleted</span></c:if>
+		                        	<c:if test="${i.state == 2}"><span class="badge bg-dark me-1">Deleted</span></c:if>
 		                        	
 		                        </td>
 		                        <td>

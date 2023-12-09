@@ -266,6 +266,7 @@ public class CartController extends HttpServlet{
 			bill.setUser(u);
 			bill.setAddress(address);
 			bill.setPhone(phone);
+			bill.setState(0);
 			
 			try {
 				billService.insert(bill);

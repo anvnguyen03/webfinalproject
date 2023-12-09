@@ -51,6 +51,7 @@
                                         <th>Order</th>
                                         <th>Date</th>
                                         <th>Total</th>
+                                        <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -60,6 +61,12 @@
 	                                        <td>${i.billID}</td>
 	                                        <td><c:out value="${fn:substring(i.createdAt, 0, 10)}" /></td>
 	                                        <td><span class="price">$<fmt:formatNumber value="${i.total}" pattern="#,###,###.##" /></span></td>
+	                                        <c:if test="${i.state == 0}">
+	                                        	<td>In transit</td>
+	                                        </c:if>
+	                                        <c:if test="${i.state == 1}">
+	                                        	<td>Delivered</td>
+	                                        </c:if>
 	                                        <td><a href="<c:url value="/orderdetails?id=${i.billID}"/>" class="view">view</a></td>
 	                                    </tr>
                                     </c:forEach>
