@@ -34,7 +34,7 @@ import NoiThat.Services.IUserService;
 import NoiThat.Services.ProductServiceImpl;
 import NoiThat.Services.UserServiceImpl;
 
-@WebServlet( urlPatterns = {"/home", "/myaccount", "/orderdetails", "/changepassword", "/changeaccountdetails"})
+@WebServlet( urlPatterns = {"/home", "/myaccount", "/orderdetails", "/changepassword", "/changeaccountdetails", "/contact"})
 
 public class HomeController extends HttpServlet{
 
@@ -82,6 +82,8 @@ public class HomeController extends HttpServlet{
 				resp.sendRedirect(req.getContextPath() + "/login");
 			}
 			
+		} else if (url.contains("/contact")) {
+			req.getRequestDispatcher("/views/contact/contact.jsp").forward(req, resp);
 		}
 
 	}	

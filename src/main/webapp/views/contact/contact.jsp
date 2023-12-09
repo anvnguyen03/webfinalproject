@@ -1,103 +1,96 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!-- Breadcrumb Section Begin -->
-<section class="breadcrumb-section set-bg"
-	data-setbg="/WebFinalProject/templates/img/breadcrumb_1.jpg">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12 text-center">
-				<div class="breadcrumb__text">
-					<h2>Contact Us</h2>
-					<div class="breadcrumb__option">
-						<a href="/WebFinalProject/views/home/listCategoryToHome.jsp">Home</a> <span>Contact Us</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<!-- Breadcrumb Section End -->
+<%@ include file="/common/taglib.jsp"%>
+<!-- ...:::: Start Breadcrumb Section:::... -->
+<div class="breadcrumb-section breadcrumb-bg-color--golden">
+    <div class="breadcrumb-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="breadcrumb-title">Contact Us</h3>
+                    <div class="breadcrumb-nav breadcrumb-nav-color--black breadcrumb-nav-hover-color--golden">
+                        <nav aria-label="breadcrumb">
+                            <ul>
+                                <li><a href="<c:url value="/home"/>">Home</a></li>
+                                <li class="active" aria-current="page">Contact Us</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- ...:::: End Breadcrumb Section:::... -->
 
-<!-- Contact Section Begin -->
-<section class="contact spad">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-3 col-md-3 col-sm-6 text-center">
-				<div class="contact__widget">
-					<span class="icon_phone"></span>
-					<h4>Phone</h4>
-					<p>+01-3-8888-6868</p>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-3 col-sm-6 text-center">
-				<div class="contact__widget">
-					<span class="icon_pin_alt"></span>
-					<h4>Address</h4>
-					<p>60-49 Road 11378 New York</p>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-3 col-sm-6 text-center">
-				<div class="contact__widget">
-					<span class="icon_clock_alt"></span>
-					<h4>Open time</h4>
-					<p>10:00 am to 23:00 pm</p>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-3 col-sm-6 text-center">
-				<div class="contact__widget">
-					<span class="icon_mail_alt"></span>
-					<h4>Email</h4>
-					<p>hello@colorlib.com</p>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<!-- Contact Section End -->
+<!-- ...::::Start Map Section:::... -->
+<div class="map-section" data-aos="fade-up"  data-aos-delay="0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="mapouter">
+                    <div class="gmap_canvas">
+                        <iframe id="gmap_canvas" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.4797730880946!2d106.77103157385054!3d10.851066789302266!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752774d7e357c3%3A0x7cc744cb226ad64!2zc-G7kSAxIFbDtSBWxINuIE5nw6JuLCBMaW5oIENoaeG7g3UsIFRo4bunIMSQ4bupYywgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1702142860115!5m2!1svi!2s"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- ...::::End  Map Section:::... -->
 
-<!-- Map Begin -->
-<div class="map">
-	<iframe
-		src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d49116.39176087041!2d-86.41867791216099!3d39.69977417971648!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x886ca48c841038a1%3A0x70cfba96bf847f0!2sPlainfield%2C%20IN%2C%20USA!5e0!3m2!1sen!2sbd!4v1586106673811!5m2!1sen!2sbd"
-		height="500" style="border: 0;" allowfullscreen="" aria-hidden="false"
-		tabindex="0"></iframe>
-	<div class="map-inside">
-		<i class="icon_pin"></i>
-		<div class="inside-widget">
-			<h4>New York</h4>
-			<ul>
-				<li>Phone: +12-345-6789</li>
-				<li>Add: 16 Creek Ave. Farmingdale, NY</li>
-			</ul>
-		</div>
-	</div>
+<!-- ...::::Start Contact Section:::... -->
+<div class="contact-section">
+    <div class="container">
+        <div class="row">
+            <div class="">
+                <!-- Start Contact Details -->
+               <div class="contact-details-wrapper section-top-gap-100" data-aos="fade-up"  data-aos-delay="0">
+                   <div class="contact-details">
+                       <!-- Start Contact Details Single Item -->
+                       <div class="contact-details-single-item">
+                           <div class="contact-details-icon">
+                               <i class="fa fa-phone"></i>
+                           </div>
+                           <div class="contact-details-content contact-phone">
+                               <a href="tel:+012345678102">+012 345 678 102</a>
+                               <a href="tel:+012345678102">+012 345 678 102</a>
+                           </div>
+                       </div> <!-- End Contact Details Single Item -->
+                       <!-- Start Contact Details Single Item -->
+                       <div class="contact-details-single-item">
+                           <div class="contact-details-icon">
+                               <i class="fa fa-globe"></i>
+                           </div>
+                           <div class="contact-details-content contact-phone">
+                               <a href="mailto:urname@email.com">urname@email.com</a>
+                               <a href="http://www.yourwebsite.com/">www.yourwebsite.com</a>
+                           </div>
+                       </div> <!-- End Contact Details Single Item -->
+                       <!-- Start Contact Details Single Item -->
+                       <div class="contact-details-single-item">
+                           <div class="contact-details-icon">
+                               <i class="fa fa-map-marker"></i>
+                           </div>
+                           <div class="contact-details-content contact-phone">
+                               <span>Address goes here,</span>
+                               <span>street, Crossroad 123.</span>
+                           </div>
+                       </div> <!-- End Contact Details Single Item -->
+                   </div>
+                   <!-- Start Contact Social Link -->
+                   <div class="contact-social">
+                       <h4>Follow Us</h4>
+                       <ul>
+                           <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                           <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                           <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                           <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                           <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                       </ul>
+                   </div> <!-- End Contact Social Link -->
+               </div> <!-- End Contact Details -->
+            </div>
+            
+        </div>
+    </div>
 </div>
-<!-- Map End -->
-
-<!-- Contact Form Begin -->
-<div class="contact-form spad">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="contact__form__title">
-					<h2>Leave Message</h2>
-				</div>
-			</div>
-		</div>
-		<form action="#">
-			<div class="row">
-				<div class="col-lg-6 col-md-6">
-					<input type="text" placeholder="Your name">
-				</div>
-				<div class="col-lg-6 col-md-6">
-					<input type="text" placeholder="Your Email">
-				</div>
-				<div class="col-lg-12 text-center">
-					<textarea placeholder="Your message"></textarea>
-					<button type="submit" class="site-btn">SEND MESSAGE</button>
-				</div>
-			</div>
-		</form>
-	</div>
-</div>
-<!-- Contact Form End -->
+<!-- ...::::ENd Contact Section:::... -->

@@ -80,7 +80,7 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <a href="contact-us.html">Contact Us</a>
+                                        <a href="<c:url value="/contact"/>">Contact Us</a>
                                     </li>
                                     <c:if test="${not empty account && account.userrole.roleID==1}">
 										<li><a href="<c:url value="/admin/home"/>">Admin page</a></li>
@@ -221,7 +221,7 @@
 	                        </c:if>
                         </c:forEach>
                     </li>
-                    <li><a href="contact-us.html">Contact Us</a></li>
+                    <li><a href="<c:url value="/contact"/>">Contact Us</a></li>
                 </ul>
             </div> <!-- End Mobile Menu Nav -->
         </div> <!-- End Mobile Menu -->
