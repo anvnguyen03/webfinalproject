@@ -35,7 +35,8 @@ import NoiThat.Services.UserServiceImpl;
 		* 50)
 
 @WebServlet(urlPatterns = { "/admin/home", "/admin/cateparents", "/admin/category", "/admin/products", "/admin/users",
-		"/admin/orders", "/admin/orderDetails", "/admin/addproducts", "/admin/updateproducts", "/admin/productdetails", "/admin/updateusers",
+		"/admin/orders", "/admin/orderDetails", "/admin/editorder", 
+		"/admin/addproducts", "/admin/updateproducts", "/admin/productdetails", "/admin/updateusers",
 		"/admin/userDetails", "/admin/addcategoryparents", "/admin/deletecategoryparents",
 		"/admin/updatecategoryparents", "/admin/addcate", "/admin/deletecate", "/admin/updatecate", "/admin/updatepro",
 		"/admin/addpro", "/admin/deletepro", "/admin/updateuser", "/admin/deleteuser" })
@@ -389,13 +390,11 @@ public class AdminController extends HttpServlet {
 			int roleID = Integer.parseInt(req.getParameter("roleID"));
 			UserRole urole = new UserRole();
 			urole.setRoleID(roleID);
-			System.out.println(urole.getRoleID() + "&&&&&7");
 			User userr = new User();
 
 			try {
 				BeanUtils.populate(userr, req.getParameterMap());
 				userr.setUserrole(urole);
-				System.out.println(urole.getRoleID() + "&&&&&7");
 
 				user.update(userr);
 
@@ -404,6 +403,23 @@ public class AdminController extends HttpServlet {
 			}
 			resp.sendRedirect(req.getContextPath() + "/admin/users");
 		}
+		//Edit bill - ad-order-233
+		else if (url.contains("/admin/editorder")) {
 
+			int userID = Integer.parseInt(req.getParameter("userID"));
+			User ur = new User();
+			ur.setUserID(userID);
+			Bill editbill = new Bill(); 
+
+			try {
+				BeanUtils.populate(editbill, req.getParameterMap());
+				editbill.setUser(ur);				
+				bill.update(editbill);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			resp.sendRedirect(req.getContextPath() + "/admin/orders");
+		}
 	}
 }

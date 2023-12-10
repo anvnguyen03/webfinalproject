@@ -230,15 +230,23 @@
 							                <div class="modal-body">
 							                    <div class="container-fluid">
 							                    	<h5 class="card-header">Edit order</h5>
-							                       		<form class="pt-0" id="del-form" onsubmit="return true" action="deleteuser" method="post">
+							                       		<form class="pt-0" id="del-form" onsubmit="return true" action="editorder" method="post">
 									                       	<!-- ID -->
 													        <div class="mb-3">
 													          <label class="form-label" for="ecommerce-category-title">Bill ID</label>
 													          <input type="text" class="form-control notEdit" id="" name="billID" aria-label="category id" readonly="readonly" value="${i.billID}">
 													        </div>
 													        <div class="mb-3">
+													          <label class="form-label" for="ecommerce-category-title">User ID</label>
+													          <input type="text" class="form-control notEdit" id="" name="userID" aria-label="category id" readonly="readonly" value="${i.user.userID}">
+													        </div>
+													        <div class="mb-3">
 													          <label class="form-label" for="ecommerce-category-title">Datetime</label>
 													          <input type="text" class="form-control notEdit" id="ecommerce-category-title" name="createdAt" aria-label="category title" readonly="readonly" value="${i.createdAt}">
+													        </div>	
+													        <div class="mb-3">
+													          <label class="form-label" for="ecommerce-category-title">Total</label>
+													          <input type="text" class="form-control notEdit" id="ecommerce-category-title" name="total" aria-label="category title" readonly="readonly" value="${i.total}">
 													        </div>		
 													        <!-- Title -->
 													        <div class="mb-3">
